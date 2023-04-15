@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/recipesFragment">
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.whattoeat.ui.fragments.RecipeOverview"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_recipe_overview" />
+    <fragment
+        android:id="@+id/recipesFragment"
+        android:name="com.example.whattoeat.ui.fragments.RecipesFragment"
+        android:label="fragment_recipes"
+        tools:layout="@layout/fragment_recipes" >
+        <argument
+            android:name="backFromBottomSheet"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <action
+            android:id="@+id/action_recipesFragment_to_recipesBottomSheet"
+            app:destination="@id/recipesBottomSheet" />
+        <action
+            android:id="@+id/action_recipesFragment_to_detailsActivity"
+            app:destination="@id/detailsActivity" />
+    </fragment>
+    <dialog
+        android:id="@+id/recipesBottomSheet"
+        android:name="com.example.whattoeat.ui.fragments.RecipesBottomSheet"
+        android:label="recipes_bottom_sheet"
+        tools:layout="@layout/recipes_bottom_sheet" >
+        <action
+            android:id="@+id/action_recipesBottomSheet_to_recipesFragment"
+            app:destination="@id/recipesFragment"
+            app:popUpTo="@id/recipesFragment"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_recipesBottomSheet_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
+    </dialog>
+    <activity
+        android:id="@+id/detailsActivity"
+        android:name="com.example.whattoeat.ui.DetailsActivity"
+        android:label="activity_details"
+        tools:layout="@layout/activity_details" >
+        <argument
+            android:name="recipeId"
+            app:argType="integer" />
+    </activity>
+    <fragment
+        android:id="@+id/overviewFragment"
+        android:name="com.example.whattoeat.ui.fragments.OverviewFragment"
+        android:label="OverviewFragment" />
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.example.whattoeat.ui.fragments.FavoritesFragment"
+        android:label="fragment_favorites"
+        tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_favoritesFragment_to_recipesFragment"
+            app:destination="@id/recipesFragment" />
+        <action
+            android:id="@+id/action_favoritesFragment_to_detailsActivity"
+            app:destination="@id/detailsActivity" />
+    </fragment>
+</navigation>

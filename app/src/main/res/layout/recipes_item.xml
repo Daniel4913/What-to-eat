@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="recipeItem"
+            type="com.example.whattoeat.model.RecipesByIngredientsItem" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        onRecipeClickListener="@{recipeItem.id}"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/row_cardView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeWidth="1dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/favorite_recipe_imageView"
+                    loadImageFromUrl="@{recipeItem.image}"
+                    android:layout_width="200dp"
+                    android:layout_height="150dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@tools:sample/avatars" />
+
+                <TextView
+                    android:id="@+id/favorite_title_textView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="12dp"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:text="@{recipeItem.title}"
+
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/favorite_recipe_imageView"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/myIngredientsCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="@{String.valueOf(recipeItem.usedIngredientCount)}"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/favorite_recipe_imageView"
+                    app:layout_constraintStart_toStartOf="@+id/favorite_title_textView" />
+
+                <ImageView
+                    android:id="@+id/fridge_iV"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="4dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/myIngredientsCount"
+                    app:layout_constraintStart_toEndOf="@+id/myIngredientsCount"
+                    app:layout_constraintTop_toTopOf="@+id/myIngredientsCount"
+                    app:srcCompat="@drawable/ic_fridge" />
+
+                <TextView
+                    android:id="@+id/missedIngrediendsCount_tV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="@{String.valueOf(recipeItem.missedIngredientCount)}"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/fridge_iV"
+                    app:layout_constraintStart_toEndOf="@+id/fridge_iV"
+                    app:layout_constraintTop_toTopOf="@+id/fridge_iV" />
+
+                <ImageView
+                    android:id="@+id/cart_iV"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="4dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/missedIngrediendsCount_tV"
+                    app:layout_constraintStart_toEndOf="@+id/missedIngrediendsCount_tV"
+                    app:layout_constraintTop_toTopOf="@+id/missedIngrediendsCount_tV"
+                    app:srcCompat="@drawable/ic_cart" />
+
+                <TextView
+                    android:id="@+id/likes_tV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="@{String.valueOf(recipeItem.likes)}"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/cart_iV"
+                    app:layout_constraintStart_toEndOf="@+id/cart_iV"
+                    app:layout_constraintTop_toTopOf="@+id/cart_iV" />
+
+                <ImageView
+                    android:id="@+id/like_iV"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="4dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/likes_tV"
+                    app:layout_constraintStart_toEndOf="@+id/likes_tV"
+                    app:layout_constraintTop_toTopOf="@+id/likes_tV"
+                    app:srcCompat="@drawable/ic_like" />
+
+                <TextView
+                    android:id="@+id/myIngrediends_tV"
+                    setMyIngredients="@{recipeItem.usedIngredients}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="16dp"
+                    android:maxWidth="160dp"
+                    android:maxLines="10"
+                    android:text="TextView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/favorite_recipe_imageView" />
+
+                <TextView
+                    android:id="@+id/missedIngrediends_tV"
+                    setMissingIngredients="@{recipeItem.missedIngredients}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
+                    android:maxWidth="160dp"
+                    android:maxLines="10"
+                    android:text="TextView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/myIngrediends_tV"
+                    app:layout_constraintTop_toBottomOf="@+id/favorite_recipe_imageView" />
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="@+id/favorite_recipe_imageView"
+                    app:layout_constraintTop_toTopOf="@+id/favorite_recipe_imageView"
+                    app:srcCompat="@drawable/ic_cart" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="mainViewModel"
+            type="com.example.whattoeat.viewmodels.MainViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.fragments.RecipesFragment">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recipesRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:padding="2dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/error_iV"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            readApiResponse="@{mainViewModel.recipesResponse}"
+            readDatabase="@{mainViewModel.readRecipes}"
+            android:alpha="0.7"
+            android:src="@drawable/baseline_wifi_tethering_error_24"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/recipesRecyclerView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.62" />
+
+        <TextView
+            android:id="@+id/error_tV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            readApiResponse2="@{mainViewModel.recipesResponse}"
+            readDatabase2="@{mainViewModel.readRecipes}"
+            android:layout_marginTop="16dp"
+            android:alpha="0.8"
+            android:text="No internet connection"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@+id/error_iV"
+            app:layout_constraintStart_toStartOf="@+id/error_iV"
+            app:layout_constraintTop_toBottomOf="@+id/error_iV" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/ingredientsFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="@dimen/fab_margin"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_fridge"
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
