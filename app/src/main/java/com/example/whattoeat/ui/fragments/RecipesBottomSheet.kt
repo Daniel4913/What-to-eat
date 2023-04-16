@@ -76,10 +76,6 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
             findNavController().navigate(action)
         }
 
-        binding.favoritesBtn.setOnClickListener {
-            findNavController().navigate(RecipesBottomSheetDirections.actionRecipesBottomSheetToFavoritesFragment())
-        }
-
         return binding.root
     }
 

@@ -21,5 +21,13 @@
     <string name="save_to_favorites">Save to favorites</string>
     <string name="no_data_text">Your favorite recipes will appear here</string>
     <string name="no_instructions_textView">No instructions availible</string>
+    <string name="toolbar_title">Details</string>
+    <string name="delete_all">Delete All</string>
+    <string name="favorites">Favorites</string>
+    <string name="recipes_label">What can I cook?</string>
+    <string name="favorites_label">My fav recipes ❤</string>
+    <string name="recipes">Recipes</string>
+    <string name="ingredients">Ingredients</string>
+
 
 </resources>

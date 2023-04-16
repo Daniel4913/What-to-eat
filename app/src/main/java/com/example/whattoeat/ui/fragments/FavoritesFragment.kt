@@ -1,17 +1,20 @@
 package com.example.whattoeat.ui.fragments
 
 import android.os.Bundle
+import android.view.*
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.whattoeat.R
 import com.example.whattoeat.adapters.FavoritesAdapter
 import com.example.whattoeat.databinding.FragmentFavoritesBinding
 import com.example.whattoeat.viewmodels.MainViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
 
@@ -19,8 +22,9 @@ class FavoritesFragment : Fragment() {
 
     private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
-    private lateinit var mAdapter: FavoritesAdapter
 
+    private lateinit var menuItem: MenuItem
+    private lateinit var mAdapter: FavoritesAdapter
     private lateinit var mainViewModel: MainViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,13 +37,29 @@ class FavoritesFragment : Fragment() {
     ): View? {
         _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
 
-        mAdapter = FavoritesAdapter {
-            findNavController().navigate(
-                FavoritesFragmentDirections.actionFavoritesFragmentToDetailsActivity(
-                    it.id
-                )
-            )
+        mAdapter = FavoritesAdapter { detailedRecipe ->
+            val action =
+                FavoritesFragmentDirections.actionFavoritesFragmentToDetailsActivity(detailedRecipe.id)
+            findNavController().navigate(action)
         }
+
+        val menuHost: MenuHost = requireActivity()
+
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.favorites_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                if (menuItem.itemId == android.R.id.home) {
+//            finish()
+                } else if (menuItem.itemId == R.id.deleteAll_favorites_menu) {
+                    showSnackBar("Favorites deleted")
+                    mainViewModel.deleteAllFavorites()
+                }
+                return true
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
         setupRecyclerView()
 
@@ -56,20 +76,28 @@ class FavoritesFragment : Fragment() {
             }
         }
 
-
-
         return binding.root
+    }
+
+    private fun showSnackBar(message: String) {
+        Snackbar.make(
+            binding.root,
+            message,
+            Snackbar.LENGTH_LONG
+        ).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setAction("Undo") {}
+            .show()
     }
 
     private fun setupRecyclerView() {
         binding.favoritesRecyclerView.adapter = mAdapter
         binding.favoritesRecyclerView.layoutManager =
             GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
-
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+
 }

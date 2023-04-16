@@ -15,13 +15,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
+
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/details_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             app:menu="@menu/details_menu"
             app:navigationIcon="@drawable/ic_arrow_back"
-            app:title="Details"
+            app:title="@string/toolbar_title"
             app:titleCentered="true" />
 
 <!--            style="@style/CustomTabLayoutStyle"-->
@@ -29,7 +31,7 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="match_parent"
             android:importantForAccessibility="no"
             app:layout_scrollFlags="scroll|enterAlways"
             >

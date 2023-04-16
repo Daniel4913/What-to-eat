@@ -8,6 +8,7 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.navArgs
 import com.example.whattoeat.R
@@ -42,12 +43,15 @@ class DetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        WindowCompat.setDecorFitsSystemWindows(window, false) kiedy to jest to toolbar jest przesuniety pod belke (czyli caly widok. z 'false' ignorowane sa navigation i appbar)
+//        WindowCompat.setDecorFitsSystemWindows(window, false) // kiedy to jest to toolbar jest przesuniety pod belke (czyli caly widok. z 'false' ignorowane sa navigation i appbar)
 
         binding = ActivityDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setSupportActionBar(binding.detailsToolbar)
+
+//        setSupport
+
 //        binding.detailsToolbar.setTitleTextColor(
 //            ContextCompat.getColor(
 //                this,
@@ -176,5 +180,6 @@ class DetailsActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         changeMenuItem(menuItem, R.color.white, R.drawable.bookmark_add)
+
     }
 }

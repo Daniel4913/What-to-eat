@@ -5,25 +5,23 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/recipesFragment">
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.example.whattoeat.ui.fragments.RecipeOverview"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_recipe_overview" />
-    <fragment
         android:id="@+id/recipesFragment"
         android:name="com.example.whattoeat.ui.fragments.RecipesFragment"
-        android:label="fragment_recipes"
-        tools:layout="@layout/fragment_recipes" >
+        android:label="@string/recipes_label"
+        tools:layout="@layout/fragment_recipes">
         <argument
             android:name="backFromBottomSheet"
-            app:argType="boolean"
-            android:defaultValue="false" />
+            android:defaultValue="false"
+            app:argType="boolean" />
         <action
             android:id="@+id/action_recipesFragment_to_recipesBottomSheet"
             app:destination="@id/recipesBottomSheet" />
         <action
             android:id="@+id/action_recipesFragment_to_detailsActivity"
             app:destination="@id/detailsActivity" />
+        <action
+            android:id="@+id/action_recipesFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
     </fragment>
     <dialog
         android:id="@+id/recipesBottomSheet"
@@ -35,9 +33,6 @@
             app:destination="@id/recipesFragment"
             app:popUpTo="@id/recipesFragment"
             app:popUpToInclusive="true"/>
-        <action
-            android:id="@+id/action_recipesBottomSheet_to_favoritesFragment"
-            app:destination="@id/favoritesFragment" />
     </dialog>
     <activity
         android:id="@+id/detailsActivity"
@@ -49,14 +44,10 @@
             app:argType="integer" />
     </activity>
     <fragment
-        android:id="@+id/overviewFragment"
-        android:name="com.example.whattoeat.ui.fragments.OverviewFragment"
-        android:label="OverviewFragment" />
-    <fragment
         android:id="@+id/favoritesFragment"
         android:name="com.example.whattoeat.ui.fragments.FavoritesFragment"
-        android:label="fragment_favorites"
-        tools:layout="@layout/fragment_favorites" >
+        android:label="@string/favorites_label"
+        tools:layout="@layout/fragment_favorites">
         <action
             android:id="@+id/action_favoritesFragment_to_recipesFragment"
             app:destination="@id/recipesFragment" />

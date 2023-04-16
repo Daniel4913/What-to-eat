@@ -1,5 +1,12 @@
 <resources>
     <style name="AppTheme" parent="Theme.Material3.Dark.NoActionBar">
+
+        // todo NIE DZIALA NIC
+<!--        <item name="android:windowActionModeOverlay">false</item>-->
+<!--        <item name="windowActionModeOverlay">false</item>-->
+<!--        <item name="windowActionBar">false</item>-->
+<!--        <item name="actionModeBackground">@color/design_default_color_error</item>-->
+//// ale na dole jak dodalem to dziala
         <item name="colorPrimary">@color/md_theme_dark_primary</item>
         <item name="colorOnPrimary">@color/md_theme_dark_onPrimary</item>
         <item name="colorPrimaryContainer">@color/md_theme_dark_primaryContainer</item>
@@ -26,7 +33,19 @@
         <item name="colorOnSurfaceInverse">@color/md_theme_dark_inverseOnSurface</item>
         <item name="colorSurfaceInverse">@color/md_theme_dark_inverseSurface</item>
         <item name="colorPrimaryInverse">@color/md_theme_dark_inversePrimary</item>
+
+
+        /////////
+        <item name="actionModeStyle">@style/Widget.ActionMode</item>
+        <item name="actionModeCloseDrawable">@drawable/ic_check</item>
+        <item name="actionModeBackground">@color/md_theme_light_surfaceTint</item>
+        <item name="windowActionModeOverlay">true</item>
     </style>
+
+<!--    <style name="Widget.ActionMode" parent="@style/Widget.AppCompat.ActionMode">-->
+<!--        <item name="android:background">@color/md_theme_light_surfaceTint</item>-->
+<!--        &lt;!&ndash;        <item name="titleTextStyle">@style/TitleTextStyle</item>&ndash;&gt;-->
+<!--    </style>-->
 
     <style name="CustomTabLayoutStyle" parent="Widget.Design.TabLayout">
         <item name="background">@color/design_default_color_primary_variant</item>

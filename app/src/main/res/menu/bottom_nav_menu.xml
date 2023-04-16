@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item
+        android:id="@+id/recipesFragment"
+        android:icon="@drawable/ic_house"
+        android:title="@string/recipes"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/favoritesFragment"
+        android:icon="@drawable/bookmarks"
+        android:title="@string/favorites"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/recipesBottomSheet"
+        android:icon="@drawable/ic_fridge"
+        android:title="@string/ingredients"
+        app:showAsAction="ifRoom" />
+
+
+</menu>

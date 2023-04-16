@@ -1,5 +1,15 @@
 <resources>
+
     <style name="AppTheme" parent="Theme.Material3.Light.NoActionBar">
+
+        // todo NIE DZIALA NIC
+        <!--        <item name="android:windowActionModeOverlay">false</item>-->
+        <!--&lt;!&ndash;        <item name="windowActionModeOverlay">false</item>&ndash;&gt;-->
+        <!--        <item name="android:windowActionBar">false</item>-->
+        <!--        <item name="android:actionModeBackground">@color/design_default_color_error</item>-->
+
+
+        // ale na dole jak dodalem to dziala
         <item name="colorPrimary">@color/md_theme_light_primary</item>
         <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
         <item name="colorPrimaryContainer">@color/md_theme_light_primaryContainer</item>
@@ -26,14 +36,33 @@
         <item name="colorOnSurfaceInverse">@color/md_theme_light_inverseOnSurface</item>
         <item name="colorSurfaceInverse">@color/md_theme_light_inverseSurface</item>
         <item name="colorPrimaryInverse">@color/md_theme_light_inversePrimary</item>
+
+/////////
+        <item name="actionModeStyle">@style/Widget.ActionMode</item>
+        <item name="actionModeCloseDrawable">@drawable/ic_check</item>
+        <item name="actionModeBackground">@color/md_theme_light_surfaceTint</item>
+        <item name="windowActionModeOverlay">true</item>
     </style>
+
+    <style name="Widget.ActionMode" parent="@style/Widget.AppCompat.ActionMode">
+        <item name="android:background">@color/md_theme_light_surfaceTint</item>
+
+        <!--        <item name="titleTextStyle">@style/TitleTextStyle</item>-->
+    </style>
+
+<!--    <style name="Widget.ActionMode" parent="Widget.AppCompat.ActionMode">-->
+<!--&lt;!&ndash;        <item name="actionModeStyle">@style/Widget.ActionMode</item>&ndash;&gt;-->
+
+<!--        <item name="android:background">@color/md_theme_dark_error</item>-->
+<!--        <item name="titleTextStyle">@color/md_theme_dark_error</item>-->
+<!--    </style>-->
 
     <style name="CustomTabLayoutStyle" parent="Widget.Design.TabLayout">
         <item name="background">@color/design_default_color_primary_variant</item>
         <item name="tabIndicatorColor">@color/design_default_color_secondary_variant</item>
         <item name="tabIndicatorHeight">2dp</item>
         <item name="tabSelectedTextColor">@color/design_default_color_secondary_variant</item>
-<!--        <item name="tabIndicatorFullWidth">false</item>-->
+        <!--        <item name="tabIndicatorFullWidth">false</item>-->
         <item name="tabIndicatorGravity">stretch</item>
 
     </style>

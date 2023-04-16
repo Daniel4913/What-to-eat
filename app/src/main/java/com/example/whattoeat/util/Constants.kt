@@ -22,8 +22,8 @@ object Constants {
 
     // Bottom sheet and preferences
     const val DEFAULT_RANKING = "1"
-    const val DEFAULT_INGREDIENTS = "egg,onion,tuna"
-    const val DEFAULT_RECIPES_NUMBER = "50"
+    const val DEFAULT_INGREDIENTS = "onion,bread"
+    const val DEFAULT_RECIPES_NUMBER = "100"
 
 
     const val PREFERENCES_NAME = "ingredients_preferences"
