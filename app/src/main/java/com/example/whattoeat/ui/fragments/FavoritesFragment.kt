@@ -68,6 +68,7 @@ class FavoritesFragment : Fragment() {
                 if (favoriteEntities.isEmpty()) {
                     binding.noDataImageView.visibility = View.VISIBLE
                     binding.noDataTextView.visibility = View.VISIBLE
+                    mAdapter.setData(favoriteEntities)
                 } else {
                     binding.noDataImageView.visibility = View.INVISIBLE
                     binding.noDataTextView.visibility = View.INVISIBLE
