@@ -8,7 +8,6 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.navArgs
 import com.example.whattoeat.R
@@ -137,7 +136,7 @@ class DetailsActivity : AppCompatActivity() {
     }
 
     private fun removeFromFavorites(item: MenuItem) {
-        mainViewModel.readDetailedRecipe.observeOnce(this) {
+        mainViewModel.readCachedRecipe.observeOnce(this) {
             val favoriteEntity =
                 FavoriteEntity(savedRecipeId, it.detailedRecipe)
             mainViewModel.deleteFavorite(favoriteEntity)
@@ -150,7 +149,7 @@ class DetailsActivity : AppCompatActivity() {
     }
 
     private fun saveToFavorites(item: MenuItem) {
-        mainViewModel.readDetailedRecipe.observeOnce(this) {
+        mainViewModel.readCachedRecipe.observeOnce(this) {
             val favoriteEntity =
                 FavoriteEntity(it.detailedRecipe.id, it.detailedRecipe)
             mainViewModel.insertFavorite(favoriteEntity)

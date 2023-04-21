@@ -42,6 +42,10 @@
         <argument
             android:name="recipeId"
             app:argType="integer" />
+        <argument
+            android:name="loadFavorite"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </activity>
     <fragment
         android:id="@+id/favoritesFragment"

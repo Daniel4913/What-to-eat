@@ -1,6 +1,7 @@
 package com.example.whattoeat.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
@@ -109,9 +110,11 @@ class RecipesFragment : Fragment() {
 
     private fun readDatabase() {
         lifecycleScope.launch {
-            mainViewModel.readRecipes.observeOnce(viewLifecycleOwner) { database ->
+            mainViewModel.readCachedRecipes.observeOnce(viewLifecycleOwner) { database ->
+                Log.d("RecipesFragment","readDatabase called")
                 if (database.isNotEmpty() && !args.backFromBottomSheet) {
                     mAdapter.setData(database[0].recipesByIngredients)
+                Log.d("RecipesFragment","readDatabase called")
                 } else {
                     requestApiData()
                 }
@@ -142,7 +145,7 @@ class RecipesFragment : Fragment() {
 
     private fun readDataFromCache() {
         lifecycleScope.launch {
-            mainViewModel.readRecipes.observe(viewLifecycleOwner) { database ->
+            mainViewModel.readCachedRecipes.observe(viewLifecycleOwner) { database ->
                 if (database.isNotEmpty()) {
                     mAdapter.setData(database[0].recipesByIngredients)
                 }

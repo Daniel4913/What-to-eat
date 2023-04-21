@@ -25,18 +25,24 @@ class MainViewModel @Inject constructor(
     application: Application
 ) : AndroidViewModel(application) {
 
+
     /** ROOM DB */
 
-    val readRecipes: LiveData<List<RecipesEntity>> = repository.local.readRecipes().asLiveData()
+    val readCachedRecipes: LiveData<List<RecipesEntity>> = repository.local.readRecipes().asLiveData()
 
-    val readDetailedRecipe: LiveData<DetailedRecipeEntity> =
+    val readCachedRecipe: LiveData<DetailedRecipeEntity> =
         repository.local.readDetailedRecipe().asLiveData()
+
+    val readDetailedRecipes: LiveData<List<DetailedRecipeEntity>> =
+        repository.local.readDetailedRecipes().asLiveData()
 
     val readFavorites: LiveData<List<FavoriteEntity>> =
         repository.local.readFavorites().asLiveData()
 
-//    val readFavorite: LiveData<FavoriteEntity> =
-//        repository.local.readFavorites().asLiveData()
+    fun readFavorite(id: Int): LiveData<FavoriteEntity> {
+        return repository.local.readFavorite(id).asLiveData()
+
+    }
 
     private fun insertRecipes(recipesEntity: RecipesEntity) =
         viewModelScope.launch(Dispatchers.IO) {

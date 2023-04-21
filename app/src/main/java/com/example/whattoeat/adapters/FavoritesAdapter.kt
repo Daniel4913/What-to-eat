@@ -5,12 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.whattoeat.data.database.entities.DetailedRecipeEntity
 import com.example.whattoeat.data.database.entities.FavoriteEntity
 import com.example.whattoeat.databinding.FavoritesItemBinding
 import com.example.whattoeat.model.DetailedRecipe
 import com.example.whattoeat.util.RecipesDiffUtil
 
-class FavoritesAdapter(private val onItemClicked: (DetailedRecipe) -> Unit) :
+class FavoritesAdapter(private val onItemClicked: (Int) -> Unit) :
     RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHolder>() {
 
     private var favoritesList = emptyList<FavoriteEntity>()
@@ -32,8 +33,9 @@ class FavoritesAdapter(private val onItemClicked: (DetailedRecipe) -> Unit) :
         holder.binding.apply {
 
             favoriteItemCardView.setOnClickListener {
-                onItemClicked(favoritesList[position].detailedRecipe)
+                onItemClicked(favoritesList[position].detailedRecipe.id)
             }
+
             favoriteRecipeImageView.load(favoritesList[position].detailedRecipe.image)
             favoriteTitleTextView.text = favoritesList[position].detailedRecipe.title
             favoriteCookingTimeChip.text =

@@ -8,9 +8,10 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.whattoeat.R
 import com.example.whattoeat.adapters.NutritionsAdapter
+import com.example.whattoeat.data.database.entities.FavoriteEntity
 import com.example.whattoeat.databinding.FragmentNutritionBinding
+import com.example.whattoeat.model.DetailedRecipe
 import com.example.whattoeat.util.observeOnce
 import com.example.whattoeat.viewmodels.MainViewModel
 import kotlinx.coroutines.launch
@@ -37,25 +38,40 @@ class NutritionFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentNutritionBinding.inflate(inflater, container, false)
         setupRecyclerView()
+        val args = requireArguments()
+        val recipeId = args.getBundle("recipeBundle")?.getInt("recipeId")!!
+        val loadFavorite = args.getBundle("recipeBundle")?.getBoolean("loadFavorite")
 
-        lifecycleScope.launch {
-            mainViewModel.readDetailedRecipe.observeOnce(viewLifecycleOwner) { database ->
-                val nutrition = database.detailedRecipe.nutrition
-                val nutrients = database.detailedRecipe.nutrition.nutrients
-                val caloricBreakdown = database.detailedRecipe.nutrition.caloricBreakdown
-                val property = database.detailedRecipe.nutrition.properties
-
-                binding.recipe = database.detailedRecipe
-                binding.nutrients = nutrients
-                binding.caloricBreakdown = caloricBreakdown
-                binding.property = property
-                binding.nutrition = nutrition
-
-                mAdapter.setData(nutrients)
+        if(loadFavorite!!){
+            lifecycleScope.launch {
+                mainViewModel.readFavorite(recipeId).observe(viewLifecycleOwner) { favoriteEntity ->
+                    setNutrientsData(favoriteEntity.detailedRecipe)
+                }
+            }
+        } else{
+            lifecycleScope.launch {
+                mainViewModel.readCachedRecipe.observeOnce(viewLifecycleOwner) { detailedRecipeEntity ->
+                    setNutrientsData(detailedRecipeEntity.detailedRecipe)
+                }
             }
         }
 
         return binding.root
+    }
+
+    private fun setNutrientsData(detailedRecipe: DetailedRecipe) {
+        val nutrition = detailedRecipe.nutrition
+        val nutrients = detailedRecipe.nutrition.nutrients
+        val caloricBreakdown = detailedRecipe.nutrition.caloricBreakdown
+        val property = detailedRecipe.nutrition.properties
+
+        binding.recipe = detailedRecipe
+        binding.nutrients = nutrients
+        binding.caloricBreakdown = caloricBreakdown
+        binding.property = property
+        binding.nutrition = nutrition
+
+        mAdapter.setData(nutrients)
     }
 
     private fun setupRecyclerView() {

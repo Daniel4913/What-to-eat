@@ -7,19 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import coil.load
 import com.example.whattoeat.databinding.FragmentOverviewBinding
-import com.example.whattoeat.databinding.RecipesItemBinding
 import com.example.whattoeat.util.Constants
 import com.example.whattoeat.util.NetworkListener
 import com.example.whattoeat.util.NetworkResult
 import com.example.whattoeat.util.observeOnce
 import com.example.whattoeat.viewmodels.MainViewModel
 import com.example.whattoeat.viewmodels.RecipesViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.properties.Delegates
 
@@ -33,7 +29,6 @@ class OverviewFragment : Fragment() {
 
     private var _binding: FragmentOverviewBinding? = null
     private val binding get() = _binding!!
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +58,14 @@ class OverviewFragment : Fragment() {
                     recipesViewModel.showNetworkStatus()
                     val args = arguments
                     resipiAjdi = args!!.getBundle("recipeBundle")?.getInt("recipeId")!!
-                    readDatabase()
+                    val loadFavorites = args!!.getBundle("recipeBundle")?.getBoolean("loadFavorite")
+                    Log.d("OverviewFrag", "args: $args")
+                    if (loadFavorites!!) {
+                        Log.d("OverviewFrag", "loadFavorites: $loadFavorites")
+                        readFavorites()
+                    } else {
+                        readDatabase()
+                    }
                 }
         }
 
@@ -71,17 +73,29 @@ class OverviewFragment : Fragment() {
         return binding.root
     }
 
+    private fun readFavorites() {
+        lifecycleScope.launch {
+            mainViewModel.readFavorites.observe(viewLifecycleOwner) { favoriteRecipes ->
+                // zastapic to ta hashtable? hashmap
+                favoriteRecipes?.forEach {
+                    if (it.id == resipiAjdi) {
+                        binding.recipeBinding = it.detailedRecipe
+                    }
+                }
+            }
+        }
+    }
+
     private fun readDatabase() {
         lifecycleScope.launch {
-            mainViewModel.readDetailedRecipe.observeOnce(viewLifecycleOwner){ database ->
-                if(database != null && database.detailedRecipe.id  == resipiAjdi){
+            mainViewModel.readCachedRecipe.observeOnce(viewLifecycleOwner) { database ->
+                if (database != null && database.detailedRecipe.id == resipiAjdi) {
                     binding.recipeBinding = database.detailedRecipe
                 } else {
                     requestApiData()
                 }
             }
         }
-
     }
 
     private fun requestApiData() {

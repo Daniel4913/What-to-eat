@@ -14,8 +14,8 @@ class NutritionFragmentBinding {
 
         @BindingAdapter("getNutrient")
         @JvmStatic
-        fun getNutrient(textView: TextView, nutrientX: List<NutrientX>) {
-            nutrientX.forEach { nutrientItem ->
+        fun getNutrient(textView: TextView, nutrientX: List<NutrientX>?) {
+            nutrientX?.forEach { nutrientItem ->
                 when (nutrientItem.name) {
                     "Calories" -> {
                         if (textView.id == R.id.tv_calories) {
@@ -62,8 +62,8 @@ class NutritionFragmentBinding {
 
         @BindingAdapter("getProperty")
         @JvmStatic
-        fun getProperty(textView: TextView, properties: List<Property>) {
-            properties.forEach { property ->
+        fun getProperty(textView: TextView, properties: List<Property>?) {
+            properties?.forEach { property ->
                 when (property.name) {
                     "Glycemic Index" -> {
                         if (textView.id == R.id.tv_glycemicIndex) {
@@ -99,8 +99,8 @@ class NutritionFragmentBinding {
 
         @BindingAdapter("setNutriScore")
         @JvmStatic
-        fun setNutriScore(imageView: ImageView, properties: List<Property>) {
-            properties.forEach {
+        fun setNutriScore(imageView: ImageView, properties: List<Property>?) {
+            properties?.forEach {
                 Log.d("changeNutriScore", "${it.name} ${it.amount}")
                 if (it.name == "Nutrition Score") {
                     when (it.amount) {
@@ -127,7 +127,7 @@ class NutritionFragmentBinding {
 
         @BindingAdapter("getServings")
         @JvmStatic
-        fun getServings(textView: TextView, servings: Int) {
+        fun getServings(textView: TextView, servings: Int?) {
             textView.text = textView.resources.getString(
                 R.string.servings,
                 servings

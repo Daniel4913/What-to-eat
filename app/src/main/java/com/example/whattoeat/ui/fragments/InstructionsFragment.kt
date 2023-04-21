@@ -1,19 +1,13 @@
 package com.example.whattoeat.ui.fragments
 
-import android.opengl.Visibility
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebViewClient
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.whattoeat.R
 import com.example.whattoeat.adapters.InstructionsAdapter
 import com.example.whattoeat.databinding.FragmentInstructionsBinding
 import com.example.whattoeat.viewmodels.MainViewModel
@@ -26,7 +20,12 @@ class InstructionsFragment : Fragment() {
 
     private var _binding: FragmentInstructionsBinding? = null
     private val binding get() = _binding!!
-    private val mAdapter: InstructionsAdapter by lazy { InstructionsAdapter(requireContext(),requireActivity()) }
+    private val mAdapter: InstructionsAdapter by lazy {
+        InstructionsAdapter(
+            requireContext(),
+            requireActivity()
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,18 +39,38 @@ class InstructionsFragment : Fragment() {
     ): View? {
         _binding = FragmentInstructionsBinding.inflate(inflater, container, false)
         setupRecyclerView()
-        lifecycleScope.launch {
+        val args = requireArguments()
+        val recipeId = args.getBundle("recipeBundle")?.getInt("recipeId")!!
+        val loadFavorite = args.getBundle("recipeBundle")?.getBoolean("loadFavorite")
 
-            mainViewModel.readDetailedRecipe.observe(viewLifecycleOwner) { database ->
+        if (loadFavorite!!) {
+            lifecycleScope.launch {
+                mainViewModel.readFavorite(recipeId).observe(viewLifecycleOwner) { favoriteEntity ->
+                    if (favoriteEntity.detailedRecipe.analyzedInstructions.isEmpty()) {
+                        binding.noInstructionsImageView.visibility = View.VISIBLE
+                        binding.noInstructionsTextView.visibility = View.VISIBLE
+                    } else {
+                        binding.noInstructionsImageView.visibility = View.INVISIBLE
+                        binding.noInstructionsTextView.visibility = View.INVISIBLE
+                        favoriteEntity.detailedRecipe.analyzedInstructions.first().let {
+                            mAdapter.setInstructions(it.steps)
+                        }
+                    }
+                }
+            }
+        } else {
+            lifecycleScope.launch {
+                mainViewModel.readCachedRecipe.observe(viewLifecycleOwner) { database ->
 
-                if (database.detailedRecipe.analyzedInstructions.isEmpty()) {
-                    binding.noInstructionsImageView.visibility = View.VISIBLE
-                    binding.noInstructionsTextView.visibility = View.VISIBLE
-                } else {
-                    binding.noInstructionsImageView.visibility = View.INVISIBLE
-                    binding.noInstructionsTextView.visibility = View.INVISIBLE
-                    database.detailedRecipe.analyzedInstructions.first().let {
-                        mAdapter.setInstructions(it.steps)
+                    if (database.detailedRecipe.analyzedInstructions.isEmpty()) {
+                        binding.noInstructionsImageView.visibility = View.VISIBLE
+                        binding.noInstructionsTextView.visibility = View.VISIBLE
+                    } else {
+                        binding.noInstructionsImageView.visibility = View.INVISIBLE
+                        binding.noInstructionsTextView.visibility = View.INVISIBLE
+                        database.detailedRecipe.analyzedInstructions.first().let {
+                            mAdapter.setInstructions(it.steps)
+                        }
                     }
                 }
             }

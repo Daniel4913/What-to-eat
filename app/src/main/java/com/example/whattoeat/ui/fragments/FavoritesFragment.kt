@@ -37,9 +37,9 @@ class FavoritesFragment : Fragment() {
     ): View? {
         _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
 
-        mAdapter = FavoritesAdapter { detailedRecipe ->
+        mAdapter = FavoritesAdapter { recipeId ->
             val action =
-                FavoritesFragmentDirections.actionFavoritesFragmentToDetailsActivity(detailedRecipe.id)
+                FavoritesFragmentDirections.actionFavoritesFragmentToDetailsActivity(recipeId,true)
             findNavController().navigate(action)
         }
 
@@ -75,6 +75,7 @@ class FavoritesFragment : Fragment() {
                     mAdapter.setData(favoriteEntities)
                 }
             }
+
         }
 
         return binding.root

@@ -26,16 +26,23 @@ interface RecipesDao {
     @Query("SELECT * FROM recipes_table ORDER BY id ASC")
     fun readRecipes(): Flow<List<RecipesEntity>>
 
-
     @Query("SELECT * FROM detailed_recipes_table ORDER BY id ASC")
     fun readDetailedRecipe(): Flow<DetailedRecipeEntity>
 
+    @Query("SELECT * FROM detailed_recipes_table ORDER BY id ASC")
+    fun readDetailedRecipes(): Flow<List<DetailedRecipeEntity>>
+
     @Query("SELECT * from favorite_recipes_table ORDER BY id ASC")
     fun readFavorites(): Flow<List<FavoriteEntity>>
+
+    @Query("SELECT * from favorite_recipes_table WHERE id= :id")
+    fun readFavorite(id: Int): Flow<FavoriteEntity>
 
     @Delete
     suspend fun deleteFavorite(favoriteEntity: FavoriteEntity)
 
     @Query("DELETE from favorite_recipes_table")
     suspend fun deleteAllFavorites()
+
+
 }

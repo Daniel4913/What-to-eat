@@ -84,7 +84,7 @@ class InstructionsAdapter(
                 applySelection(holder, stepsList[position].number)
                 true
             } else {
-                multiSelection = false
+                applySelection(holder, stepsList[position].number)
                 true
             }
         }
@@ -125,6 +125,7 @@ class InstructionsAdapter(
     private fun applyActionModeTitle(){
         when(selectedSteps.size){
             0 ->{
+                multiSelection = false
                 mActionMode.finish()
             }
             1-> {
