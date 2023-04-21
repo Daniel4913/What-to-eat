@@ -14,6 +14,7 @@ import com.example.whattoeat.databinding.FragmentNutritionBinding
 import com.example.whattoeat.model.DetailedRecipe
 import com.example.whattoeat.util.observeOnce
 import com.example.whattoeat.viewmodels.MainViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
@@ -42,17 +43,18 @@ class NutritionFragment : Fragment() {
         val recipeId = args.getBundle("recipeBundle")?.getInt("recipeId")!!
         val loadFavorite = args.getBundle("recipeBundle")?.getBoolean("loadFavorite")
 
-        if(loadFavorite!!){
+        if (loadFavorite!!) {
             lifecycleScope.launch {
                 mainViewModel.readFavorite(recipeId).observe(viewLifecycleOwner) { favoriteEntity ->
                     setNutrientsData(favoriteEntity.detailedRecipe)
                 }
             }
-        } else{
+        } else {
             lifecycleScope.launch {
-                mainViewModel.readCachedRecipe.observeOnce(viewLifecycleOwner) { detailedRecipeEntity ->
-                    setNutrientsData(detailedRecipeEntity.detailedRecipe)
-                }
+                mainViewModel.readDetailedRecipe(recipeId)
+                    .observe(viewLifecycleOwner) { detailedEntity ->
+                        setNutrientsData(detailedEntity.detailedRecipe)
+                    }
             }
         }
 

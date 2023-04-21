@@ -25,19 +25,22 @@ class MainViewModel @Inject constructor(
     application: Application
 ) : AndroidViewModel(application) {
 
+    lateinit var currentRecipe: DetailedRecipe
 
     /** ROOM DB */
 
-    val readCachedRecipes: LiveData<List<RecipesEntity>> = repository.local.readRecipes().asLiveData()
-
-    val readCachedRecipe: LiveData<DetailedRecipeEntity> =
-        repository.local.readDetailedRecipe().asLiveData()
+    val readCachedRecipesByIngredients: LiveData<List<RecipesEntity>> =
+        repository.local.readRecipes().asLiveData()
 
     val readDetailedRecipes: LiveData<List<DetailedRecipeEntity>> =
         repository.local.readDetailedRecipes().asLiveData()
 
     val readFavorites: LiveData<List<FavoriteEntity>> =
         repository.local.readFavorites().asLiveData()
+
+    fun readDetailedRecipe(id: Int): LiveData<DetailedRecipeEntity>{
+        return repository.local.readDetailedRecipe(id).asLiveData()
+    }
 
     fun readFavorite(id: Int): LiveData<FavoriteEntity> {
         return repository.local.readFavorite(id).asLiveData()
@@ -72,34 +75,38 @@ class MainViewModel @Inject constructor(
 
     /** RETROFIT */
     var recipesResponse: MutableLiveData<NetworkResult<RecipesByIngredients>> = MutableLiveData()
-    var detailedRecipeResponse: MutableLiveData<NetworkResult<DetailedRecipe>> = MutableLiveData()
+    var detailedRecipesResponse: MutableLiveData<NetworkResult<List<DetailedRecipe>>> =
+        MutableLiveData()
 
 
     fun getRecipesByIngredients(queries: Map<String, String>) = viewModelScope.launch {
         getRecipesByIngredientsSafeCall(queries)
     }
 
-    fun getDetailedRecipe(query: String, queries: Map<String, String>) = viewModelScope.launch {
-        getDetailedRecipeSafeCall(query, queries)
-    }
+    fun getDetailedRecipes(queries: Map<String, String>) =
+        viewModelScope.launch {
+            getDetailedRecipesSafeCall(queries)
+        }
 
-    private suspend fun getDetailedRecipeSafeCall(query: String, queries: Map<String, String>) {
-        detailedRecipeResponse.value = NetworkResult.Loading()
+    private suspend fun getDetailedRecipesSafeCall(
+        queries: Map<String, String>
+    ) {
+        detailedRecipesResponse.value = NetworkResult.Loading()
         if (checkInternetConnection()) {
             try {
-                val response = repository.remote.getDetailedRecipe(query, queries)
-                detailedRecipeResponse.value = handleDetailedResponse(response)
-
-                val recipe = detailedRecipeResponse.value!!.data
-                if (recipe != null) {
-                    offlineCacheDetailedRecipe(recipe)
+                val response = repository.remote.getDetailedRecipes(queries)
+                detailedRecipesResponse.value = handleDetailedResponse(response)
+                val recipes = detailedRecipesResponse.value!!.data
+                Log.d("getDetailedRecipesSafeCall", "$recipes")
+                if (recipes != null) {
+                    offlineCacheDetailedRecipe(recipes)
                 }
             } catch (e: Exception) {
-                detailedRecipeResponse.value =
+                detailedRecipesResponse.value =
                     NetworkResult.Error("Error: $e")
             }
         } else {
-            detailedRecipeResponse.value = NetworkResult.Error("Probable no internet connection")
+            detailedRecipesResponse.value = NetworkResult.Error("Probable no internet connection")
         }
     }
 
@@ -113,7 +120,7 @@ class MainViewModel @Inject constructor(
                 val recipes = recipesResponse.value!!.data
                 if (recipes != null) {
                     offlineCacheRecipes(recipes)
-                    Log.d("safecall", "offlineCacheRecipes called")
+
                 }
             } catch (e: Exception) {
                 recipesResponse.value =
@@ -130,9 +137,11 @@ class MainViewModel @Inject constructor(
         insertRecipes(recipesEntity)
     }
 
-    private fun offlineCacheDetailedRecipe(recipe: DetailedRecipe) {
-        val detailedRecipeEntity = DetailedRecipeEntity(recipe)
-        insertDetailedRecipe(detailedRecipeEntity)
+    private fun offlineCacheDetailedRecipe(recipes: List<DetailedRecipe>) {
+        recipes.forEach { detailedRecipe ->
+            val detailedRecipeEntity = DetailedRecipeEntity(detailedRecipe.id, detailedRecipe)
+            insertDetailedRecipe(detailedRecipeEntity)
+        }
 
     }
 
@@ -157,7 +166,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    private fun handleDetailedResponse(response: Response<DetailedRecipe>): NetworkResult<DetailedRecipe>? {
+    private fun handleDetailedResponse(response: Response<List<DetailedRecipe>>): NetworkResult<List<DetailedRecipe>>? {
         when {
             response.message().toString().contains("timeout") -> {
                 return NetworkResult.Error("Timeout")

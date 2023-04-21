@@ -17,6 +17,7 @@ import com.example.whattoeat.R
 import com.example.whattoeat.viewmodels.MainViewModel
 import com.example.whattoeat.adapters.RecipesAdapter
 import com.example.whattoeat.databinding.FragmentRecipesBinding
+import com.example.whattoeat.model.RecipesByIngredients
 import com.example.whattoeat.util.NetworkListener
 import com.example.whattoeat.util.NetworkResult
 import com.example.whattoeat.util.observeOnce
@@ -110,11 +111,11 @@ class RecipesFragment : Fragment() {
 
     private fun readDatabase() {
         lifecycleScope.launch {
-            mainViewModel.readCachedRecipes.observeOnce(viewLifecycleOwner) { database ->
-                Log.d("RecipesFragment","readDatabase called")
+            mainViewModel.readCachedRecipesByIngredients.observeOnce(viewLifecycleOwner) { database ->
+                Log.d("RecipesFragment", "readDatabase called")
                 if (database.isNotEmpty() && !args.backFromBottomSheet) {
                     mAdapter.setData(database[0].recipesByIngredients)
-                Log.d("RecipesFragment","readDatabase called")
+                    Log.d("RecipesFragment", "readDatabase called")
                 } else {
                     requestApiData()
                 }
@@ -129,6 +130,8 @@ class RecipesFragment : Fragment() {
                 is NetworkResult.Success -> {
                     response.data?.let { mAdapter.setData(it) }
 //                    recipesViewModel.saveIngredients() // TODO ZAPISUJE WPISANE INGREDIENTS W VIEWMODELU. DOBRZE???????????
+                    val recipes: RecipesByIngredients? = response.data
+                    requestDetailedRecipesApiData(recipesViewModel.applyDetailedQueries(recipes))
                 }
                 is NetworkResult.Error -> {
                     readDataFromCache()
@@ -140,12 +143,19 @@ class RecipesFragment : Fragment() {
                 }
                 is NetworkResult.Loading -> {}
             }
+
         }
+
+    }
+
+    private fun requestDetailedRecipesApiData(queries: Map<String, String>) {
+        lifecycleScope.launch { }
+        mainViewModel.getDetailedRecipes(queries)
     }
 
     private fun readDataFromCache() {
         lifecycleScope.launch {
-            mainViewModel.readCachedRecipes.observe(viewLifecycleOwner) { database ->
+            mainViewModel.readCachedRecipesByIngredients.observe(viewLifecycleOwner) { database ->
                 if (database.isNotEmpty()) {
                     mAdapter.setData(database[0].recipesByIngredients)
                 }

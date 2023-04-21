@@ -7,8 +7,9 @@ import com.example.whattoeat.util.Constants.DETAILED_RECIPES_TABLE
 
 @Entity(tableName = DETAILED_RECIPES_TABLE)
 class DetailedRecipeEntity(
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0,
     val detailedRecipe: DetailedRecipe
 ) {
-    @PrimaryKey(autoGenerate = false)
-    var id: Int = 0
+
 }

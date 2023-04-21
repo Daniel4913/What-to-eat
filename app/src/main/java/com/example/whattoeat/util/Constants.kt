@@ -20,10 +20,10 @@ object Constants {
     const val QUERY_RANKING = "ranking"
     const val QUERY_API_KEY = "apiKey"
 
-    // Bottom sheet and preferences
+    // Bottom sheet and preferences values
     const val DEFAULT_RANKING = "1"
     const val DEFAULT_INGREDIENTS = "onion,bread"
-    const val DEFAULT_RECIPES_NUMBER = "100"
+    const val DEFAULT_RECIPES_NUMBER = "10"
 
 
     const val PREFERENCES_NAME = "ingredients_preferences"

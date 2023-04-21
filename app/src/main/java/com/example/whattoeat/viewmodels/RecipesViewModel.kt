@@ -1,12 +1,14 @@
 package com.example.whattoeat.viewmodels
 
 import android.app.Application
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.whattoeat.data.DataStoreRepository
 import com.example.whattoeat.data.IngredientsPreferences
+import com.example.whattoeat.model.RecipesByIngredients
 import com.example.whattoeat.util.Constants.API_KEY
 import com.example.whattoeat.util.Constants.DEFAULT_INGREDIENTS
 import com.example.whattoeat.util.Constants.DEFAULT_RANKING
@@ -35,6 +37,7 @@ class RecipesViewModel @Inject constructor(
 
     val readIngredients = dataStoreRepository.readIngredients
     val readBackOnline = dataStoreRepository.readBackOnline.asLiveData()
+    var recipesIds = mutableListOf<String>()
 
     fun saveIngredients(selectedRanking: String, typedIngredients: String) =
         viewModelScope.launch(Dispatchers.IO) {
@@ -48,6 +51,7 @@ class RecipesViewModel @Inject constructor(
             dataStoreRepository.saveBackOnline(backOnline)
         }
 
+
     fun applyQueries(): HashMap<String, String> {
         val queries: HashMap<String, String> = HashMap()
         viewModelScope.launch {
@@ -58,11 +62,28 @@ class RecipesViewModel @Inject constructor(
         }
         queries[QUERY_NUMBER] = DEFAULT_RECIPES_NUMBER
 //        queries[QUERY_API_KEY] = API_KEY
-        queries.put(QUERY_API_KEY,API_KEY)  // to to samo co []
+        queries.put(QUERY_API_KEY, API_KEY)  // to to samo co []
         queries[QUERY_RANKING] = ranking
         queries[QUERY_INGREDIENTS] = typedIngredients
 
         return queries
+    }
+
+    fun applyDetailedQueries(recipes: RecipesByIngredients?): HashMap<String, String> {
+        val queries: HashMap<String, String> = HashMap()
+        getRecipesIds(recipes)
+
+        queries["ids"] = recipesIds.toString().removeSurrounding("[", "]")
+        queries[QUERY_NUMBER] = DEFAULT_RECIPES_NUMBER
+        queries[QUERY_API_KEY] = API_KEY
+        Log.d("applyDetailedQueries recipesVM", "$queries")
+        return queries
+    }
+
+    private fun getRecipesIds(recipes: RecipesByIngredients?) {
+        recipes?.forEach {
+            recipesIds.add(it.id.toString())
+        }
     }
 
     fun showNetworkStatus() {
@@ -84,4 +105,5 @@ class RecipesViewModel @Inject constructor(
             }
         }
     }
+
 }

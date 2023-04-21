@@ -60,18 +60,25 @@ class InstructionsFragment : Fragment() {
             }
         } else {
             lifecycleScope.launch {
-                mainViewModel.readCachedRecipe.observe(viewLifecycleOwner) { database ->
-
-                    if (database.detailedRecipe.analyzedInstructions.isEmpty()) {
-                        binding.noInstructionsImageView.visibility = View.VISIBLE
-                        binding.noInstructionsTextView.visibility = View.VISIBLE
-                    } else {
-                        binding.noInstructionsImageView.visibility = View.INVISIBLE
-                        binding.noInstructionsTextView.visibility = View.INVISIBLE
-                        database.detailedRecipe.analyzedInstructions.first().let {
-                            mAdapter.setInstructions(it.steps)
+                mainViewModel.readDetailedRecipes.observe(viewLifecycleOwner) { detailedRecipesEntity ->
+                    if (!detailedRecipesEntity.isNullOrEmpty()) {
+                        detailedRecipesEntity.forEach { detailedRecipesEntity ->
+                            if (detailedRecipesEntity.id == recipeId) {
+                                if (detailedRecipesEntity.detailedRecipe.analyzedInstructions.isEmpty()) {
+                                    binding.noInstructionsImageView.visibility = View.VISIBLE
+                                    binding.noInstructionsTextView.visibility = View.VISIBLE
+                                } else {
+                                    binding.noInstructionsImageView.visibility = View.INVISIBLE
+                                    binding.noInstructionsTextView.visibility = View.INVISIBLE
+                                    detailedRecipesEntity.detailedRecipe.analyzedInstructions.first()
+                                        .let {
+                                            mAdapter.setInstructions(it.steps)
+                                        }
+                                }
+                            }
                         }
                     }
+
                 }
             }
         }

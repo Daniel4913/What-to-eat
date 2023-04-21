@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.whattoeat.databinding.FragmentOverviewBinding
+import com.example.whattoeat.model.DetailedRecipe
 import com.example.whattoeat.util.Constants
 import com.example.whattoeat.util.NetworkListener
 import com.example.whattoeat.util.NetworkResult
@@ -59,7 +60,7 @@ class OverviewFragment : Fragment() {
                     val args = arguments
                     resipiAjdi = args!!.getBundle("recipeBundle")?.getInt("recipeId")!!
                     val loadFavorites = args!!.getBundle("recipeBundle")?.getBoolean("loadFavorite")
-                    Log.d("OverviewFrag", "args: $args")
+
                     if (loadFavorites!!) {
                         Log.d("OverviewFrag", "loadFavorites: $loadFavorites")
                         readFavorites()
@@ -88,9 +89,16 @@ class OverviewFragment : Fragment() {
 
     private fun readDatabase() {
         lifecycleScope.launch {
-            mainViewModel.readCachedRecipe.observeOnce(viewLifecycleOwner) { database ->
-                if (database != null && database.detailedRecipe.id == resipiAjdi) {
-                    binding.recipeBinding = database.detailedRecipe
+            mainViewModel.readDetailedRecipes.observeOnce(viewLifecycleOwner) { detailedRecipesEntity ->
+                // TODO teraz tutaj zrobic hashmape id z tabeli w db porownac do argumentu z nawigacji i zbindowac recipeBinding? bez
+                //  sensu no bo i tak najpierw robie forEach aby potem zrobic z tego mape xDD
+                if (!detailedRecipesEntity.isNullOrEmpty()) {
+                    detailedRecipesEntity.forEach {
+                        if (it.id == resipiAjdi) {
+                            binding.recipeBinding = it.detailedRecipe
+                            mainViewModel.currentRecipe =  it.detailedRecipe
+                        }
+                    }
                 } else {
                     requestApiData()
                 }
@@ -113,14 +121,14 @@ class OverviewFragment : Fragment() {
             return queries
         }
 
-        mainViewModel.getDetailedRecipe(applyQuery(), applyApiKey())
+//        mainViewModel.getDetailedRecipe(applyQuery(), applyApiKey())
 
-        mainViewModel.detailedRecipeResponse.observe(viewLifecycleOwner) { response ->
+        mainViewModel.detailedRecipesResponse.observe(viewLifecycleOwner) { response ->
 
             when (response) {
                 is NetworkResult.Success -> {
 //                    response.data?.let { binding.recipeBinding } //TODO dlaczego z tym let nie dziala??
-                    binding.recipeBinding = response.data
+//                    binding.recipeBinding = response.data
                 }
                 is NetworkResult.Error -> {
                     Toast.makeText(

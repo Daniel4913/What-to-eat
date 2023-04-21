@@ -5,7 +5,6 @@ import com.example.whattoeat.model.RecipesByIngredients
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
-import retrofit2.http.Query
 import retrofit2.http.QueryMap
 
 interface SpoonacularApi {
@@ -24,4 +23,9 @@ interface SpoonacularApi {
        @Path("recipeId") query: String,
        @QueryMap queries: Map<String,String>
     ): Response<DetailedRecipe>
+
+    @GET("/recipes/informationBulk?includeNutrition=true")
+    suspend fun getDetailedRecipes(
+        @QueryMap queries: Map<String,String>
+    ): Response<List<DetailedRecipe>>
 }

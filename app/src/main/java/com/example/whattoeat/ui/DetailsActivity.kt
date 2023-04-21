@@ -136,7 +136,7 @@ class DetailsActivity : AppCompatActivity() {
     }
 
     private fun removeFromFavorites(item: MenuItem) {
-        mainViewModel.readCachedRecipe.observeOnce(this) {
+        mainViewModel.readDetailedRecipe(args.recipeId).observeOnce(this) {
             val favoriteEntity =
                 FavoriteEntity(savedRecipeId, it.detailedRecipe)
             mainViewModel.deleteFavorite(favoriteEntity)
@@ -149,7 +149,7 @@ class DetailsActivity : AppCompatActivity() {
     }
 
     private fun saveToFavorites(item: MenuItem) {
-        mainViewModel.readCachedRecipe.observeOnce(this) {
+        mainViewModel.readDetailedRecipe(args.recipeId).observeOnce(this) {
             val favoriteEntity =
                 FavoriteEntity(it.detailedRecipe.id, it.detailedRecipe)
             mainViewModel.insertFavorite(favoriteEntity)

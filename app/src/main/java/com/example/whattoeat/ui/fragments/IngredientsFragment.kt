@@ -52,15 +52,21 @@ class IngredientsFragment : Fragment() {
             }
         } else {
             lifecycleScope.launch {
-                mainViewModel.readCachedRecipe.observeOnce(viewLifecycleOwner) { database ->
-                    database.detailedRecipe.extendedIngredients.let {
-                        ingredientsAdapter.setIngredients(
-                            it
-                        )
+                mainViewModel.readDetailedRecipes.observeOnce(viewLifecycleOwner) { detailedRecipesEntity ->
+                    if (!detailedRecipesEntity.isNullOrEmpty()) {
+                        detailedRecipesEntity.forEach {
+                            if (it.id == recipeId) {
+                                ingredientsAdapter.setIngredients(
+                                    it.detailedRecipe.extendedIngredients
+                                )
+                            }
+                        }
                     }
                 }
             }
         }
+
+
 
 
         return binding.root
