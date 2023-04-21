@@ -7,13 +7,14 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.whattoeat.data.DataStoreRepository
-import com.example.whattoeat.data.IngredientsPreferences
+import com.example.whattoeat.data.IngredientsAndRanking
 import com.example.whattoeat.model.RecipesByIngredients
 import com.example.whattoeat.util.Constants.API_KEY
 import com.example.whattoeat.util.Constants.DEFAULT_INGREDIENTS
 import com.example.whattoeat.util.Constants.DEFAULT_RANKING
 import com.example.whattoeat.util.Constants.DEFAULT_RECIPES_NUMBER
 import com.example.whattoeat.util.Constants.QUERY_API_KEY
+import com.example.whattoeat.util.Constants.QUERY_IDS
 import com.example.whattoeat.util.Constants.QUERY_INGREDIENTS
 import com.example.whattoeat.util.Constants.QUERY_NUMBER
 import com.example.whattoeat.util.Constants.QUERY_RANKING
@@ -29,24 +30,33 @@ class RecipesViewModel @Inject constructor(
 ) :
     AndroidViewModel(application) {
 
-    private var ranking = DEFAULT_RANKING
-    private var typedIngredients = DEFAULT_INGREDIENTS
+    private lateinit var ingredientsAndRanking: IngredientsAndRanking
 
     var networkStatus = false
     var backOnline = false
 
-    val readIngredients = dataStoreRepository.readIngredients
+    val readIngredientsAndRanking = dataStoreRepository.readIngredients
     val readBackOnline = dataStoreRepository.readBackOnline.asLiveData()
     var recipesIds = mutableListOf<String>()
 
-    fun saveIngredients(selectedRanking: String, typedIngredients: String) =
+    fun saveIngredients() =
         viewModelScope.launch(Dispatchers.IO) {
-            dataStoreRepository.saveIngredients(
-                selectedRanking, typedIngredients
-            )
+            if (this@RecipesViewModel::ingredientsAndRanking.isInitialized) {
+                dataStoreRepository.saveIngredients(
+                    ingredientsAndRanking.selectedRanking,
+                    ingredientsAndRanking.typedIngredients
+                )
+            }
         }
 
-    fun saveBackOnline(backOnline: Boolean) =
+    fun saveIngredientsTemp(
+        selectedRanking: String,
+        typedIngredients: String
+    ) {
+        ingredientsAndRanking = IngredientsAndRanking(selectedRanking, typedIngredients)
+    }
+
+    private fun saveBackOnline(backOnline: Boolean) =
         viewModelScope.launch(Dispatchers.IO) {
             dataStoreRepository.saveBackOnline(backOnline)
         }
@@ -54,17 +64,17 @@ class RecipesViewModel @Inject constructor(
 
     fun applyQueries(): HashMap<String, String> {
         val queries: HashMap<String, String> = HashMap()
-        viewModelScope.launch {
-            readIngredients.collect { value ->
-                ranking = value.selectedRanking
-                typedIngredients = value.typedIngredients
-            }
-        }
+
         queries[QUERY_NUMBER] = DEFAULT_RECIPES_NUMBER
-//        queries[QUERY_API_KEY] = API_KEY
-        queries.put(QUERY_API_KEY, API_KEY)  // to to samo co []
-        queries[QUERY_RANKING] = ranking
-        queries[QUERY_INGREDIENTS] = typedIngredients
+        queries[QUERY_API_KEY] = API_KEY
+
+        if (this@RecipesViewModel::ingredientsAndRanking.isInitialized) {
+            queries[QUERY_RANKING] = ingredientsAndRanking.selectedRanking
+            queries[QUERY_INGREDIENTS] = ingredientsAndRanking.typedIngredients
+        } else {
+            queries[QUERY_RANKING] = DEFAULT_RANKING
+            queries[QUERY_INGREDIENTS] = DEFAULT_INGREDIENTS
+        }
 
         return queries
     }
@@ -73,7 +83,7 @@ class RecipesViewModel @Inject constructor(
         val queries: HashMap<String, String> = HashMap()
         getRecipesIds(recipes)
 
-        queries["ids"] = recipesIds.toString().removeSurrounding("[", "]")
+        queries[QUERY_IDS] = recipesIds.toString().removeSurrounding("[", "]")
         queries[QUERY_NUMBER] = DEFAULT_RECIPES_NUMBER
         queries[QUERY_API_KEY] = API_KEY
         Log.d("applyDetailedQueries recipesVM", "$queries")

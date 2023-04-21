@@ -141,17 +141,8 @@ class InstructionsAdapter(
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
         mActionMode = mode!!
-//        mActionMode.customView.textAlignment = View.TEXT_ALIGNMENT_CENTER nullPointerException
-//        mActionMode.customView.visibility = View.INVISIBLE nullPointer
-//        mActionMode.customView = get/set customView required View! //
         mActionMode.subtitle = "Steps done"
 
-//        mode?.title = "${selectedSteps.size.plus(1)} / ${stepsList.size}"
-
-//        requireActivity.window.statusBarColor =
-//            ContextCompat.getColor(requireActivity, R.color.md_theme_light_surfaceTint)
-
-//        (requireActivity as? AppCompatActivity)?.supportActionBar?.title = "/ ${stepsList.size}"
         return true
     }
 
@@ -177,6 +168,4 @@ class InstructionsAdapter(
         selectedSteps.clear()
         mode?.finish()
     }
-
-
 }

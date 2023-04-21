@@ -9,12 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.whattoeat.adapters.NutritionsAdapter
-import com.example.whattoeat.data.database.entities.FavoriteEntity
 import com.example.whattoeat.databinding.FragmentNutritionBinding
 import com.example.whattoeat.model.DetailedRecipe
-import com.example.whattoeat.util.observeOnce
 import com.example.whattoeat.viewmodels.MainViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
@@ -51,7 +48,7 @@ class NutritionFragment : Fragment() {
             }
         } else {
             lifecycleScope.launch {
-                mainViewModel.readDetailedRecipe(recipeId)
+                mainViewModel.readCurrentRecipe(recipeId)
                     .observe(viewLifecycleOwner) { detailedEntity ->
                         setNutrientsData(detailedEntity.detailedRecipe)
                     }

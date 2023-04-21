@@ -52,22 +52,12 @@ class IngredientsFragment : Fragment() {
             }
         } else {
             lifecycleScope.launch {
-                mainViewModel.readDetailedRecipes.observeOnce(viewLifecycleOwner) { detailedRecipesEntity ->
-                    if (!detailedRecipesEntity.isNullOrEmpty()) {
-                        detailedRecipesEntity.forEach {
-                            if (it.id == recipeId) {
-                                ingredientsAdapter.setIngredients(
-                                    it.detailedRecipe.extendedIngredients
-                                )
-                            }
-                        }
+                mainViewModel.readCurrentRecipe(recipeId)
+                    .observe(viewLifecycleOwner) { detailedEntity ->
+                        ingredientsAdapter.setIngredients(detailedEntity.detailedRecipe.extendedIngredients)
                     }
-                }
             }
         }
-
-
-
 
         return binding.root
     }

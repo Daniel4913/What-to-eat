@@ -38,13 +38,12 @@ class MainViewModel @Inject constructor(
     val readFavorites: LiveData<List<FavoriteEntity>> =
         repository.local.readFavorites().asLiveData()
 
-    fun readDetailedRecipe(id: Int): LiveData<DetailedRecipeEntity>{
+    fun readCurrentRecipe(id: Int): LiveData<DetailedRecipeEntity>{
         return repository.local.readDetailedRecipe(id).asLiveData()
     }
 
     fun readFavorite(id: Int): LiveData<FavoriteEntity> {
         return repository.local.readFavorite(id).asLiveData()
-
     }
 
     private fun insertRecipes(recipesEntity: RecipesEntity) =
@@ -88,16 +87,13 @@ class MainViewModel @Inject constructor(
             getDetailedRecipesSafeCall(queries)
         }
 
-    private suspend fun getDetailedRecipesSafeCall(
-        queries: Map<String, String>
-    ) {
+    private suspend fun getDetailedRecipesSafeCall(queries: Map<String, String>) {
         detailedRecipesResponse.value = NetworkResult.Loading()
         if (checkInternetConnection()) {
             try {
                 val response = repository.remote.getDetailedRecipes(queries)
                 detailedRecipesResponse.value = handleDetailedResponse(response)
                 val recipes = detailedRecipesResponse.value!!.data
-                Log.d("getDetailedRecipesSafeCall", "$recipes")
                 if (recipes != null) {
                     offlineCacheDetailedRecipe(recipes)
                 }
@@ -125,7 +121,7 @@ class MainViewModel @Inject constructor(
             } catch (e: Exception) {
                 recipesResponse.value =
                     NetworkResult.Error("Recipes not found. Some kind of exception occurred")
-                Log.d("get SafeCall", "${e}")
+                Log.d("getRecipesByIngredientsSafeCall", "e: ${e}")
             }
         } else {
             recipesResponse.value = NetworkResult.Error(message = "No internet connection")
@@ -142,7 +138,6 @@ class MainViewModel @Inject constructor(
             val detailedRecipeEntity = DetailedRecipeEntity(detailedRecipe.id, detailedRecipe)
             insertDetailedRecipe(detailedRecipeEntity)
         }
-
     }
 
     private fun handleByIngredientsResponse(response: Response<RecipesByIngredients>): NetworkResult<RecipesByIngredients>? {

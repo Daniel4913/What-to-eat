@@ -1,25 +1,18 @@
 package com.example.whattoeat.ui.fragments
 
-import android.graphics.Rect
 import android.os.Bundle
 import android.text.InputType
-import android.util.Log
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.Toast
-import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
-import com.example.whattoeat.R
 import com.example.whattoeat.databinding.RecipesBottomSheetBinding
 import com.example.whattoeat.util.Constants.DEFAULT_INGREDIENTS
 import com.example.whattoeat.util.Constants.DEFAULT_RANKING
 import com.example.whattoeat.viewmodels.RecipesViewModel
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.textfield.TextInputEditText
@@ -48,12 +41,13 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
 
         setupEditText()
 
-        recipesViewModel.readIngredients.asLiveData().observe(viewLifecycleOwner) { value ->
-            ranking = value.selectedRanking
-            ingredients = value.typedIngredients
-            updateSwitch(value.selectedRanking, binding.rankingSwitch)
-            updateEditText(value.typedIngredients, binding.myIngredientsEditText)
-        }
+        recipesViewModel.readIngredientsAndRanking.asLiveData()
+            .observe(viewLifecycleOwner) { value ->
+                ranking = value.selectedRanking
+                ingredients = value.typedIngredients
+                updateSwitch(value.selectedRanking, binding.rankingSwitch)
+                updateEditText(value.typedIngredients, binding.myIngredientsEditText)
+            }
 
         binding.rankingSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
@@ -67,7 +61,7 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
 
         binding.searchBtn.setOnClickListener {
             ingredients = binding.myIngredientsEditText.text.toString()
-            recipesViewModel.saveIngredients(
+            recipesViewModel.saveIngredientsTemp(
                 ranking,
                 ingredients
             )
@@ -84,12 +78,11 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun updateSwitch(selectedRanking: String, rankingSwitch: SwitchMaterial) {
-        rankingSwitch.isChecked = selectedRanking == "1"
-//        if (selectedRanking == "1") {
-//            rankingSwitch.isChecked = true
-//        } else {
-//            rankingSwitch.isChecked = false
-//        }
+        if (selectedRanking == "1"){
+            rankingSwitch.isChecked = true
+        } else {
+            rankingSwitch.isChecked = false
+        }
     }
 
     private fun setupEditText() {

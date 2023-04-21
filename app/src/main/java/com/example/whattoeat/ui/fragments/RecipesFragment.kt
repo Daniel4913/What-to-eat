@@ -129,7 +129,7 @@ class RecipesFragment : Fragment() {
             when (response) {
                 is NetworkResult.Success -> {
                     response.data?.let { mAdapter.setData(it) }
-//                    recipesViewModel.saveIngredients() // TODO ZAPISUJE WPISANE INGREDIENTS W VIEWMODELU. DOBRZE???????????
+                    recipesViewModel.saveIngredients()
                     val recipes: RecipesByIngredients? = response.data
                     requestDetailedRecipesApiData(recipesViewModel.applyDetailedQueries(recipes))
                 }
@@ -143,9 +143,7 @@ class RecipesFragment : Fragment() {
                 }
                 is NetworkResult.Loading -> {}
             }
-
         }
-
     }
 
     private fun requestDetailedRecipesApiData(queries: Map<String, String>) {

@@ -48,7 +48,7 @@ class DataStoreRepository @Inject constructor(
         }
     }
 
-    val readIngredients: Flow<IngredientsPreferences> = dataStore.data
+    val readIngredients: Flow<IngredientsAndRanking> = dataStore.data
         .catch { exception ->
             if (exception is IOException) {
                 emit(emptyPreferences())
@@ -61,7 +61,7 @@ class DataStoreRepository @Inject constructor(
                 preferences[PreferencesKeys.selectedRanking] ?: DEFAULT_RANKING
             val typedIngredients =
                 preferences[PreferencesKeys.typedIngredients] ?: DEFAULT_INGREDIENTS
-            IngredientsPreferences(
+            IngredientsAndRanking(
                 selectedRanking,
                 typedIngredients
             )
@@ -81,7 +81,7 @@ class DataStoreRepository @Inject constructor(
         }
 }
 
-data class IngredientsPreferences(
+data class IngredientsAndRanking(
     val selectedRanking: String,
     val typedIngredients: String,
 )

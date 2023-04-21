@@ -28,10 +28,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DetailsActivity : AppCompatActivity() {
 
-    private val args: DetailsActivityArgs by navArgs()
+    private val args by navArgs<DetailsActivityArgs>()
 
     private val mainViewModel: MainViewModel by viewModels()
-    private lateinit var networkListener: NetworkListener
 
     private lateinit var binding: ActivityDetailsBinding
 
@@ -42,21 +41,11 @@ class DetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        WindowCompat.setDecorFitsSystemWindows(window, false) // kiedy to jest to toolbar jest przesuniety pod belke (czyli caly widok. z 'false' ignorowane sa navigation i appbar)
 
         binding = ActivityDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setSupportActionBar(binding.detailsToolbar)
-
-//        setSupport
-
-//        binding.detailsToolbar.setTitleTextColor(
-//            ContextCompat.getColor(
-//                this,
-//                R.color.md_theme_dark_error
-//            )
-//        )
 
         val fragments = ArrayList<Fragment>()
         fragments.add(OverviewFragment())
@@ -115,7 +104,6 @@ class DetailsActivity : AppCompatActivity() {
 
     private fun checkSavedRecipes(menuItem: MenuItem) {
         mainViewModel.readFavorites.observe(this) { favoritesEntity ->
-            recipeSaved
             try {
                 for (savedRecipe in favoritesEntity) {
                     if (savedRecipe.detailedRecipe.id == args.recipeId) {
@@ -136,11 +124,10 @@ class DetailsActivity : AppCompatActivity() {
     }
 
     private fun removeFromFavorites(item: MenuItem) {
-        mainViewModel.readDetailedRecipe(args.recipeId).observeOnce(this) {
+        mainViewModel.readCurrentRecipe(args.recipeId).observeOnce(this) {
             val favoriteEntity =
                 FavoriteEntity(savedRecipeId, it.detailedRecipe)
             mainViewModel.deleteFavorite(favoriteEntity)
-            Log.d("removeFromFav", "readDetailedRecipe.observeOnce called")
             changeMenuItem(item, R.color.white, R.drawable.bookmark_add)
             showSnackBar("Recipe removed from favorites")
             recipeSaved = false
@@ -149,7 +136,7 @@ class DetailsActivity : AppCompatActivity() {
     }
 
     private fun saveToFavorites(item: MenuItem) {
-        mainViewModel.readDetailedRecipe(args.recipeId).observeOnce(this) {
+        mainViewModel.readCurrentRecipe(args.recipeId).observeOnce(this) {
             val favoriteEntity =
                 FavoriteEntity(it.detailedRecipe.id, it.detailedRecipe)
             mainViewModel.insertFavorite(favoriteEntity)

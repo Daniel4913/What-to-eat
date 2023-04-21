@@ -23,7 +23,6 @@ class FavoritesFragment : Fragment() {
     private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var menuItem: MenuItem
     private lateinit var mAdapter: FavoritesAdapter
     private lateinit var mainViewModel: MainViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,9 +50,7 @@ class FavoritesFragment : Fragment() {
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                if (menuItem.itemId == android.R.id.home) {
-//            finish()
-                } else if (menuItem.itemId == R.id.deleteAll_favorites_menu) {
+                if (menuItem.itemId == R.id.deleteAll_favorites_menu) {
                     showSnackBar("Favorites deleted")
                     mainViewModel.deleteAllFavorites()
                 }
@@ -75,7 +72,6 @@ class FavoritesFragment : Fragment() {
                     mAdapter.setData(favoriteEntities)
                 }
             }
-
         }
 
         return binding.root
@@ -86,7 +82,7 @@ class FavoritesFragment : Fragment() {
             binding.root,
             message,
             Snackbar.LENGTH_LONG
-        ).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setAction("Undo") {}
+        ).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setAction("Ok") {}
             .show()
     }
 

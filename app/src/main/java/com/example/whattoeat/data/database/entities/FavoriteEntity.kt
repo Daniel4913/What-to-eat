@@ -7,7 +7,7 @@ import com.example.whattoeat.util.Constants.FAVORITE_RECIPES_TABLE
 
 @Entity(tableName = FAVORITE_RECIPES_TABLE)
 class FavoriteEntity(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false)
     var id: Int = 0,
     var detailedRecipe: DetailedRecipe
 )

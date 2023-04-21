@@ -3,10 +3,10 @@ package com.example.whattoeat.util
 
 object Constants {
 
+    // Spoonacular
     const val BASE_URL = "https://api.spoonacular.com"
     const val BASE_IMAGE_URL = "https://spoonacular.com/cdn/ingredients_100x100/"
-//    const val API_KEY = "b9df31a176c74fa9a0324df9bfd3dc72" danielo49
-    const val API_KEY = "1b7968aa5d314a21b6b3c24d1f563dde" // sosnowskidan13
+    const val API_KEY = ""
 
     // ROOM DB
     const val DATABASE_NAME = "recipes_database"
@@ -19,11 +19,12 @@ object Constants {
     const val QUERY_INGREDIENTS = "ingredients"
     const val QUERY_RANKING = "ranking"
     const val QUERY_API_KEY = "apiKey"
+    const val QUERY_IDS = "ids"
 
     // Bottom sheet and preferences values
     const val DEFAULT_RANKING = "1"
     const val DEFAULT_INGREDIENTS = "onion,bread"
-    const val DEFAULT_RECIPES_NUMBER = "10"
+    const val DEFAULT_RECIPES_NUMBER = "30"
 
 
     const val PREFERENCES_NAME = "ingredients_preferences"
