@@ -1,10 +1,13 @@
 package com.example.whattoeat.ui.fragments
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.BindingAdapter
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.whattoeat.databinding.FragmentOverviewBinding
@@ -61,12 +64,21 @@ class OverviewFragment : Fragment() {
         return binding.root
     }
 
+    private fun openWebsite(url: String) {
+        val webpage: Uri = Uri.parse(url)
+        val intent = Intent(Intent.ACTION_VIEW, webpage)
+        startActivity(intent)
+    }
+
     private fun readFavorites(recipeId: Int) {
         lifecycleScope.launch {
             mainViewModel.readFavorites.observe(viewLifecycleOwner) { favoriteRecipes ->
-                favoriteRecipes?.forEach {
-                    if (it.id == recipeId) {
-                        binding.recipeBinding = it.detailedRecipe
+                favoriteRecipes?.forEach { favoriteEntity ->
+                    if (favoriteEntity.id == recipeId) {
+                        binding.recipeBinding = favoriteEntity.detailedRecipe
+                        binding.webpageButton.setOnClickListener {
+                            openWebsite(favoriteEntity.detailedRecipe.sourceUrl)
+                        }
                     }
                 }
             }
@@ -77,16 +89,20 @@ class OverviewFragment : Fragment() {
         lifecycleScope.launch {
             mainViewModel.readDetailedRecipes.observe(viewLifecycleOwner) { detailedEntities ->
                 if (!detailedEntities.isNullOrEmpty()) {
-                    detailedEntities.forEach {
-                        if (it.id == recipeId) {
-                            binding.recipeBinding = it.detailedRecipe
-                            mainViewModel.currentRecipe = it.detailedRecipe
+                    detailedEntities.forEach { entity ->
+                        if (entity.id == recipeId) {
+                            binding.recipeBinding = entity.detailedRecipe
+                            mainViewModel.currentRecipe = entity.detailedRecipe
+                            binding.webpageButton.setOnClickListener {
+                                openWebsite(entity.detailedRecipe.sourceUrl)
+                            }
                         }
                     }
                 }
             }
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

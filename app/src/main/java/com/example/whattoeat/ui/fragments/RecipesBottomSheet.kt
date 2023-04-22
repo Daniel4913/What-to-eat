@@ -49,15 +49,20 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
                 updateEditText(value.typedIngredients, binding.myIngredientsEditText)
             }
 
+        binding.rankingSwitch.isChecked
+
         binding.rankingSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 buttonView.text = "Maximize used ingredients first"
                 ranking = "1"
+                updateSwitch(ranking, binding.rankingSwitch)
             } else {
                 buttonView.text = "Minimize missing ingredients first"
                 ranking = "2"
+                updateSwitch(ranking, binding.rankingSwitch)
             }
         }
+
 
         binding.searchBtn.setOnClickListener {
             ingredients = binding.myIngredientsEditText.text.toString()
@@ -78,10 +83,12 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun updateSwitch(selectedRanking: String, rankingSwitch: SwitchMaterial) {
-        if (selectedRanking == "1"){
+        if (selectedRanking == "1") {
             rankingSwitch.isChecked = true
-        } else {
+            rankingSwitch.text = "Maximize used ingredients first"
+        } else if (selectedRanking == "2") {
             rankingSwitch.isChecked = false
+            rankingSwitch.text = "Minimize missing ingredients first"
         }
     }
 

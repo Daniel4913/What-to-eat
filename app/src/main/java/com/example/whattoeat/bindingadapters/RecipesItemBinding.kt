@@ -1,9 +1,12 @@
 package com.example.whattoeat.bindingadapters
 
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
 import coil.load
@@ -13,7 +16,7 @@ import com.example.whattoeat.model.UsedIngredient
 import com.example.whattoeat.ui.fragments.RecipesFragmentDirections
 import org.jsoup.Jsoup
 
-class RecipesItemBinding {
+class RecipesItemBinding() {
 
     companion object {
 
@@ -83,5 +86,7 @@ class RecipesItemBinding {
                 textView.text = desc
             }
         }
+
+
     }
 }
