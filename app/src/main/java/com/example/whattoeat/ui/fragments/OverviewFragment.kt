@@ -76,9 +76,12 @@ class OverviewFragment : Fragment() {
                 favoriteRecipes?.forEach { favoriteEntity ->
                     if (favoriteEntity.id == recipeId) {
                         binding.recipeBinding = favoriteEntity.detailedRecipe
+                        binding.dietsListTextView.isSelected = true
+                        binding.cuisinesListTextView.isSelected = true
                         binding.webpageButton.setOnClickListener {
                             openWebsite(favoriteEntity.detailedRecipe.sourceUrl)
                         }
+                        binding.webpageButton.text
                     }
                 }
             }

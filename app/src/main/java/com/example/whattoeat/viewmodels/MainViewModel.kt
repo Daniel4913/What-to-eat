@@ -8,8 +8,8 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.example.whattoeat.data.Repository
 import com.example.whattoeat.data.database.entities.DetailedRecipeEntity
-import com.example.whattoeat.data.database.entities.FavoriteEntity
-import com.example.whattoeat.data.database.entities.RecipesEntity
+import com.example.whattoeat.data.database.entities.FavoriteRecipeEntity
+import com.example.whattoeat.data.database.entities.RecipeByIngredientEntity
 import com.example.whattoeat.model.DetailedRecipe
 import com.example.whattoeat.model.RecipesByIngredients
 import com.example.whattoeat.util.NetworkResult
@@ -29,26 +29,26 @@ class MainViewModel @Inject constructor(
 
     /** ROOM DB */
 
-    val readCachedRecipesByIngredients: LiveData<List<RecipesEntity>> =
-        repository.local.readRecipes().asLiveData()
+    val readCachedRecipesByIngredients: LiveData<List<RecipeByIngredientEntity>> =
+        repository.local.readRecipesByIngredients().asLiveData()
 
     val readDetailedRecipes: LiveData<List<DetailedRecipeEntity>> =
         repository.local.readDetailedRecipes().asLiveData()
 
-    val readFavorites: LiveData<List<FavoriteEntity>> =
-        repository.local.readFavorites().asLiveData()
+    val readFavorites: LiveData<List<FavoriteRecipeEntity>> =
+        repository.local.readFavoriteRecipes().asLiveData()
 
     fun readCurrentRecipe(id: Int): LiveData<DetailedRecipeEntity>{
         return repository.local.readDetailedRecipe(id).asLiveData()
     }
 
-    fun readFavorite(id: Int): LiveData<FavoriteEntity> {
-        return repository.local.readFavorite(id).asLiveData()
+    fun readFavorite(id: Int): LiveData<FavoriteRecipeEntity> {
+        return repository.local.readFavoriteRecipe(id).asLiveData()
     }
 
-    private fun insertRecipes(recipesEntity: RecipesEntity) =
+    private fun insertRecipes(recipeByIngredientEntity: RecipeByIngredientEntity) =
         viewModelScope.launch(Dispatchers.IO) {
-            repository.local.insertRecipes(recipesEntity)
+            repository.local.insertRecipesByIngredients(recipeByIngredientEntity)
         }
 
     private fun insertDetailedRecipe(detailedRecipeEntity: DetailedRecipeEntity) =
@@ -56,19 +56,19 @@ class MainViewModel @Inject constructor(
             repository.local.insertDetailedRecipe(detailedRecipeEntity)
         }
 
-    fun insertFavorite(favoriteEntity: FavoriteEntity) =
+    fun insertFavorite(favoriteRecipeEntity: FavoriteRecipeEntity) =
         viewModelScope.launch(Dispatchers.IO) {
-            repository.local.insertFavoriteRecipe(favoriteEntity)
+            repository.local.insertFavoriteRecipe(favoriteRecipeEntity)
         }
 
-    fun deleteFavorite(favoriteEntity: FavoriteEntity) =
+    fun deleteFavorite(favoriteRecipeEntity: FavoriteRecipeEntity) =
         viewModelScope.launch(Dispatchers.IO) {
-            repository.local.deleteFavorite(favoriteEntity)
+            repository.local.deleteFavoriteRecipe(favoriteRecipeEntity)
         }
 
     fun deleteAllFavorites() =
         viewModelScope.launch(Dispatchers.IO) {
-            repository.local.deleteAllFavorites()
+            repository.local.deleteAllFavoriteRecipes()
         }
 
 
@@ -129,8 +129,8 @@ class MainViewModel @Inject constructor(
     }
 
     private fun offlineCacheRecipes(recipes: RecipesByIngredients) {
-        val recipesEntity = RecipesEntity(recipes)
-        insertRecipes(recipesEntity)
+        val recipeByIngredientEntity = RecipeByIngredientEntity(recipes)
+        insertRecipes(recipeByIngredientEntity)
     }
 
     private fun offlineCacheDetailedRecipe(recipes: List<DetailedRecipe>) {

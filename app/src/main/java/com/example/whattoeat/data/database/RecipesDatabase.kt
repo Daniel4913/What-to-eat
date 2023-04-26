@@ -4,11 +4,11 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.whattoeat.data.database.entities.DetailedRecipeEntity
-import com.example.whattoeat.data.database.entities.FavoriteEntity
-import com.example.whattoeat.data.database.entities.RecipesEntity
+import com.example.whattoeat.data.database.entities.FavoriteRecipeEntity
+import com.example.whattoeat.data.database.entities.RecipeByIngredientEntity
 
 @Database(
-    entities = [RecipesEntity::class, DetailedRecipeEntity::class, FavoriteEntity::class],
+    entities = [RecipeByIngredientEntity::class, DetailedRecipeEntity::class, FavoriteRecipeEntity::class],
     version = 1,
     exportSchema = false
 )

@@ -9,20 +9,10 @@ import retrofit2.http.QueryMap
 
 interface SpoonacularApi {
 
-    ///recipes/findByIngredients?ingredients="
     @GET("/recipes/findByIngredients")
     suspend fun getRecipesByIngredients(
         @QueryMap queries: Map<String, String>
     ): Response<RecipesByIngredients>
-
-//    @GET("/recipes/{recipeId}/information/includeNutrition=true") NIE DZIAUA
-//    @GET("/recipes/{recipeId}/information&includeNutrition=true") NIE DZIAUA
-//    @GET("/recipes/{recipeId}/includeNutrition=true/information") NIE DZIAUA
-    @GET("/recipes/{recipeId}/information?includeNutrition=true")
-    suspend fun getRecipeInformation(
-       @Path("recipeId") query: String,
-       @QueryMap queries: Map<String,String>
-    ): Response<DetailedRecipe>
 
     @GET("/recipes/informationBulk?includeNutrition=true")
     suspend fun getDetailedRecipes(

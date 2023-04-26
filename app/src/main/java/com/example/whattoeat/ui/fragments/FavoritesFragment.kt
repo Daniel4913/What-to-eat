@@ -11,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.whattoeat.R
-import com.example.whattoeat.adapters.FavoritesAdapter
+import com.example.whattoeat.adapters.FavoriteRecipesAdapter
 import com.example.whattoeat.databinding.FragmentFavoritesBinding
 import com.example.whattoeat.viewmodels.MainViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -23,7 +23,7 @@ class FavoritesFragment : Fragment() {
     private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var mAdapter: FavoritesAdapter
+    private lateinit var mAdapter: FavoriteRecipesAdapter
     private lateinit var mainViewModel: MainViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +36,7 @@ class FavoritesFragment : Fragment() {
     ): View? {
         _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
 
-        mAdapter = FavoritesAdapter { recipeId ->
+        mAdapter = FavoriteRecipesAdapter { recipeId ->
             val action =
                 FavoritesFragmentDirections.actionFavoritesFragmentToDetailsActivity(recipeId,true)
             findNavController().navigate(action)

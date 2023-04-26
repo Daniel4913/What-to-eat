@@ -1,12 +1,5 @@
 <resources>
     <style name="AppTheme" parent="Theme.Material3.Dark.NoActionBar">
-
-        // todo NIE DZIALA NIC
-<!--        <item name="android:windowActionModeOverlay">false</item>-->
-<!--        <item name="windowActionModeOverlay">false</item>-->
-<!--        <item name="windowActionBar">false</item>-->
-<!--        <item name="actionModeBackground">@color/design_default_color_error</item>-->
-//// ale na dole jak dodalem to dziala
         <item name="colorPrimary">@color/md_theme_dark_primary</item>
         <item name="colorOnPrimary">@color/md_theme_dark_onPrimary</item>
         <item name="colorPrimaryContainer">@color/md_theme_dark_primaryContainer</item>
@@ -35,18 +28,28 @@
         <item name="colorPrimaryInverse">@color/md_theme_dark_inversePrimary</item>
 
 
-        /////////
-        <item name="actionModeStyle">@style/Widget.ActionMode</item>
-        <item name="actionModeCloseDrawable">@drawable/ic_check</item>
-        <item name="actionModeBackground">@color/md_theme_light_surfaceTint</item>
+        <!--   ActionMode     //////////////////////////////////////////////////////-->
+        <item name="actionModeStyle">@style/actionModeDark</item>
         <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeBackground">@color/md_theme_dark_surface</item>
+        <item name="actionModeCloseDrawable">@drawable/ic_check_dark</item>
+
+        <item name="android:statusBarColor">@color/md_theme_dark_surface</item>
+        <item name="android:windowLightStatusBar">false</item>
+
+        <item name="iconTint">@color/md_theme_dark_primary</item>
     </style>
 
-<!--    <style name="Widget.ActionMode" parent="@style/Widget.AppCompat.ActionMode">-->
-<!--        <item name="android:background">@color/md_theme_light_surfaceTint</item>-->
-<!--        &lt;!&ndash;        <item name="titleTextStyle">@style/TitleTextStyle</item>&ndash;&gt;-->
-<!--    </style>-->
+    <style name="actionModeDark" parent="@style/Widget.AppCompat.ActionMode">
 
+    </style>
+
+    <style name="bodyMediumPrimaryContainer" parent="@style/TextAppearance.Material3.BodyMedium">
+        <item name="android:textColor">@color/md_theme_dark_onPrimaryContainer</item>
+    </style>
+
+
+<!--    //////////////////////////////////  -->
     <style name="CustomTabLayoutStyle" parent="Widget.Design.TabLayout">
         <item name="background">@color/design_default_color_primary_variant</item>
         <item name="tabIndicatorColor">@color/design_default_color_secondary_variant</item>

@@ -6,8 +6,8 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.whattoeat.data.database.entities.DetailedRecipeEntity
-import com.example.whattoeat.data.database.entities.FavoriteEntity
-import com.example.whattoeat.data.database.entities.RecipesEntity
+import com.example.whattoeat.data.database.entities.FavoriteRecipeEntity
+import com.example.whattoeat.data.database.entities.RecipeByIngredientEntity
 import kotlinx.coroutines.flow.Flow
 
 
@@ -15,16 +15,16 @@ import kotlinx.coroutines.flow.Flow
 interface RecipesDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertRecipe(recipesEntity: RecipesEntity)
+    suspend fun insertRecipeByIngredients(recipeByIngredientEntity: RecipeByIngredientEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertFavorite(favoriteEntity: FavoriteEntity)
+    suspend fun insertFavoriteRecipe(favoriteRecipeEntity: FavoriteRecipeEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDetailedRecipe(detailedRecipeEntity: DetailedRecipeEntity)
 
     @Query("SELECT * FROM recipes_table ORDER BY id ASC")
-    fun readRecipes(): Flow<List<RecipesEntity>>
+    fun readRecipesByIngredients(): Flow<List<RecipeByIngredientEntity>>
 
     @Query("SELECT * FROM detailed_recipes_table WHERE id= :id")
     fun readDetailedRecipe(id: Int): Flow<DetailedRecipeEntity>
@@ -33,16 +33,16 @@ interface RecipesDao {
     fun readDetailedRecipes(): Flow<List<DetailedRecipeEntity>>
 
     @Query("SELECT * from favorite_recipes_table ORDER BY id ASC")
-    fun readFavorites(): Flow<List<FavoriteEntity>>
+    fun readFavoriteRecipes(): Flow<List<FavoriteRecipeEntity>>
 
     @Query("SELECT * from favorite_recipes_table WHERE id= :id")
-    fun readFavorite(id: Int): Flow<FavoriteEntity>
+    fun readFavoriteRecipe(id: Int): Flow<FavoriteRecipeEntity>
 
     @Delete
-    suspend fun deleteFavorite(favoriteEntity: FavoriteEntity)
+    suspend fun deleteFavoriteRecipe(favoriteRecipeEntity: FavoriteRecipeEntity)
 
     @Query("DELETE from favorite_recipes_table")
-    suspend fun deleteAllFavorites()
+    suspend fun deleteAllFavoriteRecipes()
 
 
 }

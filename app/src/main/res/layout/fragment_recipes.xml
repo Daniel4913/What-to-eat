@@ -13,7 +13,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.fragments.RecipesFragment">
+        tools:context=".ui.fragments.RecipesFragment"
+
+        >
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recipesRecyclerView"
@@ -56,19 +58,6 @@
             app:layout_constraintEnd_toEndOf="@+id/error_iV"
             app:layout_constraintStart_toStartOf="@+id/error_iV"
             app:layout_constraintTop_toBottomOf="@+id/error_iV" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/ingredientsFab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_marginEnd="@dimen/fab_margin"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_fridge"
-            />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

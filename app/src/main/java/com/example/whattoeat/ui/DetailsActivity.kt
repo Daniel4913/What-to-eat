@@ -12,13 +12,12 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.navArgs
 import com.example.whattoeat.R
 import com.example.whattoeat.adapters.PagerAdapter
-import com.example.whattoeat.data.database.entities.FavoriteEntity
+import com.example.whattoeat.data.database.entities.FavoriteRecipeEntity
 import com.example.whattoeat.databinding.ActivityDetailsBinding
 import com.example.whattoeat.ui.fragments.IngredientsFragment
 import com.example.whattoeat.ui.fragments.InstructionsFragment
 import com.example.whattoeat.ui.fragments.NutritionFragment
 import com.example.whattoeat.ui.fragments.OverviewFragment
-import com.example.whattoeat.util.NetworkListener
 import com.example.whattoeat.util.observeOnce
 import com.example.whattoeat.viewmodels.MainViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -109,7 +108,7 @@ class DetailsActivity : AppCompatActivity() {
                     if (savedRecipe.detailedRecipe.id == args.recipeId) {
                         changeMenuItem(
                             menuItem,
-                            R.color.md_theme_dark_onPrimaryContainer,
+                            R.color.md_theme_dark_primary,
                             R.drawable.bookmark_added
                         )
                         savedRecipeId = savedRecipe.detailedRecipe.id
@@ -125,9 +124,9 @@ class DetailsActivity : AppCompatActivity() {
 
     private fun removeFromFavorites(item: MenuItem) {
         mainViewModel.readCurrentRecipe(args.recipeId).observeOnce(this) {
-            val favoriteEntity =
-                FavoriteEntity(savedRecipeId, it.detailedRecipe)
-            mainViewModel.deleteFavorite(favoriteEntity)
+            val favoriteRecipeEntity =
+                FavoriteRecipeEntity(savedRecipeId, it.detailedRecipe)
+            mainViewModel.deleteFavorite(favoriteRecipeEntity)
             changeMenuItem(item, R.color.white, R.drawable.bookmark_add)
             showSnackBar("Recipe removed from favorites")
             recipeSaved = false
@@ -137,9 +136,9 @@ class DetailsActivity : AppCompatActivity() {
 
     private fun saveToFavorites(item: MenuItem) {
         mainViewModel.readCurrentRecipe(args.recipeId).observeOnce(this) {
-            val favoriteEntity =
-                FavoriteEntity(it.detailedRecipe.id, it.detailedRecipe)
-            mainViewModel.insertFavorite(favoriteEntity)
+            val favoriteRecipeEntity =
+                FavoriteRecipeEntity(it.detailedRecipe.id, it.detailedRecipe)
+            mainViewModel.insertFavorite(favoriteRecipeEntity)
         }
         changeMenuItem(item, R.color.md_theme_dark_onPrimaryContainer, R.drawable.bookmark_added)
         recipeSaved = true

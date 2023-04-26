@@ -8,14 +8,12 @@
         <variable
             name="recipeBinding"
             type="com.example.whattoeat.model.DetailedRecipe" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.fragments.OverviewFragment">
-
 
         <ImageView
             android:id="@+id/main_imageView"
@@ -26,218 +24,177 @@
             android:src="@drawable/ic_search"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/avatars" />
 
-        <View
-            android:id="@+id/gradient_overlay"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:background="@drawable/gradient_overlay"
-            app:layout_constraintBottom_toBottomOf="@+id/main_imageView"
-            app:layout_constraintEnd_toEndOf="@+id/main_imageView"
-            app:layout_constraintStart_toStartOf="@+id/main_imageView"
-            app:layout_constraintTop_toTopOf="@+id/main_imageView"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <TextView
-            android:id="@+id/time_textView"
+        <com.google.android.material.chip.Chip
+            android:id="@+id/cooking_time_chip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="12dp"
-            android:text="100"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/main_imageView"
-            app:layout_constraintEnd_toEndOf="@+id/gradient_overlay" />
+            android:layout_marginEnd="8dp"
+            android:focusable="false"
+            app:chipIcon="@drawable/ic_clock"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@{String.valueOf(recipeBinding.readyInMinutes)}"
+            tools:text="12453" />
 
-        <ImageView
-            android:id="@+id/time_imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_clock"
-            app:layout_constraintBottom_toTopOf="@+id/time_textView"
-            app:layout_constraintEnd_toEndOf="@+id/time_textView"
-            app:layout_constraintStart_toStartOf="@+id/time_textView"
-            app:tint="@color/white" />
+        <!--        <View-->
+        <!--            android:id="@+id/gradient_overlay"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="100dp"-->
 
-        <TextView
-            android:id="@+id/likes_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="12dp"
-            android:text="100"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/time_textView"
-            app:layout_constraintEnd_toStartOf="@+id/time_textView" />
+        <!--            android:background="@drawable/gradient_overlay"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@+id/main_imageView"-->
+        <!--            app:layout_constraintEnd_toEndOf="@+id/main_imageView"-->
+        <!--            app:layout_constraintStart_toStartOf="@+id/main_imageView"-->
+        <!--            app:layout_constraintTop_toTopOf="@+id/main_imageView"-->
+        <!--            app:layout_constraintVertical_bias="1.0" />-->
 
-        <ImageView
-            android:id="@+id/likes_imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_heart"
-            app:layout_constraintBottom_toTopOf="@+id/likes_textView"
-            app:layout_constraintEnd_toEndOf="@+id/likes_textView"
-            app:layout_constraintStart_toStartOf="@+id/likes_textView"
-            app:tint="@color/white" />
 
-        <TextView
-            android:id="@+id/title_textView"
-            android:layout_width="0dp"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/overview_card"
+            style="@style/Widget.Material3.CardView.Elevated"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="12dp"
-            android:text="@{recipeBinding.title}"
-            android:textColor="@color/md_theme_light_tertiary"
-            android:textSize="22sp"
-            android:textStyle="bold"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="-30dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toTopOf="@id/overview_scrollView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_imageView" />
+            app:layout_constraintTop_toBottomOf="@+id/main_imageView"
+            app:layout_constraintVertical_bias="0.77">
 
-        <ImageView
-            android:id="@+id/vegetarian_imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:src="@drawable/ic_checkmark"
-            app:layout_constraintStart_toStartOf="@+id/title_textView"
-            app:layout_constraintTop_toBottomOf="@+id/title_textView"
-            app:tint="@color/darkGray" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/vegetarian_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="Vege"
-            android:textColor="@color/darkGray"
-            app:layout_constraintBottom_toBottomOf="@+id/vegetarian_imageView"
-            app:layout_constraintStart_toEndOf="@+id/vegetarian_imageView"
-            app:layout_constraintTop_toTopOf="@+id/vegetarian_imageView" />
 
-        <ImageView
-            android:id="@+id/vegan_imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:src="@drawable/ic_checkmark"
-            app:layout_constraintStart_toStartOf="@+id/vegetarian_imageView"
-            app:layout_constraintTop_toBottomOf="@+id/vegetarian_imageView"
-            app:tint="@color/darkGray" />
+                <TextView
+                    android:id="@+id/title_textView"
+                    style="@style/TextAppearance.Material3.TitleLarge"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="12dp"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:text="@{recipeBinding.title}"
+                    app:layout_constraintEnd_toStartOf="@id/likes_imageView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Super dluga nazwa jakiegos takiego dania sp 24 na trzy linijki albo nawet dluzszy a to z sp to nie prawda" />
 
-        <TextView
-            android:id="@+id/vegan_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="vege"
-            android:textColor="@color/darkGray"
-            app:layout_constraintBottom_toBottomOf="@+id/vegan_imageView"
-            app:layout_constraintStart_toEndOf="@+id/vegan_imageView"
-            app:layout_constraintTop_toTopOf="@+id/vegan_imageView" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:alpha="0.2"
+                    android:background="@drawable/gradient_center"
+                    app:layout_constraintBottom_toTopOf="@+id/diets_textView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/title_textView" />
 
-        <ImageView
-            android:id="@+id/gluten_free_imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:src="@drawable/ic_checkmark"
-            app:layout_constraintBottom_toBottomOf="@+id/vegetarian_textView"
-            app:layout_constraintStart_toEndOf="@+id/vegetarian_textView"
-            app:layout_constraintTop_toTopOf="@+id/vegetarian_textView"
-            app:tint="@color/darkGray" />
+                <TextView
+                    android:id="@+id/likes_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    tools:text="100"
+                    android:text="@{String.valueOf(recipeBinding.aggregateLikes)}"
+                    style="@style/bodyMediumPrimaryContainer"
+                    app:layout_constraintBottom_toBottomOf="@+id/likes_imageView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/likes_imageView" />
 
-        <TextView
-            android:id="@+id/gluten_free_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="gluten_free"
-            android:textColor="@color/darkGray"
-            app:layout_constraintBottom_toBottomOf="@+id/gluten_free_imageView"
-            app:layout_constraintStart_toEndOf="@+id/gluten_free_imageView"
-            app:layout_constraintTop_toTopOf="@+id/gluten_free_imageView" />
+                <ImageView
+                    android:id="@+id/likes_imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/ic_heart"
+                    app:layout_constraintBottom_toBottomOf="@+id/title_textView"
+                    app:layout_constraintEnd_toStartOf="@id/likes_textView"
+                    app:layout_constraintTop_toTopOf="@+id/title_textView"
+                    app:tint="@color/md_theme_dark_primary" />
 
-        <ImageView
-            android:id="@+id/dairy_free_imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:src="@drawable/ic_checkmark"
-            app:layout_constraintStart_toStartOf="@+id/gluten_free_imageView"
-            app:layout_constraintTop_toBottomOf="@+id/gluten_free_imageView"
-            app:tint="@color/darkGray" />
+                <TextView
+                    android:id="@+id/diets_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Diets: "
+                    style="@style/bodyMediumPrimaryContainer"
+                    app:layout_constraintStart_toStartOf="@+id/title_textView"
+                    app:layout_constraintTop_toBottomOf="@+id/title_textView" />
 
-        <TextView
-            android:id="@+id/dairy_free_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="dairy_free"
-            android:textColor="@color/darkGray"
-            app:layout_constraintBottom_toBottomOf="@+id/dairy_free_imageView"
-            app:layout_constraintStart_toEndOf="@+id/dairy_free_imageView"
-            app:layout_constraintTop_toTopOf="@+id/dairy_free_imageView" />
+                <TextView
+                    android:id="@+id/cuisines_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    style="@style/bodyMediumPrimaryContainer"
+                    android:text="Dish types:"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/diets_textView"
+                    app:layout_constraintTop_toBottomOf="@+id/diets_textView" />
 
-        <ImageView
-            android:id="@+id/healthy_imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:src="@drawable/ic_checkmark"
-            app:layout_constraintBottom_toBottomOf="@+id/gluten_free_textView"
-            app:layout_constraintStart_toEndOf="@+id/gluten_free_textView"
-            app:layout_constraintTop_toTopOf="@+id/gluten_free_textView"
-            app:tint="@color/darkGray" />
+                <TextView
+                    android:id="@+id/diets_list_textView"
+                    style="@style/bodyMediumPrimaryContainer"
+                    setList="@{recipeBinding.diets}"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:singleLine="true"
+                    android:scrollHorizontally="true"
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit ="marquee_forever"
+                    app:layout_constraintBottom_toBottomOf="@+id/diets_textView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/diets_textView"
+                    app:layout_constraintTop_toTopOf="@+id/diets_textView"
+                    tools:text="TextView" />
 
-        <TextView
-            android:id="@+id/healthy_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="healthy"
-            android:textColor="@color/darkGray"
-            app:layout_constraintBottom_toBottomOf="@+id/healthy_imageView"
-            app:layout_constraintStart_toEndOf="@+id/healthy_imageView"
-            app:layout_constraintTop_toTopOf="@+id/healthy_imageView" />
-
-        <ImageView
-            android:id="@+id/cheap_imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:src="@drawable/ic_checkmark"
-            app:layout_constraintStart_toStartOf="@+id/healthy_imageView"
-            app:layout_constraintTop_toBottomOf="@+id/healthy_imageView"
-            app:tint="@color/darkGray" />
-
-        <TextView
-            android:id="@+id/cheap_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="cheap"
-            android:textColor="@color/darkGray"
-            app:layout_constraintBottom_toBottomOf="@+id/cheap_imageView"
-            app:layout_constraintStart_toEndOf="@+id/cheap_imageView"
-            app:layout_constraintTop_toTopOf="@+id/cheap_imageView" />
+                <TextView
+                    android:id="@+id/cuisines_list_textView"
+                    style="@style/bodyMediumPrimaryContainer"
+                    setList="@{recipeBinding.dishTypes}"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:singleLine="true"
+                    android:scrollHorizontally="true"
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit ="marquee_forever"
+                    android:maxLines="1"
+                    app:layout_constraintBottom_toBottomOf="@+id/cuisines_textView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/cuisines_textView"
+                    app:layout_constraintTop_toTopOf="@+id/cuisines_textView"
+                    tools:text="TextView" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <ScrollView
+            android:id="@+id/overview_scrollView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
-            android:layout_marginEnd="12dp"
+            android:layout_marginEnd="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vegan_imageView">
+            app:layout_constraintTop_toBottomOf="@+id/overview_card">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -254,10 +211,10 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/webpage_button"
                     style="@style/Widget.Material3.Button.TextButton"
-                    android:layout_width="wrap_content"
+                    setRecipePageString="@{recipeBinding.sourceUrl}"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Visit original site"
-/>
+                    tools:text="Visit vistit" />
             </LinearLayout>
         </ScrollView>
 

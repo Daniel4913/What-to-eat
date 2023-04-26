@@ -7,10 +7,20 @@ import androidx.databinding.BindingAdapter
 import com.example.whattoeat.R
 import com.example.whattoeat.model.NutrientX
 import com.example.whattoeat.model.Property
+import com.google.android.material.button.MaterialButton
 
 class NutritionFragmentBinding {
 
     companion object {
+
+        @BindingAdapter("setRecipePageString")
+        @JvmStatic
+        fun setRecipePageString(materialButton: MaterialButton, sourceUrl: String?) {
+            if (sourceUrl != null) {
+                materialButton.text =
+                    materialButton.resources.getString(R.string.visit_recipe_page, sourceUrl)
+            }
+        }
 
         @BindingAdapter("getNutrient")
         @JvmStatic

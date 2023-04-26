@@ -65,14 +65,19 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
 
 
         binding.searchBtn.setOnClickListener {
-            ingredients = binding.myIngredientsEditText.text.toString()
-            recipesViewModel.saveIngredientsTemp(
-                ranking,
-                ingredients
-            )
-            val action =
-                RecipesBottomSheetDirections.actionRecipesBottomSheetToRecipesFragment(true)
-            findNavController().navigate(action)
+            if (recipesViewModel.networkStatus) {
+                ingredients = binding.myIngredientsEditText.text.toString()
+                recipesViewModel.saveIngredientsTemp(
+                    ranking,
+                    ingredients
+                )
+                val action =
+                    RecipesBottomSheetDirections.actionRecipesBottomSheetToRecipesFragment(true)
+                findNavController().navigate(action)
+            } else {
+                recipesViewModel.showNetworkStatus()
+            }
+
         }
 
         return binding.root

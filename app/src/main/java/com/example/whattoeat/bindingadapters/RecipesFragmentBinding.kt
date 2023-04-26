@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.example.whattoeat.data.database.entities.RecipesEntity
+import com.example.whattoeat.data.database.entities.RecipeByIngredientEntity
 import com.example.whattoeat.model.RecipesByIngredients
 import com.example.whattoeat.util.NetworkResult
 
@@ -17,7 +17,7 @@ class RecipesFragmentBinding {
         fun errorImageViewVisibility(
             imageView: ImageView,
             apiResponse: NetworkResult<RecipesByIngredients>?,
-            database: List<RecipesEntity>?
+            database: List<RecipeByIngredientEntity>?
         ) {
             if (apiResponse is NetworkResult.Error && database.isNullOrEmpty()) {
                 imageView.visibility = View.VISIBLE
@@ -33,7 +33,7 @@ class RecipesFragmentBinding {
         fun errorTextViewVisibility(
             textView: TextView,
             apiResponse: NetworkResult<RecipesByIngredients>?,
-            database: List<RecipesEntity>?
+            database: List<RecipeByIngredientEntity>?
         ) {
             if (apiResponse is NetworkResult.Error && database.isNullOrEmpty()) {
                 textView.visibility = View.VISIBLE

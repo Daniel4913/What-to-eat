@@ -11,23 +11,27 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        onRecipeClickListener="@{recipeItem.id}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        onRecipeClickListener="@{recipeItem.id}"
         android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp">
+        android:layout_marginBottom="4dp"
+
+        >
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/row_cardView"
+            style="@style/Widget.Material3.CardView.Elevated"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:cardCornerRadius="10dp"
-            app:cardElevation="3dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+
+            >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -52,7 +56,7 @@
                     android:ellipsize="end"
                     android:maxLines="3"
                     android:text="@{recipeItem.title}"
-
+                    tools:text="Uasdbdhs uuasjdnbb Akjnsbdlkjabs Ajsj JAnsudkajn"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -68,7 +72,8 @@
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/favorite_recipe_imageView"
-                    app:layout_constraintStart_toStartOf="@+id/favorite_title_textView" />
+                    app:layout_constraintStart_toStartOf="@+id/favorite_title_textView"
+                    tools:text="10" />
 
                 <ImageView
                     android:id="@+id/fridge_iV"
@@ -90,7 +95,8 @@
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/fridge_iV"
                     app:layout_constraintStart_toEndOf="@+id/fridge_iV"
-                    app:layout_constraintTop_toTopOf="@+id/fridge_iV" />
+                    app:layout_constraintTop_toTopOf="@+id/fridge_iV"
+                    tools:text="10" />
 
                 <ImageView
                     android:id="@+id/cart_iV"
@@ -112,7 +118,8 @@
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/cart_iV"
                     app:layout_constraintStart_toEndOf="@+id/cart_iV"
-                    app:layout_constraintTop_toTopOf="@+id/cart_iV" />
+                    app:layout_constraintTop_toTopOf="@+id/cart_iV"
+                    tools:text="10" />
 
                 <ImageView
                     android:id="@+id/like_iV"

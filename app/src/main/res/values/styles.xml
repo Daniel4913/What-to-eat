@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="mainBackground">"@drawable/foody_background_light"</style>
+</resources>
