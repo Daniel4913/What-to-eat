@@ -28,7 +28,7 @@ class NutritionFragmentBinding {
             nutrientX?.forEach { nutrientItem ->
                 when (nutrientItem.name) {
                     "Calories" -> {
-                        if (textView.id == R.id.tv_calories) {
+                        if (textView.id == R.id.calories_textView) {
                             textView.text = textView.resources.getString(
                                 R.string.calories,
                                 nutrientItem.amount
@@ -36,22 +36,22 @@ class NutritionFragmentBinding {
                         }
                     }
                     "Fat" -> {
-                        if (textView.id == R.id.tv_gramFat) {
+                        if (textView.id == R.id.gramFat_textView) {
                             textView.text = nutrientItem.amount.toString()
                         }
                     }
                     "Carbohydrates" -> {
-                        if (textView.id == R.id.tv_gramCarb) {
+                        if (textView.id == R.id.gramCarb_textView) {
                             textView.text = nutrientItem.amount.toString()
                         }
                     }
                     "Protein" -> {
-                        if (textView.id == R.id.tv_gramProtein) {
+                        if (textView.id == R.id.gramProtein_textView) {
                             textView.text = nutrientItem.amount.toString()
                         }
                     }
                     "Saturated Fat" -> {
-                        if (textView.id == R.id.tv_gramSaturatedFat) {
+                        if (textView.id == R.id.gramSaturatedFat_textView) {
                             textView.text = textView.resources.getString(
                                 R.string.saturated_fat,
                                 nutrientItem.amount
@@ -59,7 +59,7 @@ class NutritionFragmentBinding {
                         }
                     }
                     "Sugar" -> {
-                        if (textView.id == R.id.tv_gramSugar) {
+                        if (textView.id == R.id.gramSugar_textView) {
                             textView.text =
                                 textView.resources.getString(R.string.sugar, nutrientItem.amount)
                         }
@@ -76,7 +76,7 @@ class NutritionFragmentBinding {
             properties?.forEach { property ->
                 when (property.name) {
                     "Glycemic Index" -> {
-                        if (textView.id == R.id.tv_glycemicIndex) {
+                        if (textView.id == R.id.glycemicIndex_textView) {
 //                            textView.text = property.amount.toString()
                             textView.text = textView.resources.getString(
                                 R.string.glycemic_index,
@@ -85,7 +85,7 @@ class NutritionFragmentBinding {
                         }
                     }
                     "Glycemic Load" -> {
-                        if (textView.id == R.id.tv_glycemicLoad) {
+                        if (textView.id == R.id.glycemicLoad_textView) {
                             textView.text = textView.resources.getString(
                                 R.string.glycemic_load,
                                 property.amount
@@ -93,7 +93,7 @@ class NutritionFragmentBinding {
                         }
                     }
                     "Nutrition Score" -> {
-                        if (textView.id == R.id.tv_nutritionScore) {
+                        if (textView.id == R.id.nutritionScore_textView) {
                             textView.text = textView.resources.getString(
                                 R.string.nutrition_score,
                                 property.amount

@@ -18,7 +18,7 @@
         >
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recipesRecyclerView"
+            android:id="@+id/recipes_recyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
@@ -31,7 +31,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/error_iV"
+            android:id="@+id/error_imageView"
             android:layout_width="200dp"
             android:layout_height="200dp"
             readApiResponse="@{mainViewModel.recipesResponse}"
@@ -39,14 +39,14 @@
             android:alpha="0.7"
             android:src="@drawable/baseline_wifi_tethering_error_24"
             android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/recipesRecyclerView"
+            app:layout_constraintBottom_toBottomOf="@+id/recipes_recyclerView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.62" />
 
         <TextView
-            android:id="@+id/error_tV"
+            android:id="@+id/error_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             readApiResponse2="@{mainViewModel.recipesResponse}"
@@ -55,9 +55,9 @@
             android:alpha="0.8"
             android:text="No internet connection"
             android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="@+id/error_iV"
-            app:layout_constraintStart_toStartOf="@+id/error_iV"
-            app:layout_constraintTop_toBottomOf="@+id/error_iV" />
+            app:layout_constraintEnd_toEndOf="@+id/error_imageView"
+            app:layout_constraintStart_toStartOf="@+id/error_imageView"
+            app:layout_constraintTop_toBottomOf="@+id/error_imageView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

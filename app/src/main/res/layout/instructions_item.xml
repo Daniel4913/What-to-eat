@@ -28,7 +28,7 @@
 
 
             <TextView
-                android:id="@+id/step_label"
+                android:id="@+id/step_label_textView"
                 style="@style/TextAppearance.Material3.BodyLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -39,27 +39,27 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/step_count"
+                android:id="@+id/step_count_textView"
                 style="@style/TextAppearance.Material3.BodyLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/step_label"
+                app:layout_constraintBottom_toBottomOf="@+id/step_label_textView"
                 app:layout_constraintEnd_toStartOf="@id/divider"
-                app:layout_constraintStart_toEndOf="@+id/step_label"
-                app:layout_constraintTop_toTopOf="@+id/step_label"
+                app:layout_constraintStart_toEndOf="@+id/step_label_textView"
+                app:layout_constraintTop_toTopOf="@+id/step_label_textView"
                 tools:text="1" />
 
             <TextView
-                android:id="@+id/step_ingredients"
+                android:id="@+id/step_ingredients_textView"
                 style="@style/TextAppearance.Material3.BodySmall"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="@+id/divider"
                 app:layout_constraintStart_toStartOf="@+id/divider"
-                app:layout_constraintTop_toBottomOf="@+id/step_label"
+                app:layout_constraintTop_toBottomOf="@+id/step_label_textView"
                 tools:text="pork chops, parmesan, water, pork, sauce, pork" />
 
             <ImageView
@@ -75,7 +75,7 @@
                 app:tint="@color/md_theme_light_tertiary" />
 
             <TextView
-                android:id="@+id/step_details"
+                android:id="@+id/step_details_textView"
                 style="@style/TextAppearance.Material3.BodyMedium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -84,31 +84,31 @@
                 android:paddingBottom="16dp"
 
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/step_label"
-                app:layout_constraintTop_toBottomOf="@+id/step_ingredients"
+                app:layout_constraintStart_toStartOf="@+id/step_label_textView"
+                app:layout_constraintTop_toBottomOf="@+id/step_ingredients_textView"
                 tools:text="wash and rinse pork chops and place into the skillet.cut them into bite sized pieces and add half of the Basil Garlic simmer sauce.boil your water and start working on cooking your bow-tie pasta.when you have finished with boiling and draining your pasta, add it to the pork along with the rest of the Basil Garlic Simmering Sauce, mixing lightly.Next you will top with the Chunky Bruschetta Finishing Sauce, cover with Parmesan, and cover. Cooking on low heat 2 to 3 minutes or until heated through." />
 
             <com.google.android.material.divider.MaterialDivider
                 android:id="@+id/divider"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                app:layout_constraintBottom_toBottomOf="@id/step_count"
-                app:layout_constraintEnd_toStartOf="@id/step_length"
-                app:layout_constraintStart_toEndOf="@id/step_count"
-                app:layout_constraintTop_toTopOf="@id/step_count" />
+                app:layout_constraintBottom_toBottomOf="@id/step_count_textView"
+                app:layout_constraintEnd_toStartOf="@id/step_length_textView"
+                app:layout_constraintStart_toEndOf="@id/step_count_textView"
+                app:layout_constraintTop_toTopOf="@id/step_count_textView" />
 
             <TextView
-                android:id="@+id/step_length"
+                android:id="@+id/step_length_textView"
                 style="@style/TextAppearance.Material3.BodyLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="8dp"
                 android:text="@string/step_length"
-                app:layout_constraintBottom_toBottomOf="@+id/step_count"
+                app:layout_constraintBottom_toBottomOf="@+id/step_count_textView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/divider"
-                app:layout_constraintTop_toTopOf="@+id/step_count"
+                app:layout_constraintTop_toTopOf="@+id/step_count_textView"
                 tools:text="2 minutes" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
+import com.example.whattoeat.R
 import com.example.whattoeat.databinding.RecipesBottomSheetBinding
 import com.example.whattoeat.util.Constants.DEFAULT_INGREDIENTS
 import com.example.whattoeat.util.Constants.DEFAULT_RANKING
@@ -31,6 +33,8 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         recipesViewModel = ViewModelProvider(requireActivity())[RecipesViewModel::class.java]
+        // style for not cover search button by keyboard
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.BottomSheetDialogThemeNoFloating)
     }
 
     override fun onCreateView(
@@ -41,6 +45,8 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
 
         setupEditText()
 
+
+
         recipesViewModel.readIngredientsAndRanking.asLiveData()
             .observe(viewLifecycleOwner) { value ->
                 ranking = value.selectedRanking
@@ -50,6 +56,8 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
             }
 
         binding.rankingSwitch.isChecked
+
+        binding.rankingSwitch.toggle()
 
         binding.rankingSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
@@ -64,7 +72,7 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
         }
 
 
-        binding.searchBtn.setOnClickListener {
+        binding.searchButton.setOnClickListener {
             if (recipesViewModel.networkStatus) {
                 ingredients = binding.myIngredientsEditText.text.toString()
                 recipesViewModel.saveIngredientsTemp(

@@ -10,20 +10,19 @@
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/ranking_switch"
-        style="@style/Widget.Material3.CompoundButton.MaterialSwitch"
-
+        style="@style/mSwitch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
         android:layout_marginTop="8dp"
-        tools:text="Maximize my ingredients"
+        android:layout_marginEnd="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Maximize my ingredients" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/myIngredientsInputLayout"
+        android:id="@+id/myIngredients_inputLayout"
         style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,23 +32,23 @@
         android:layout_marginBottom="12dp"
         android:hint="My ingredients"
         app:endIconMode="clear_text"
-        app:layout_constraintBottom_toTopOf="@id/searchBtn"
+        app:layout_constraintBottom_toTopOf="@id/search_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
 
         app:layout_constraintTop_toBottomOf="@id/ranking_switch">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:imeOptions="actionDone"
-            android:id="@+id/myIngredientsEditText"
-            android:text=""
+            android:id="@+id/myIngredients_editText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:text="" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/searchBtn"
+        android:id="@+id/search_button"
         style="@style/Widget.Material3.Button.OutlinedButton.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -20,7 +20,7 @@
     <string name="nutrition_score">Nutrition score: %.1f %%</string>
     <string name="save_to_favorites">Save to favorites</string>
     <string name="empty_favorites">Your favorite recipes will appear here</string>
-    <string name="no_instructions_textView">No instructions availible</string>
+    <string name="no_instructions_text">No instructions availible</string>
     <string name="toolbar_title">Details</string>
     <string name="delete_all">Delete All</string>
     <string name="favorites">Favorites</string>

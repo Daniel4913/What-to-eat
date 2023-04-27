@@ -48,6 +48,20 @@
         <item name="android:textColor">@color/md_theme_dark_onPrimaryContainer</item>
     </style>
 
+    <style name="recipeItemIcons">
+        <item name="android:tint">@color/md_theme_dark_secondary</item>
+    </style>
+
+    <style name="detailsToolbar" parent="@style/Widget.Material3.Toolbar">
+        <item name="navigationIconTint">@color/md_theme_dark_onSurfaceVariant</item>
+        <item name="titleTextColor">@color/md_theme_dark_onSurfaceVariant</item>
+    </style>
+
+    <style name="recipeCountTextView" parent="@style/TextAppearance.Material3.LabelLarge">
+
+    </style>
+
+
 
 <!--    //////////////////////////////////  -->
     <style name="CustomTabLayoutStyle" parent="Widget.Design.TabLayout">

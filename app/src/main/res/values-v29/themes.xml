@@ -54,6 +54,21 @@
 
     </style>
 
+    <style name="mSwitch" parent="Widget.Material3.CompoundButton.MaterialSwitch">
+        <item name="thumbIconTint">@color/md_theme_light_secondary</item>
+        <item name="state_with_icon">true</item>
+
+    </style>
+
+    <style name="detailsToolbar" parent="@style/Widget.Material3.Toolbar">
+        <item name="navigationIconTint">@color/md_theme_light_onSurfaceVariant</item>
+        <item name="titleTextColor">@color/md_theme_light_onSurfaceVariant</item>
+    </style>
+
+    <style name="recipeCountTextView" parent="@style/TextAppearance.Material3.LabelLarge">
+        <item name="android:fontWeight">100</item>
+    </style>
+
 
     <!--///////////////////////////////////////////////////////////////////-->
     <style name="CustomTabLayoutStyle" parent="Widget.Design.TabLayout">

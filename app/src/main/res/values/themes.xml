@@ -1,4 +1,5 @@
 <resources>
+
     <style name="AppTheme" parent="Theme.Material3.Light.NoActionBar">
         <item name="colorPrimary">@color/md_theme_light_primary</item>
         <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
@@ -27,11 +28,10 @@
         <item name="colorSurfaceInverse">@color/md_theme_light_inverseSurface</item>
         <item name="colorPrimaryInverse">@color/md_theme_light_inversePrimary</item>
         <item name="iconTint">@color/md_theme_light_primary</item>
-<!--        <item name="android:iconTint">@color/md_theme_dark_secondaryContainer</item>-->
+        <!--        <item name="android:iconTint">@color/md_theme_dark_secondaryContainer</item>-->
 
 
-
-<!--   ActionMode     //////////////////////////////////////////////////////-->
+        <!--   ActionMode     //////////////////////////////////////////////////////-->
         <item name="actionModeStyle">@style/Widget.ActionMode</item>
         <item name="actionModeCloseDrawable">@drawable/ic_check</item>
         <item name="actionModeBackground">@color/md_theme_light_onErrorContainer</item>
@@ -40,7 +40,9 @@
 
         <!--      BottomNav  //////////////////////////////////////////////////////-->
 
-        <item name="bottomNavigationStyle">@style/Widget.Material3.BottomNavigationView.ActiveIndicator</item>
+        <item name="bottomNavigationStyle">
+            @style/Widget.Material3.BottomNavigationView.ActiveIndicator
+        </item>
 
 
     </style>
@@ -49,11 +51,39 @@
         <item name="android:textColor">@color/md_theme_light_onPrimaryContainer</item>
     </style>
 
-    <style name="actionModeDark" parent="@style/Widget.AppCompat.ActionMode">
+    <style name="actionModeDark" parent="@style/Widget.AppCompat.ActionMode"></style>
+
+    <style name="BottomSheetDialogThemeNoFloating" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowSoftInputMode">adjustResize|stateVisible</item>
+        <item name="colorContainer">@color/md_theme_light_secondaryContainer</item>
     </style>
 
 
+    <!-- Nie dziala chuja dziala to  //////////////////////////////////////////////////////-->
+    <style name="mSwitch" parent="Widget.Material3.CompoundButton.MaterialSwitch">
+        <item name="thumbIconTint">@color/md_theme_light_secondary</item>
+        <item name="state_with_icon">true</item>
+
+    </style>
+
+    <style name="detailsToolbar" parent="@style/Widget.Material3.Toolbar">
+        <item name="navigationIconTint">@color/md_theme_light_onSurfaceVariant</item>
+        <item name="titleTextColor">@color/md_theme_light_onSurfaceVariant</item>
+
+    </style>
+
+
+
+
     <!--        //////////////////////////////////////////////////////-->
+    <style name="recipeItemIcons">
+        <item name="android:tint">@color/md_theme_light_secondary</item>
+    </style>
+
+    <style name="recipeCountTextView" parent="@style/TextAppearance.Material3.LabelLarge">
+
+    </style>
 
 
     <style name="CustomTabLayoutStyle" parent="Widget.Design.TabLayout">

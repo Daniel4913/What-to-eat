@@ -1,11 +1,14 @@
 package com.example.whattoeat.ui
 
+import android.content.res.Configuration
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -34,10 +37,12 @@ class DetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailsBinding
 
     private lateinit var menuItem: MenuItem
+    private lateinit var currentConfiguration: Configuration
 
     private var recipeSaved = false
     private var savedRecipeId = 0
 
+    @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -45,6 +50,7 @@ class DetailsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.detailsToolbar)
+        currentConfiguration = resources?.configuration!!
 
         val fragments = ArrayList<Fragment>()
         fragments.add(OverviewFragment())
@@ -77,8 +83,8 @@ class DetailsActivity : AppCompatActivity() {
         TabLayoutMediator(binding.tabLayout, binding.viewPager2) { tab, position ->
             tab.text = titles[position]
             tab.icon = icons[position]
-
         }.attach()
+
 
     }
 
@@ -86,6 +92,7 @@ class DetailsActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.details_menu, menu)
         menuItem = menu!!.findItem(R.id.save_to_favorites_menu_item)
         checkSavedRecipes(menuItem)
+        setNightModeBookmarkIconColor()
         return true
     }
 
@@ -113,7 +120,7 @@ class DetailsActivity : AppCompatActivity() {
                         )
                         savedRecipeId = savedRecipe.detailedRecipe.id
                         recipeSaved = true
-
+                        setNightModeBookmarkIconColor()
                     }
                 }
             } catch (e: java.lang.Exception) {
@@ -127,9 +134,10 @@ class DetailsActivity : AppCompatActivity() {
             val favoriteRecipeEntity =
                 FavoriteRecipeEntity(savedRecipeId, it.detailedRecipe)
             mainViewModel.deleteFavorite(favoriteRecipeEntity)
-            changeMenuItem(item, R.color.white, R.drawable.bookmark_add)
+            changeMenuItem(item, R.color.md_theme_dark_onSurfaceVariant, R.drawable.bookmark_add)
             showSnackBar("Recipe removed from favorites")
             recipeSaved = false
+            setNightModeBookmarkIconColor()
         }
 
     }
@@ -143,6 +151,7 @@ class DetailsActivity : AppCompatActivity() {
         changeMenuItem(item, R.color.md_theme_dark_onPrimaryContainer, R.drawable.bookmark_added)
         recipeSaved = true
         showSnackBar("Recipe saved!")
+        setNightModeBookmarkIconColor()
     }
 
     private fun showSnackBar(message: String) {
@@ -162,8 +171,47 @@ class DetailsActivity : AppCompatActivity() {
         item.icon?.setTint(ContextCompat.getColor(this, color))
     }
 
+
+    private fun setNightModeBookmarkIconColor() {
+        if (this::currentConfiguration.isInitialized) {
+            val isNightModeActive =
+                currentConfiguration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+            if (recipeSaved) {
+                if (isNightModeActive) {
+                    changeMenuItem(
+                        menuItem,
+                        R.color.md_theme_dark_primary,
+                        R.drawable.bookmark_added
+                    )
+                } else {
+                    changeMenuItem(
+                        menuItem,
+                        R.color.md_theme_light_primary,
+                        R.drawable.bookmark_added
+                    )
+                }
+            } else {
+                if (isNightModeActive) {
+                    changeMenuItem(
+                        menuItem,
+                        R.color.md_theme_dark_onSurfaceVariant,
+                        R.drawable.bookmark_add
+                    )
+                } else {
+                    changeMenuItem(
+                        menuItem,
+                        R.color.md_theme_light_onSurfaceVariant,
+                        R.drawable.bookmark_add
+                    )
+                }
+            }
+        }
+    }
+
+
     override fun onDestroy() {
         super.onDestroy()
+        setNightModeBookmarkIconColor()
         changeMenuItem(menuItem, R.color.white, R.drawable.bookmark_add)
 
     }

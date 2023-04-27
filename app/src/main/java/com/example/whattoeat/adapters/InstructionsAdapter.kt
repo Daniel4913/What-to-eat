@@ -51,23 +51,23 @@ class InstructionsAdapter(
     override fun onBindViewHolder(holder: InstructionsViewHolder, position: Int) {
         instructionsViewHolders.add(holder)
         holder.binding.apply {
-            stepCount.text = stepsList[position].number.toString()
+            stepCountTextView.text = stepsList[position].number.toString()
 
             val names = mutableListOf<String>()
             stepsList[position].ingredients.forEach {
                 names.add(it.name)
             }
 
-            stepIngredients.text = names.toString().removeSurrounding("[", "]")
+            stepIngredientsTextView.text = names.toString().removeSurrounding("[", "]")
 
-            stepDetails.text = stepsList[position].step
+            stepDetailsTextView.text = stepsList[position].step
 
             if (stepsList[position].length != null) {
                 val length = stepsList[position].length.number
                 val unit = stepsList[position].length.unit
-                stepLength.text = context.getString(R.string.step_length, length, unit)
+                stepLengthTextView.text = context.getString(R.string.step_length, length, unit)
             } else {
-                stepLength.text = ""
+                stepLengthTextView.text = ""
             }
         }
 
