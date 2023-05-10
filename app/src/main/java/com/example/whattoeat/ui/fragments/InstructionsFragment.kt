@@ -85,10 +85,14 @@ class InstructionsFragment : Fragment() {
         binding.instructionsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 
+    override fun onPause() {
+        super.onPause()
+        mAdapter.finishActionMode()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        mAdapter.finishActionMode()
     }
 
 }

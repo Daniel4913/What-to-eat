@@ -37,237 +37,362 @@
 
         <TextView
             android:id="@+id/nutrition_label_textView"
+            style="@style/TextAppearance.Material3.TitleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/values_label"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/servings_textView"
+            style="@style/TextAppearance.Material3.LabelLarge"
             getServings="@{recipe.servings}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/nutrition_label_textView"
             app:layout_constraintStart_toStartOf="@+id/nutrition_label_textView"
             app:layout_constraintTop_toBottomOf="@+id/nutrition_label_textView"
             tools:text="2 servings" />
 
         <TextView
             android:id="@+id/weightPerServing_textView"
+            style="@style/TextAppearance.Material3.LabelLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@{@string/weight_per_serving(nutrition.weightPerServing.amount)}"
-            app:layout_constraintEnd_toEndOf="@+id/servings_textView"
             app:layout_constraintStart_toStartOf="@+id/servings_textView"
-            app:layout_constraintTop_toBottomOf="@+id/servings_textView" />
+            app:layout_constraintTop_toBottomOf="@+id/servings_textView"
+            tools:text="12" />
+
+        <TextView
+            android:id="@+id/calories_textView"
+            style="@style/TextAppearance.Material3.TitleSmall"
+            getNutrient="@{nutrients}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/weightPerServing_textView"
+            app:layout_constraintTop_toBottomOf="@+id/weightPerServing_textView"
+            tools:text="124 kcal" />
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="82dp"
-            android:layout_height="82dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="98dp"
+            android:layout_height="98dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:src="@drawable/ic_molecule"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/calories_textView" />
+            app:layout_constraintBottom_toBottomOf="@+id/calories_textView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.divider.MaterialDivider
             android:id="@+id/materialDivider"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            app:dividerInsetEnd="8dp"
+            app:dividerInsetStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nutri_score_imageView" />
 
 
         <com.google.android.material.divider.MaterialDivider
             android:id="@+id/materialDivider2"
+            style="@style/Widget.Material3.MaterialDivider"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            app:dividerInsetEnd="8dp"
+            app:dividerInsetStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/carbs_textView" />
+            app:layout_constraintTop_toBottomOf="@+id/fat_cardView" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/materialDivider3"
+            style="@style/Widget.Material3.MaterialDivider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:dividerInsetEnd="8dp"
+            app:dividerInsetStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/calories_textView" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/nutrients_list_label_textView"
             style="@style/TextAppearance.Material3.TitleMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="Full nutrients list:"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/materialDivider" />
 
-        <TextView
-            android:id="@+id/percentFat_textView"
-            android:layout_width="wrap_content"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/fat_cardView"
+            style="@style/Widget.Material3.CardView.Outlined"
+            android:layout_marginTop="16dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@{@string/percent_caloric_breakdown(caloricBreakdown.percentFat)}"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="@+id/imageView"
-            tools:text="10%" />
+            app:cardElevation="3dp"
+            app:layout_constraintBottom_toTopOf="@+id/materialDivider2"
+            app:layout_constraintEnd_toStartOf="@id/carbs_cardView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/materialDivider3">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp">
 
 
-        <TextView
-            android:id="@+id/percentCarbs_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{@string/percent_caloric_breakdown(caloricBreakdown.percentCarbs)}"
-            app:layout_constraintBottom_toBottomOf="@+id/percentFat_textView"
-            app:layout_constraintEnd_toStartOf="@id/percentProtein_textView"
-            app:layout_constraintStart_toEndOf="@+id/percentFat_textView"
-            app:layout_constraintTop_toTopOf="@+id/percentFat_textView"
-            app:layout_constraintVertical_bias="0.0"
-            tools:text="10%" />
+                <TextView
+                    android:id="@+id/percentFat_textView"
+                    style="@style/TextAppearance.Material3.BodyMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@{@string/percent_caloric_breakdown(caloricBreakdown.percentFat)}"
+                    app:layout_constraintBottom_toTopOf="@+id/gramFat_textView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
 
-        <TextView
-            android:id="@+id/percentProtein_textView"
-            android:layout_width="wrap_content"
+                    tools:text="10%" />
+
+
+                <TextView
+                    android:id="@+id/gramFat_textView"
+                    style="@style/TextAppearance.Material3.TitleLarge"
+                    getNutrient="@{nutrients}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintBottom_toTopOf="@id/fat_textView"
+                    app:layout_constraintEnd_toEndOf="@+id/percentFat_textView"
+                    app:layout_constraintStart_toStartOf="@+id/percentFat_textView"
+                    app:layout_constraintTop_toBottomOf="@+id/percentFat_textView"
+                    tools:text="123,23 g" />
+
+                <TextView
+                    android:id="@+id/fat_textView"
+                    style="@style/TextAppearance.Material3.TitleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Fat"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/gramFat_textView"
+                    app:layout_constraintStart_toStartOf="@+id/gramFat_textView"
+                    app:layout_constraintTop_toBottomOf="@+id/gramFat_textView" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/carbs_cardView"
+            style="@style/Widget.Material3.CardView.Outlined"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="@{@string/percent_caloric_breakdown(caloricBreakdown.percentProtein)}"
-            app:layout_constraintBottom_toBottomOf="@+id/percentCarbs_textView"
+            app:cardElevation="3dp"
+            app:layout_constraintBottom_toBottomOf="@+id/fat_cardView"
+            app:layout_constraintEnd_toStartOf="@id/protein_cardView"
+            app:layout_constraintStart_toEndOf="@+id/fat_cardView"
+            app:layout_constraintTop_toTopOf="@+id/fat_cardView"
+            app:layout_constraintVertical_bias="0.0">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp">
+
+                <TextView
+                    android:id="@+id/percentCarbs_textView"
+                    style="@style/TextAppearance.Material3.BodyMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@{@string/percent_caloric_breakdown(caloricBreakdown.percentCarbs)}"
+                    app:layout_constraintBottom_toTopOf="@id/gramCarb_textView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="10%" />
+
+                <TextView
+                    android:id="@+id/gramCarb_textView"
+                    style="@style/TextAppearance.Material3.TitleLarge"
+                    getNutrient="@{nutrients}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintBottom_toTopOf="@id/carbs_textView"
+                    app:layout_constraintEnd_toEndOf="@+id/percentCarbs_textView"
+                    app:layout_constraintStart_toStartOf="@+id/percentCarbs_textView"
+                    app:layout_constraintTop_toBottomOf="@+id/percentCarbs_textView"
+                    tools:text="123,23 g" />
+
+                <TextView
+                    android:id="@+id/carbs_textView"
+                    style="@style/TextAppearance.Material3.TitleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Carbs"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/gramCarb_textView"
+                    app:layout_constraintStart_toStartOf="@+id/gramCarb_textView"
+                    app:layout_constraintTop_toBottomOf="@+id/gramCarb_textView" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/protein_cardView"
+            style="@style/Widget.Material3.CardView.Outlined"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+
+            app:cardElevation="3dp"
+            app:layout_constraintBottom_toBottomOf="@+id/carbs_cardView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/percentCarbs_textView"
-            app:layout_constraintTop_toTopOf="@+id/percentCarbs_textView"
-            app:layout_constraintVertical_bias="0.0"
-            tools:text="10%" />
+            app:layout_constraintStart_toEndOf="@+id/carbs_cardView"
+            app:layout_constraintTop_toTopOf="@+id/carbs_cardView">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp">
+
+                <TextView
+                    android:id="@+id/percentProtein_textView"
+                    style="@style/TextAppearance.Material3.BodyMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@{@string/percent_caloric_breakdown(caloricBreakdown.percentProtein)}"
+                    app:layout_constraintBottom_toTopOf="@id/gramProtein_textView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="10%" />
 
 
-        <TextView
-            android:id="@+id/gramProtein_textView"
-            getNutrient="@{nutrients}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@+id/percentProtein_textView"
-            app:layout_constraintTop_toBottomOf="@+id/percentProtein_textView"
-            tools:text="123,23 g" />
+                <TextView
+                    android:id="@+id/gramProtein_textView"
+                    style="@style/TextAppearance.Material3.TitleLarge"
+                    getNutrient="@{nutrients}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintBottom_toTopOf="@id/gramProtein_textView"
+                    app:layout_constraintEnd_toEndOf="@+id/percentProtein_textView"
+                    app:layout_constraintStart_toStartOf="@+id/percentProtein_textView"
+                    app:layout_constraintTop_toBottomOf="@+id/percentProtein_textView"
+                    tools:text="123,23 g" />
 
-        <TextView
-            android:id="@+id/gramFat_textView"
-            getNutrient="@{nutrients}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            tools:text="123,23 g"
-            app:layout_constraintStart_toStartOf="@+id/percentFat_textView"
-            app:layout_constraintTop_toBottomOf="@+id/percentFat_textView" />
+                <TextView
+                    android:id="@+id/protein_textView"
+                    style="@style/TextAppearance.Material3.TitleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Protein"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/gramProtein_textView"
+                    app:layout_constraintStart_toStartOf="@+id/gramProtein_textView"
+                    app:layout_constraintTop_toBottomOf="@+id/gramProtein_textView" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <TextView
             android:id="@+id/gramSaturatedFat_textView"
+            style="@style/TextAppearance.Material3.TitleSmall"
             getNutrient="@{nutrients}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/glycemicIndex_textView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/materialDivider2"
             tools:text="Saturated Fat 222 g" />
 
         <TextView
-            android:id="@+id/gramCarb_textView"
-            getNutrient="@{nutrients}"
-            android:layout_width="wrap_content"
-            tools:text="123,23 g"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@+id/percentCarbs_textView"
-            app:layout_constraintTop_toBottomOf="@+id/percentCarbs_textView" />
-
-        <TextView
             android:id="@+id/gramSugar_textView"
+            style="@style/TextAppearance.Material3.TitleSmall"
             getNutrient="@{nutrients}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="123,23 g"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/gramSaturatedFat_textView" />
+            app:layout_constraintEnd_toEndOf="@+id/gramSaturatedFat_textView"
+            app:layout_constraintStart_toStartOf="@+id/gramSaturatedFat_textView"
+            app:layout_constraintTop_toBottomOf="@+id/gramSaturatedFat_textView"
+            tools:text="123,23 g" />
 
         <TextView
             android:id="@+id/glycemicIndex_textView"
+            style="@style/TextAppearance.Material3.TitleSmall"
+
             getProperty="@{property}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            tools:text="124"
-            app:layout_constraintStart_toStartOf="@+id/carbs_textView"
-            app:layout_constraintTop_toBottomOf="@+id/materialDivider2" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/gramSaturatedFat_textView"
+            app:layout_constraintTop_toBottomOf="@+id/materialDivider2"
+            tools:text="124" />
 
 
         <TextView
             android:id="@+id/glycemicLoad_textView"
+            style="@style/TextAppearance.Material3.TitleSmall"
             getProperty="@{property}"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/glycemicIndex_textView"
             app:layout_constraintStart_toStartOf="@+id/glycemicIndex_textView"
-            app:layout_constraintTop_toBottomOf="@+id/glycemicIndex_textView" />
+            app:layout_constraintTop_toBottomOf="@+id/glycemicIndex_textView"
+            tools:text="glycemicload textview" />
 
         <TextView
             android:id="@+id/nutritionScore_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Nutrition Score 24.2 %"
+            style="@style/TextAppearance.Material3.TitleSmall"
             getProperty="@{property}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="@+id/nutri_score_imageView"
-            app:layout_constraintStart_toStartOf="@+id/gramSugar_textView"
-            app:layout_constraintTop_toTopOf="@+id/nutri_score_imageView" />
-
-
-        <TextView
-            android:id="@+id/calories_textView"
-            getNutrient="@{nutrients}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/weightPerServing_textView"
-            app:layout_constraintStart_toStartOf="@+id/weightPerServing_textView"
-            app:layout_constraintTop_toBottomOf="@+id/weightPerServing_textView"
-            tools:text="12423 kcal" />
-
-        <TextView
-            android:id="@+id/fat_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Fat"
-            app:layout_constraintStart_toStartOf="@+id/gramFat_textView"
-            app:layout_constraintTop_toBottomOf="@+id/gramFat_textView" />
-
-        <TextView
-            android:id="@+id/carbs_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Carbs"
-            app:layout_constraintStart_toStartOf="@+id/gramCarb_textView"
-            app:layout_constraintTop_toBottomOf="@+id/gramCarb_textView" />
-
-        <TextView
-            android:id="@+id/protein_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Protein"
-            app:layout_constraintStart_toStartOf="@+id/gramProtein_textView"
-            app:layout_constraintTop_toBottomOf="@+id/gramProtein_textView" />
+            app:layout_constraintEnd_toEndOf="@+id/glycemicLoad_textView"
+            app:layout_constraintStart_toStartOf="@+id/glycemicLoad_textView"
+            app:layout_constraintTop_toTopOf="@+id/nutri_score_imageView"
+            tools:text="Nutrition Score 24.2 %" />
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/nutritions_recyclerView"
-            android:layout_width="409dp"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -276,14 +401,14 @@
 
         <ImageView
             android:id="@+id/nutri_score_imageView"
+            setNutriScore="@{property}"
             android:layout_width="120dp"
             android:layout_height="80dp"
-            android:layout_marginTop="16dp"
             android:src="@drawable/nutri_a"
-            setNutriScore="@{property}"
             android:visibility="visible"
-            app:layout_constraintStart_toStartOf="@+id/carbs_textView"
-            app:layout_constraintTop_toBottomOf="@+id/glycemicLoad_textView" />
+            app:layout_constraintEnd_toEndOf="@+id/gramSugar_textView"
+            app:layout_constraintStart_toStartOf="@+id/gramSugar_textView"
+            app:layout_constraintTop_toBottomOf="@+id/gramSugar_textView" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

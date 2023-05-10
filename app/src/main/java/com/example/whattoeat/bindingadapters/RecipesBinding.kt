@@ -1,13 +1,9 @@
 package com.example.whattoeat.bindingadapters
 
-import android.content.Intent
-import android.graphics.drawable.GradientDrawable
-import android.net.Uri
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
 import coil.load
@@ -16,12 +12,10 @@ import com.example.whattoeat.R
 import com.example.whattoeat.model.MissedIngredient
 import com.example.whattoeat.model.UsedIngredient
 import com.example.whattoeat.ui.fragments.RecipesFragmentDirections
-import kotlinx.coroutines.coroutineScope
 import org.jsoup.Jsoup
 import java.util.*
 
-class RecipesItemBinding() {
-
+class RecipesBinding {
     companion object {
 
         @BindingAdapter("onRecipeClickListener")
@@ -38,32 +32,16 @@ class RecipesItemBinding() {
             }
         }
 
+
+
         @BindingAdapter("loadImageFromUrl")
         @JvmStatic
         fun loadImageFromUrl(imageView: ImageView, imageUrl: String?) {
-
             imageView.load(imageUrl) {
                 crossfade(600)
                 transformations(RoundedCornersTransformation(0f, 0f, 0f, 15f))
                 error(R.drawable.baseline_wifi_tethering_error_24)
-            }
-        }
-
-        @BindingAdapter("setImage")
-        @JvmStatic
-        fun setImage(imageView: ImageView, imageUrl: String?) {
-            //TODO dlaczego w OverviewFragment zwraca mi odrazu null a w RecipesFragment stevdza nie dostaje nulla?
-            if (imageUrl != null) {
-                imageView.load(imageUrl) {
-                    crossfade(600)
-                    transformations(
-                        RoundedCornersTransformation(0f, 0f, 15f, 15f),
-
-                        )
-                    error(R.drawable.baseline_wifi_tethering_error_24)
-
-                }
-                imageView
+                placeholder(R.drawable.ic_imagesearch_roller)
             }
         }
 

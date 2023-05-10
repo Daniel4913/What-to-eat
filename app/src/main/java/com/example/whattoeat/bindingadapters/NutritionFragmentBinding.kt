@@ -13,14 +13,7 @@ class NutritionFragmentBinding {
 
     companion object {
 
-        @BindingAdapter("setRecipePageString")
-        @JvmStatic
-        fun setRecipePageString(materialButton: MaterialButton, sourceUrl: String?) {
-            if (sourceUrl != null) {
-                materialButton.text =
-                    materialButton.resources.getString(R.string.visit_recipe_page, sourceUrl)
-            }
-        }
+
 
         @BindingAdapter("getNutrient")
         @JvmStatic
@@ -37,17 +30,26 @@ class NutritionFragmentBinding {
                     }
                     "Fat" -> {
                         if (textView.id == R.id.gramFat_textView) {
-                            textView.text = nutrientItem.amount.toString()
+                            textView.text = textView.resources.getString(
+                                R.string.gram_nutrient,
+                                nutrientItem.amount
+                            )
                         }
                     }
                     "Carbohydrates" -> {
                         if (textView.id == R.id.gramCarb_textView) {
-                            textView.text = nutrientItem.amount.toString()
+                            textView.text = textView.resources.getString(
+                                R.string.gram_nutrient,
+                                nutrientItem.amount
+                            )
                         }
                     }
                     "Protein" -> {
                         if (textView.id == R.id.gramProtein_textView) {
-                            textView.text = nutrientItem.amount.toString()
+                            textView.text = textView.resources.getString(
+                                R.string.gram_nutrient,
+                                nutrientItem.amount
+                            )
                         }
                     }
                     "Saturated Fat" -> {

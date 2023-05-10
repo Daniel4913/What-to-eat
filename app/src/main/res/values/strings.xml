@@ -10,6 +10,8 @@
 
     <string name="servings">%d servings</string>
     <string name="percent_caloric_breakdown">%.1f%%</string>
+    <string name="gram_nutrient">%.1f g</string>
+
     <string name="glycemic_load">Glycemic Load: %.1f</string>
     <string name="glycemic_index">Glycemic Index: %.1f</string>
     <string name="saturated_fat">Saturated Fat: %.1f g</string>
@@ -17,7 +19,7 @@
     <string name="weight_per_serving">Serving weight: %d g</string>
     <string name="calories">%.0f kcal</string>
     <string name="values_label">Nutrition values per serving:</string>
-    <string name="nutrition_score">Nutrition score: %.1f %%</string>
+    <string name="nutrition_score">Nutrition score:\n %.1f %%</string>
     <string name="save_to_favorites">Save to favorites</string>
     <string name="empty_favorites">Your favorite recipes will appear here</string>
     <string name="no_instructions_text">No instructions availible</string>

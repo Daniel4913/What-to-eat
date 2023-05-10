@@ -21,7 +21,6 @@ class NutritionFragment : Fragment() {
 
     private var _binding: FragmentNutritionBinding? = null
     private val binding get() = _binding!!
-
     private val mAdapter by lazy { NutritionsAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,13 +32,11 @@ class NutritionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         _binding = FragmentNutritionBinding.inflate(inflater, container, false)
         setupRecyclerView()
         val args = requireArguments()
         val recipeId = args.getBundle("recipeBundle")?.getInt("recipeId")!!
         val loadFavorite = args.getBundle("recipeBundle")?.getBoolean("loadFavorite")
-
         if (loadFavorite!!) {
             lifecycleScope.launch {
                 mainViewModel.readFavorite(recipeId).observe(viewLifecycleOwner) { favoriteEntity ->
@@ -63,13 +60,11 @@ class NutritionFragment : Fragment() {
         val nutrients = detailedRecipe.nutrition.nutrients
         val caloricBreakdown = detailedRecipe.nutrition.caloricBreakdown
         val property = detailedRecipe.nutrition.properties
-
         binding.recipe = detailedRecipe
         binding.nutrients = nutrients
         binding.caloricBreakdown = caloricBreakdown
         binding.property = property
         binding.nutrition = nutrition
-
         mAdapter.setData(nutrients)
     }
 

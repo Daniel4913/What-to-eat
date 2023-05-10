@@ -1,4 +1,5 @@
 package com.example.whattoeat.model
 
 
-class RecipesByIngredients : ArrayList<RecipesByIngredientsItem>()
+class RecipesByIngredients :
+    ArrayList<RecipesByIngredientsItem>()

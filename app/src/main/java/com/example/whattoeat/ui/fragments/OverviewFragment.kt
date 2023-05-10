@@ -1,5 +1,6 @@
 package com.example.whattoeat.ui.fragments
 
+
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -7,12 +8,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.BindingAdapter
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.whattoeat.databinding.FragmentOverviewBinding
 import com.example.whattoeat.util.NetworkListener
-import com.example.whattoeat.util.observeOnce
 import com.example.whattoeat.viewmodels.MainViewModel
 import com.example.whattoeat.viewmodels.RecipesViewModel
 import kotlinx.coroutines.launch
@@ -31,6 +30,7 @@ class OverviewFragment : Fragment() {
         super.onCreate(savedInstanceState)
         mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
         recipesViewModel = ViewModelProvider(requireActivity())[RecipesViewModel::class.java]
+
     }
 
     override fun onCreateView(
@@ -38,6 +38,7 @@ class OverviewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentOverviewBinding.inflate(inflater, container, false)
+
         binding.lifecycleOwner = this
 
         recipesViewModel.readBackOnline.observe(viewLifecycleOwner) {
@@ -68,6 +69,7 @@ class OverviewFragment : Fragment() {
         val webpage: Uri = Uri.parse(url)
         val intent = Intent(Intent.ACTION_VIEW, webpage)
         startActivity(intent)
+
     }
 
     private fun readFavorites(recipeId: Int) {
@@ -76,11 +78,9 @@ class OverviewFragment : Fragment() {
                 favoriteRecipes?.forEach { favoriteEntity ->
                     if (favoriteEntity.id == recipeId) {
                         binding.recipeBinding = favoriteEntity.detailedRecipe
+
                         binding.dietsListTextView.isSelected = true
                         binding.cuisinesListTextView.isSelected = true
-                        binding.webpageButton.setOnClickListener {
-                            openWebsite(favoriteEntity.detailedRecipe.sourceUrl)
-                        }
                         binding.webpageButton.text
                     }
                 }
@@ -95,10 +95,8 @@ class OverviewFragment : Fragment() {
                     detailedEntities.forEach { entity ->
                         if (entity.id == recipeId) {
                             binding.recipeBinding = entity.detailedRecipe
+                            binding.fragmentActivity = requireActivity()
                             mainViewModel.currentRecipe = entity.detailedRecipe
-                            binding.webpageButton.setOnClickListener {
-                                openWebsite(entity.detailedRecipe.sourceUrl)
-                            }
                         }
                     }
                 }

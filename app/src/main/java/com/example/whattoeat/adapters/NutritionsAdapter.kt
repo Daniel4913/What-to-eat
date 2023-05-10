@@ -31,7 +31,6 @@ class NutritionsAdapter : RecyclerView.Adapter<NutritionsAdapter.NutritionsViewH
             tvName.text = nutritionsList[position].name
             tvAmount.text = String.format("%.2f",nutritionsList[position].amount)
             tvUnits.text = nutritionsList[position].unit
-            tvDailyNeeds.text = String.format("%.1f", nutritionsList[position].percentOfDailyNeeds)
         }
     }
 

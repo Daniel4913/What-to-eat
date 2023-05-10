@@ -15,7 +15,12 @@ class FavoriteRecipesAdapter(private val onItemClicked: (Int) -> Unit) :
     private var favoriteRecipesList = emptyList<FavoriteRecipeEntity>()
 
     class FavoritesViewHolder(val binding: FavoritesItemBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root) {
+            fun bind(favoriteRecipeEntity: FavoriteRecipeEntity){
+                binding.recipeItem = favoriteRecipeEntity.detailedRecipe
+                binding.executePendingBindings()
+            }
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesViewHolder {
         return FavoritesViewHolder(
@@ -28,17 +33,8 @@ class FavoriteRecipesAdapter(private val onItemClicked: (Int) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: FavoritesViewHolder, position: Int) {
-        holder.binding.apply {
-
-            favoriteItemCardView.setOnClickListener {
-                onItemClicked(favoriteRecipesList[position].detailedRecipe.id)
-            }
-
-            favoriteRecipeImageView.load(favoriteRecipesList[position].detailedRecipe.image)
-            favoriteTitleTextView.text = favoriteRecipesList[position].detailedRecipe.title
-            favoriteCookingTimeChip.text =
-                favoriteRecipesList[position].detailedRecipe.readyInMinutes.toString()
-        }
+        val detailedRecipe = favoriteRecipesList[position]
+        holder.bind(detailedRecipe)
     }
 
     fun setData(newFavorites: List<FavoriteRecipeEntity>) {

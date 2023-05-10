@@ -61,7 +61,10 @@
 
     </style>
 
-
+    <!--    Divider style -->
+    <style name="divider" parent="@style/Widget.Material3.MaterialDivider">
+        <item name="dividerColor">@color/md_theme_light_outlineVariant</item>
+    </style>
 
 <!--    //////////////////////////////////  -->
     <style name="CustomTabLayoutStyle" parent="Widget.Design.TabLayout">

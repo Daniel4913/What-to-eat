@@ -104,7 +104,7 @@ class RecipesViewModel @Inject constructor(
                 Toast.LENGTH_SHORT
             ).show()
             saveBackOnline(true)
-        } else if (networkStatus) {
+        } else {
             if (backOnline) {
                 Toast.makeText(
                     getApplication(),

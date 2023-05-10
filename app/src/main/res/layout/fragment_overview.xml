@@ -4,10 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="recipeBinding"
             type="com.example.whattoeat.model.DetailedRecipe" />
+
+        <variable
+            name="fragmentActivity"
+            type="androidx.fragment.app.FragmentActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,11 +24,12 @@
             android:layout_width="0dp"
             android:layout_height="250dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_search"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/avatars" />
+
+
 
         <com.google.android.material.chip.Chip
             android:id="@+id/cooking_time_chip"
@@ -33,10 +37,10 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:focusable="false"
+            android:text="@{String.valueOf(recipeBinding.readyInMinutes)}"
             app:chipIcon="@drawable/ic_clock"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="@{String.valueOf(recipeBinding.readyInMinutes)}"
             tools:text="12453" />
 
         <com.google.android.material.card.MaterialCardView
@@ -85,15 +89,15 @@
 
                 <TextView
                     android:id="@+id/likes_textView"
+                    style="@style/bodyMediumPrimaryContainer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
-                    tools:text="100"
                     android:text="@{String.valueOf(recipeBinding.aggregateLikes)}"
-                    style="@style/bodyMediumPrimaryContainer"
                     app:layout_constraintBottom_toBottomOf="@+id/likes_imageView"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/likes_imageView" />
+                    app:layout_constraintTop_toTopOf="@+id/likes_imageView"
+                    tools:text="100" />
 
                 <ImageView
                     android:id="@+id/likes_imageView"
@@ -108,21 +112,21 @@
 
                 <TextView
                     android:id="@+id/diets_textView"
+                    style="@style/bodyMediumPrimaryContainer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="Diets: "
-                    style="@style/bodyMediumPrimaryContainer"
                     app:layout_constraintStart_toStartOf="@+id/title_textView"
                     app:layout_constraintTop_toBottomOf="@+id/title_textView" />
 
                 <TextView
                     android:id="@+id/cuisines_textView"
+                    style="@style/bodyMediumPrimaryContainer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    style="@style/bodyMediumPrimaryContainer"
                     android:text="Dish types:"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/diets_textView"
@@ -135,12 +139,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:ellipsize="marquee"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
-                    android:singleLine="true"
+                    android:marqueeRepeatLimit="marquee_forever"
                     android:scrollHorizontally="true"
-                    android:ellipsize="marquee"
-                    android:marqueeRepeatLimit ="marquee_forever"
+                    android:singleLine="true"
                     app:layout_constraintBottom_toBottomOf="@+id/diets_textView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/diets_textView"
@@ -154,13 +158,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:ellipsize="marquee"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
-                    android:singleLine="true"
-                    android:scrollHorizontally="true"
-                    android:ellipsize="marquee"
-                    android:marqueeRepeatLimit ="marquee_forever"
+                    android:marqueeRepeatLimit="marquee_forever"
                     android:maxLines="1"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
                     app:layout_constraintBottom_toBottomOf="@+id/cuisines_textView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/cuisines_textView"
@@ -196,10 +200,11 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/webpage_button"
                     style="@style/Widget.Material3.Button.TextButton"
-                    setRecipePageString="@{recipeBinding.sourceUrl}"
+                    openWebsite="@{recipeBinding.sourceUrl}"
+                    passActivity="@{fragmentActivity}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="Visit vistit" />
+                    tools:text="http://recipe.website" />
             </LinearLayout>
         </ScrollView>
 

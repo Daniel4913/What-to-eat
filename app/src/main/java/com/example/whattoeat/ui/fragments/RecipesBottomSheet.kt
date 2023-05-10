@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
@@ -26,7 +27,6 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
 
     private var _binding: RecipesBottomSheetBinding? = null
     private val binding get() = _binding!!
-
     private var ranking = DEFAULT_RANKING
     private var ingredients = DEFAULT_INGREDIENTS
 

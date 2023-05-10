@@ -22,6 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val repository: Repository,
+//    private val getRecipesUseCase: GetRecipesByIngredientsUseCase,
     application: Application
 ) : AndroidViewModel(application) {
 
@@ -79,6 +80,7 @@ class MainViewModel @Inject constructor(
 
 
     fun getRecipesByIngredients(queries: Map<String, String>) = viewModelScope.launch {
+//        GetRecipesByIngredientsUseCase()
         getRecipesByIngredientsSafeCall(queries)
     }
 
@@ -111,11 +113,11 @@ class MainViewModel @Inject constructor(
         if (checkInternetConnection()) {
             try {
                 val response = repository.remote.getRecipesByIngredients(queries)
-                recipesResponse.value = handleByIngredientsResponse(response)
+                recipesResponse.value = handleRecipesByIngredientsResponse(response)
 
                 val recipes = recipesResponse.value!!.data
                 if (recipes != null) {
-                    offlineCacheRecipes(recipes)
+                    offlineCacheRecipesByIngredients(recipes)
 
                 }
             } catch (e: Exception) {
@@ -128,7 +130,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    private fun offlineCacheRecipes(recipes: RecipesByIngredients) {
+    private fun offlineCacheRecipesByIngredients(recipes: RecipesByIngredients) {
         val recipeByIngredientEntity = RecipeByIngredientEntity(recipes)
         insertRecipes(recipeByIngredientEntity)
     }
@@ -140,7 +142,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    private fun handleByIngredientsResponse(response: Response<RecipesByIngredients>): NetworkResult<RecipesByIngredients>? {
+    private fun handleRecipesByIngredientsResponse(response: Response<RecipesByIngredients>): NetworkResult<RecipesByIngredients>? {
         when {
             response.message().toString().contains("timeout") -> {
                 return NetworkResult.Error("Timeout")

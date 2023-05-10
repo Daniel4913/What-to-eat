@@ -39,11 +39,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-namespace 'com.example.whattoeat'
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
@@ -59,15 +57,13 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.1'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.1'
 
-    // Room components
-    implementation "androidx.room:room-runtime:2.4.3"
-    kapt "androidx.room:room-compiler:2.4.3"
-    implementation "androidx.room:room-ktx:2.4.3"
-    androidTestImplementation "androidx.room:room-testing:2.4.3"
+    def roomVersion = "2.4.3"
 
-    // Data binding
-//    kapt "com.android.databinding:compiler:3.2.0-alpha10"
-//    kapt "androidx.databinding:databinding-common:4.2.2"
+    // Room components
+    implementation "androidx.room:room-runtime:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
+    androidTestImplementation "androidx.room:room-testing:$roomVersion"
 
     // DataStore
     implementation "androidx.datastore:datastore-preferences:1.0.0"

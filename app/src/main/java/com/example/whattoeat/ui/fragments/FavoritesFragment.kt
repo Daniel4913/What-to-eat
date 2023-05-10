@@ -36,6 +36,7 @@ class FavoritesFragment : Fragment() {
     ): View? {
         _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
 
+
         mAdapter = FavoriteRecipesAdapter { recipeId ->
             val action =
                 FavoritesFragmentDirections.actionFavoritesFragmentToDetailsActivity(recipeId,true)
