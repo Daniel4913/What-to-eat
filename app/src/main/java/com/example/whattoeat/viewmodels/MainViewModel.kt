@@ -12,6 +12,10 @@ import com.example.whattoeat.data.database.entities.FavoriteRecipeEntity
 import com.example.whattoeat.data.database.entities.RecipeByIngredientEntity
 import com.example.whattoeat.model.DetailedRecipe
 import com.example.whattoeat.model.RecipesByIngredients
+import com.example.whattoeat.usecase.CacheDetailedRecipesUseCase
+import com.example.whattoeat.usecase.CacheRecipesByIngredientsUseCase
+import com.example.whattoeat.usecase.GetDetailedRecipesUseCase
+import com.example.whattoeat.usecase.GetRecipesByIngredientsUseCase
 import com.example.whattoeat.util.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -22,9 +26,11 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val repository: Repository,
-//    private val getRecipesUseCase: GetRecipesByIngredientsUseCase,
-    application: Application
-) : AndroidViewModel(application) {
+    private val getRecipesUseCase: GetRecipesByIngredientsUseCase,
+    private val cacheRecipesUseCase: CacheRecipesByIngredientsUseCase,
+    private val getDetailedRecipesUseCase: GetDetailedRecipesUseCase,
+    private val cacheDetailedRecipesUseCase: CacheDetailedRecipesUseCase,
+) : ViewModel() {
 
     lateinit var currentRecipe: DetailedRecipe
 
@@ -39,7 +45,7 @@ class MainViewModel @Inject constructor(
     val readFavorites: LiveData<List<FavoriteRecipeEntity>> =
         repository.local.readFavoriteRecipes().asLiveData()
 
-    fun readCurrentRecipe(id: Int): LiveData<DetailedRecipeEntity>{
+    fun readCurrentRecipe(id: Int): LiveData<DetailedRecipeEntity> {
         return repository.local.readDetailedRecipe(id).asLiveData()
     }
 
@@ -80,121 +86,31 @@ class MainViewModel @Inject constructor(
 
 
     fun getRecipesByIngredients(queries: Map<String, String>) = viewModelScope.launch {
-//        GetRecipesByIngredientsUseCase()
-        getRecipesByIngredientsSafeCall(queries)
+
+        recipesResponse.value = getRecipesUseCase.execute(queries)
+        recipesResponse.value!!.data?.let { offlineCacheRecipesByIngredients(it) }
+//        getRecipesByIngredientsSafeCall(queries)
     }
 
     fun getDetailedRecipes(queries: Map<String, String>) =
         viewModelScope.launch {
-            getDetailedRecipesSafeCall(queries)
+            detailedRecipesResponse.value = getDetailedRecipesUseCase.execute(queries)
+//            getDetailedRecipesSafeCall(queries)
+            detailedRecipesResponse.value!!.data?.let { offlineCacheDetailedRecipe(it) }
         }
 
-    private suspend fun getDetailedRecipesSafeCall(queries: Map<String, String>) {
-        detailedRecipesResponse.value = NetworkResult.Loading()
-        if (checkInternetConnection()) {
-            try {
-                val response = repository.remote.getDetailedRecipes(queries)
-                detailedRecipesResponse.value = handleDetailedResponse(response)
-                val recipes = detailedRecipesResponse.value!!.data
-                if (recipes != null) {
-                    offlineCacheDetailedRecipe(recipes)
-                }
-            } catch (e: Exception) {
-                detailedRecipesResponse.value =
-                    NetworkResult.Error("Error: $e")
-            }
-        } else {
-            detailedRecipesResponse.value = NetworkResult.Error("Probable no internet connection")
-        }
-    }
-
-    private suspend fun getRecipesByIngredientsSafeCall(queries: Map<String, String>) {
-        recipesResponse.value = NetworkResult.Loading()
-        if (checkInternetConnection()) {
-            try {
-                val response = repository.remote.getRecipesByIngredients(queries)
-                recipesResponse.value = handleRecipesByIngredientsResponse(response)
-
-                val recipes = recipesResponse.value!!.data
-                if (recipes != null) {
-                    offlineCacheRecipesByIngredients(recipes)
-
-                }
-            } catch (e: Exception) {
-                recipesResponse.value =
-                    NetworkResult.Error("Recipes not found. Some kind of exception occurred")
-                Log.d("getRecipesByIngredientsSafeCall", "e: ${e}")
-            }
-        } else {
-            recipesResponse.value = NetworkResult.Error(message = "No internet connection")
-        }
-    }
-
-    private fun offlineCacheRecipesByIngredients(recipes: RecipesByIngredients) {
+    private suspend fun offlineCacheRecipesByIngredients(recipes: RecipesByIngredients) {
         val recipeByIngredientEntity = RecipeByIngredientEntity(recipes)
-        insertRecipes(recipeByIngredientEntity)
+        cacheRecipesUseCase.execute(recipeByIngredientEntity)
     }
 
-    private fun offlineCacheDetailedRecipe(recipes: List<DetailedRecipe>) {
+    private suspend fun offlineCacheDetailedRecipe(recipes: List<DetailedRecipe>) {
         recipes.forEach { detailedRecipe ->
             val detailedRecipeEntity = DetailedRecipeEntity(detailedRecipe.id, detailedRecipe)
-            insertDetailedRecipe(detailedRecipeEntity)
+            cacheDetailedRecipesUseCase.execute(detailedRecipeEntity)
+//            insertDetailedRecipe(detailedRecipeEntity)
         }
     }
 
-    private fun handleRecipesByIngredientsResponse(response: Response<RecipesByIngredients>): NetworkResult<RecipesByIngredients>? {
-        when {
-            response.message().toString().contains("timeout") -> {
-                return NetworkResult.Error("Timeout")
-            }
-            response.code() == 402 -> {
-                return NetworkResult.Error("API KEY LIMITED")
-            }
-            response.body().isNullOrEmpty() -> {
-                return NetworkResult.Error("Recipes not found")
-            }
-            response.isSuccessful -> {
-                val foodRecipes = response.body()
-                return NetworkResult.Success(foodRecipes!!)
-            }
-            else -> {
-                return NetworkResult.Error(response.message())
-            }
-        }
-    }
 
-    private fun handleDetailedResponse(response: Response<List<DetailedRecipe>>): NetworkResult<List<DetailedRecipe>>? {
-        when {
-            response.message().toString().contains("timeout") -> {
-                return NetworkResult.Error("Timeout")
-            }
-            response.code() == 402 -> {
-                return NetworkResult.Error("API KEY LIMITED")
-            }
-            response.body() == null -> {
-                return NetworkResult.Error("Recipes not found")
-            }
-            response.isSuccessful -> {
-                val foodRecipes = response.body()
-                return NetworkResult.Success(foodRecipes!!)
-            }
-            else -> {
-                return NetworkResult.Error(response.message())
-            }
-        }
-    }
-
-    private fun checkInternetConnection(): Boolean {
-        val connectivityManager = getApplication<Application>().getSystemService(
-            Context.CONNECTIVITY_SERVICE
-        ) as ConnectivityManager
-        val activeNetwork = connectivityManager.activeNetwork ?: return false
-        val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
-        return when {
-            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
-            else -> false
-        }
-    }
 }

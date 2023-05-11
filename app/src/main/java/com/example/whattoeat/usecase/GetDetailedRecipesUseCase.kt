@@ -1,36 +1,37 @@
 package com.example.whattoeat.usecase
 
-import android.app.Application
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import com.example.whattoeat.data.Repository
-import com.example.whattoeat.model.RecipesByIngredients
+import com.example.whattoeat.model.DetailedRecipe
 import com.example.whattoeat.util.NetworkResult
 import retrofit2.Response
 
-
-class GetRecipesByIngredientsUseCase(
+class GetDetailedRecipesUseCase(
     private val repoUse: Repository,
     private val connectivityManager: ConnectivityManager,
 ) {
 
-    suspend fun execute(myIngredients: Map<String, String>):
-            NetworkResult<RecipesByIngredients> // class RecipesByIngredients : ArrayList<RecipesByIngredientsItem>()
-//          ArrayList<RecipesByIngredientsItem>
-    {
-        return if (checkInternetConnection()) {
+    suspend fun execute(queries: Map<String, String>):NetworkResult<List<DetailedRecipe>> {
+//        detailedRecipesResponse.value = NetworkResult.Loading()
+       return if (checkInternetConnection()) {
             try {
-                val response = repoUse.remote.getRecipesByIngredients(myIngredients)
-                handleRecipesByIngredientsResponse(response)
+                val response = repoUse.remote.getDetailedRecipes(queries)
+                handleDetailedResponse(response)
+//                val recipes = detailedRecipesResponse.value!!.data
+//                if (recipes != null) {
+//                    offlineCacheDetailedRecipe(recipes)
+//                }
             } catch (e: Exception) {
-                NetworkResult.Error("Recipes not found. Some kind of exception occurred")
+
+                    NetworkResult.Error("Error: $e")
             }
         } else {
-            NetworkResult.Error(message = "No internet connection")
+            NetworkResult.Error("Probable no internet connection")
         }
     }
 
-    private fun handleRecipesByIngredientsResponse(response: Response<RecipesByIngredients>): NetworkResult<RecipesByIngredients> {
+    private fun handleDetailedResponse(response: Response<List<DetailedRecipe>>): NetworkResult<List<DetailedRecipe>> {
         when {
             response.message().toString().contains("timeout") -> {
                 return NetworkResult.Error("Timeout")
@@ -38,7 +39,7 @@ class GetRecipesByIngredientsUseCase(
             response.code() == 402 -> {
                 return NetworkResult.Error("API KEY LIMITED")
             }
-            response.body().isNullOrEmpty() -> {
+            response.body() == null -> {
                 return NetworkResult.Error("Recipes not found")
             }
             response.isSuccessful -> {
@@ -63,28 +64,5 @@ class GetRecipesByIngredientsUseCase(
             capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
             else -> false
         }
-    }
-}
-
-//repository
-class RecipesJsonModel
-class RecipesDto //room
-
-// domain
-class RecipesEntity
-
-interface Mapper<In, Out> {
-    fun map(input: In): Out
-}
-
-class RecipesEntityFromJsonMapper : Mapper<RecipesJsonModel, RecipesEntity> {
-    override fun map(input: RecipesJsonModel): RecipesEntity {
-        TODO("Not yet implemented")
-    }
-}
-
-class RecipesEntityFromDto : Mapper<RecipesDto, RecipesEntity> {
-    override fun map(input: RecipesDto): RecipesEntity {
-        TODO("Not yet implemented")
     }
 }
