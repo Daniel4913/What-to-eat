@@ -31,11 +31,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class DetailsActivity : AppCompatActivity() {
 
     private val args by navArgs<DetailsActivityArgs>()
-
     private val mainViewModel: MainViewModel by viewModels()
 
     private lateinit var binding: ActivityDetailsBinding
-
     private lateinit var menuItem: MenuItem
     private lateinit var currentConfiguration: Configuration
 
@@ -171,7 +169,6 @@ class DetailsActivity : AppCompatActivity() {
         item.icon?.setTint(ContextCompat.getColor(this, color))
     }
 
-
     private fun setNightModeBookmarkIconColor() {
         if (this::currentConfiguration.isInitialized) {
             val isNightModeActive =
@@ -208,11 +205,9 @@ class DetailsActivity : AppCompatActivity() {
         }
     }
 
-
     override fun onDestroy() {
         super.onDestroy()
         setNightModeBookmarkIconColor()
         changeMenuItem(menuItem, R.color.white, R.drawable.bookmark_add)
-
     }
 }

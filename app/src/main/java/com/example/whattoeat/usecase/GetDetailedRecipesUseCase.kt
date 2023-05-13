@@ -2,12 +2,14 @@ package com.example.whattoeat.usecase
 
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import com.example.whattoeat.data.DataSource
 import com.example.whattoeat.data.Repository
 import com.example.whattoeat.model.DetailedRecipe
 import com.example.whattoeat.util.NetworkResult
 import retrofit2.Response
+import javax.inject.Inject
 
-class GetDetailedRecipesUseCase(
+class GetDetailedRecipesUseCase @Inject constructor(
     private val repoUse: Repository,
     private val connectivityManager: ConnectivityManager,
 ) {
@@ -23,7 +25,6 @@ class GetDetailedRecipesUseCase(
 //                    offlineCacheDetailedRecipe(recipes)
 //                }
             } catch (e: Exception) {
-
                     NetworkResult.Error("Error: $e")
             }
         } else {

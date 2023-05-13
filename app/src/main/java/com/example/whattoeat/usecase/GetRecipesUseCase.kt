@@ -1,15 +1,15 @@
 package com.example.whattoeat.usecase
 
-import android.app.Application
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import com.example.whattoeat.data.Repository
 import com.example.whattoeat.model.RecipesByIngredients
 import com.example.whattoeat.util.NetworkResult
 import retrofit2.Response
+import javax.inject.Inject
 
 
-class GetRecipesByIngredientsUseCase(
+class GetRecipesByIngredientsUseCase @Inject constructor (
     private val repoUse: Repository,
     private val connectivityManager: ConnectivityManager,
 ) {

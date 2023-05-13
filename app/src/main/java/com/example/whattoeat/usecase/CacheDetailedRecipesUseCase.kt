@@ -2,12 +2,10 @@ package com.example.whattoeat.usecase
 
 import com.example.whattoeat.data.Repository
 import com.example.whattoeat.data.database.entities.DetailedRecipeEntity
-import kotlinx.coroutines.coroutineScope
+import javax.inject.Inject
 
-class CacheDetailedRecipesUseCase(private val repoUse:Repository) {
+class CacheDetailedRecipesUseCase @Inject constructor(private val repository:Repository) {
     suspend fun execute(recipes: DetailedRecipeEntity){
-        coroutineScope {
-            repoUse.local.insertDetailedRecipe(recipes)
-        }
+            repository.local.insertDetailedRecipe(recipes)
     }
 }

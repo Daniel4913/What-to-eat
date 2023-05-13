@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.whattoeat.databinding.FragmentOverviewBinding
@@ -18,7 +19,6 @@ import kotlinx.coroutines.launch
 
 
 class OverviewFragment : Fragment() {
-
     private lateinit var mainViewModel: MainViewModel
     private lateinit var recipesViewModel: RecipesViewModel
     private lateinit var networkListener: NetworkListener
@@ -50,7 +50,7 @@ class OverviewFragment : Fragment() {
             networkListener.checkNetworkAvailability(requireContext())
                 .collect { status ->
                     recipesViewModel.networkStatus = status
-                    recipesViewModel.showNetworkStatus()
+                    showNetworkStatus()
                     val args = arguments
                     val recipeId = args!!.getBundle("recipeBundle")?.getInt("recipeId")!!
                     val loadFavorites = args!!.getBundle("recipeBundle")?.getBoolean("loadFavorite")
@@ -64,12 +64,24 @@ class OverviewFragment : Fragment() {
 
         return binding.root
     }
-
-    private fun openWebsite(url: String) {
-        val webpage: Uri = Uri.parse(url)
-        val intent = Intent(Intent.ACTION_VIEW, webpage)
-        startActivity(intent)
-
+    private fun showNetworkStatus() {
+        if (!recipesViewModel.networkStatus) {
+            Toast.makeText(
+                requireContext(),
+                "No internet connection",
+                Toast.LENGTH_SHORT
+            ).show()
+            recipesViewModel.saveBackOnline(true)
+        } else {
+            if (recipesViewModel.backOnline) {
+                Toast.makeText(
+                    requireContext(),
+                    "Back online in internet",
+                    Toast.LENGTH_SHORT
+                ).show()
+                recipesViewModel.saveBackOnline(false)
+            }
+        }
     }
 
     private fun readFavorites(recipeId: Int) {

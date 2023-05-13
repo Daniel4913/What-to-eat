@@ -2,17 +2,11 @@ package com.example.whattoeat.usecase
 
 import com.example.whattoeat.data.Repository
 import com.example.whattoeat.data.database.entities.RecipeByIngredientEntity
-import com.example.whattoeat.model.RecipesByIngredients
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
+import javax.inject.Inject
 
-class CacheRecipesByIngredientsUseCase(private val repoUse: Repository,) {
+class CacheRecipesUseCase @Inject constructor (private val repoUse: Repository,) {
 
     suspend fun execute(recipes: RecipeByIngredientEntity){
-        coroutineScope(
-//            Dispatchers.IO
-        ) {
         repoUse.local.insertRecipesByIngredients(recipes)
-        }
     }
 }

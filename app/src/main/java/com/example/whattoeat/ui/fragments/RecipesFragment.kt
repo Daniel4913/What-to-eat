@@ -16,7 +16,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.whattoeat.R
 import com.example.whattoeat.viewmodels.MainViewModel
 import com.example.whattoeat.adapters.RecipesAdapter
+import com.example.whattoeat.data.database.entities.DetailedRecipeEntity
+import com.example.whattoeat.data.database.entities.RecipeByIngredientEntity
 import com.example.whattoeat.databinding.FragmentRecipesBinding
+import com.example.whattoeat.model.DetailedRecipe
 import com.example.whattoeat.model.RecipesByIngredients
 import com.example.whattoeat.util.NetworkListener
 import com.example.whattoeat.util.NetworkResult
@@ -68,12 +71,32 @@ class RecipesFragment : Fragment() {
             networkListener.checkNetworkAvailability(requireContext())
                 .collect { status ->
                     recipesViewModel.networkStatus = status
-                    recipesViewModel.showNetworkStatus()
+                    showNetworkStatus()
                     readDatabase()
                 }
         }
 
         return binding.root
+    }
+
+    private fun showNetworkStatus() {
+        if (!recipesViewModel.networkStatus) {
+            Toast.makeText(
+                requireContext(),
+                "No internet connection",
+                Toast.LENGTH_SHORT
+            ).show()
+            recipesViewModel.saveBackOnline(true)
+        } else {
+            if (recipesViewModel.backOnline) {
+                Toast.makeText(
+                    requireContext(),
+                    "Back online in internet",
+                    Toast.LENGTH_SHORT
+                ).show()
+                recipesViewModel.saveBackOnline(false)
+            }
+        }
     }
 
     private fun setupMenu() {
@@ -124,6 +147,7 @@ class RecipesFragment : Fragment() {
                     recipesViewModel.saveIngredients()
                     val recipes: RecipesByIngredients? = response.data
                     requestDetailedRecipesApiData(recipesViewModel.applyDetailedQueries(recipes))
+                    cacheRecipes(recipes)
                 }
                 is NetworkResult.Error -> {
                     readDataFromCache()
@@ -138,9 +162,23 @@ class RecipesFragment : Fragment() {
         }
     }
 
+    private fun cacheRecipes(recipes: RecipesByIngredients?) {
+        val recipeEntity = recipes?.let { RecipeByIngredientEntity(it) }
+        if (recipeEntity != null) {
+            mainViewModel.insertRecipes(recipeEntity)
+        }
+    }
+
     private fun requestDetailedRecipesApiData(queries: Map<String, String>) {
-        lifecycleScope.launch { }
         mainViewModel.getDetailedRecipes(queries)
+        cacheDetailedRecipes()
+    }
+
+    private fun cacheDetailedRecipes() {
+        mainViewModel.detailedRecipesResponse.value?.data?.forEach {
+            val detailedRecipe = DetailedRecipeEntity(it.id, it)
+            mainViewModel.insertDetailedRecipe(detailedRecipe)
+        }
     }
 
     private fun readDataFromCache() {

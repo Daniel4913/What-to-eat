@@ -4,11 +4,13 @@ import android.app.Application
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.whattoeat.data.DataStoreRepository
 import com.example.whattoeat.data.IngredientsAndRanking
 import com.example.whattoeat.model.RecipesByIngredients
+import com.example.whattoeat.usecase.CheckNetworkUseCase
 import com.example.whattoeat.util.Constants.API_KEY
 import com.example.whattoeat.util.Constants.DEFAULT_INGREDIENTS
 import com.example.whattoeat.util.Constants.DEFAULT_RANKING
@@ -25,10 +27,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RecipesViewModel @Inject constructor(
-    application: Application,
-    private val dataStoreRepository: DataStoreRepository
+    private val dataStoreRepository: DataStoreRepository,
+    checkNetworkUseCase: CheckNetworkUseCase
 ) :
-    AndroidViewModel(application) {
+    ViewModel() {
 
     private lateinit var ingredientsAndRanking: IngredientsAndRanking
 
@@ -56,11 +58,10 @@ class RecipesViewModel @Inject constructor(
         ingredientsAndRanking = IngredientsAndRanking(selectedRanking, typedIngredients)
     }
 
-    private fun saveBackOnline(backOnline: Boolean) =
+    fun saveBackOnline(backOnline: Boolean) =
         viewModelScope.launch(Dispatchers.IO) {
             dataStoreRepository.saveBackOnline(backOnline)
         }
-
 
     fun applyQueries(): HashMap<String, String> {
         val queries: HashMap<String, String> = HashMap()
@@ -75,7 +76,6 @@ class RecipesViewModel @Inject constructor(
             queries[QUERY_RANKING] = DEFAULT_RANKING
             queries[QUERY_INGREDIENTS] = DEFAULT_INGREDIENTS
         }
-
         return queries
     }
 
@@ -86,7 +86,6 @@ class RecipesViewModel @Inject constructor(
         queries[QUERY_IDS] = recipesIds.toString().removeSurrounding("[", "]")
         queries[QUERY_NUMBER] = DEFAULT_RECIPES_NUMBER
         queries[QUERY_API_KEY] = API_KEY
-        Log.d("applyDetailedQueries recipesVM", "$queries")
         return queries
     }
 
@@ -96,24 +95,23 @@ class RecipesViewModel @Inject constructor(
         }
     }
 
-    fun showNetworkStatus() {
-        if (!networkStatus) {
-            Toast.makeText(
-                getApplication(),
-                "No internet connection",
-                Toast.LENGTH_SHORT
-            ).show()
-            saveBackOnline(true)
-        } else {
-            if (backOnline) {
-                Toast.makeText(
-                    getApplication(),
-                    "Back online in internet",
-                    Toast.LENGTH_SHORT
-                ).show()
-                saveBackOnline(false)
-            }
-        }
-    }
-
+//    fun showNetworkStatus( ) {
+//        if (!networkStatus) {
+//            Toast.makeText(
+//                getApplication(),
+//                "No internet connection",
+//                Toast.LENGTH_SHORT
+//            ).show()
+//            saveBackOnline(true)
+//        } else {
+//            if (backOnline) {
+//                Toast.makeText(
+//                    getApplication(),
+//                    "Back online in internet",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//                saveBackOnline(false)
+//            }
+//        }
+//    }
 }

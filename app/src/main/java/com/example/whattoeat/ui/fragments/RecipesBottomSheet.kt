@@ -91,6 +91,8 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
         return binding.root
     }
 
+
+
     private fun updateEditText(typedIngredients: String, myIngredientsEditText: TextInputEditText) {
         myIngredientsEditText.setText(typedIngredients)
     }

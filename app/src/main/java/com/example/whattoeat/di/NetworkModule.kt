@@ -1,22 +1,34 @@
 package com.example.whattoeat.di
 
-import com.example.whattoeat.data.DataSource
+import android.content.Context
+import android.net.ConnectivityManager
 import com.example.whattoeat.data.network.SpoonacularApi
 import com.example.whattoeat.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+
+    @Singleton
+    @Provides
+    fun provideConnectivityManager(@ApplicationContext context: Context) = context.getSystemService(
+        Context.CONNECTIVITY_SERVICE
+    ) as ConnectivityManager
+
+//        val connectivityManager = getApplication(application).getSystemService(
+//            Context.CONNECTIVITY_SERVICE
+//        ) as ConnectivityManager
+
 
     @Singleton
     @Provides
@@ -50,18 +62,6 @@ object NetworkModule {
     @Provides
     fun provideApiService(retrofit: Retrofit): SpoonacularApi {
         return retrofit.create(SpoonacularApi::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideRemoteDataSource(): DataSource<String> {
-        TODO()
-    }
-    @Singleton
-    @Provides
-    @Named("local_data_source")
-    fun provideLocalDataSource(): DataSource<Int> {
-        TODO()
     }
 
 }
