@@ -7,10 +7,10 @@ import com.example.whattoeat.data.database.entities.DetailedRecipeEntity
 import javax.inject.Inject
 
 class ReadDetailedRecipesUseCase @Inject constructor(
-    private val repoUse: Repository
+    private val repository: Repository
 ) {
     fun execute(): LiveData<List<DetailedRecipeEntity>> {
-        return repoUse.local.readDetailedRecipes().asLiveData()
+        return repository.local.readDetailedRecipes().asLiveData()
     }
 
 }

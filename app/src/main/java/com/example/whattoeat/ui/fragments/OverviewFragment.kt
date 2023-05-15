@@ -1,14 +1,11 @@
 package com.example.whattoeat.ui.fragments
 
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.whattoeat.databinding.FragmentOverviewBinding
@@ -30,7 +27,6 @@ class OverviewFragment : Fragment() {
         super.onCreate(savedInstanceState)
         mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
         recipesViewModel = ViewModelProvider(requireActivity())[RecipesViewModel::class.java]
-
     }
 
     override fun onCreateView(
@@ -38,9 +34,7 @@ class OverviewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentOverviewBinding.inflate(inflater, container, false)
-
         binding.lifecycleOwner = this
-
         recipesViewModel.readBackOnline.observe(viewLifecycleOwner) {
             recipesViewModel.backOnline = it
         }
@@ -50,10 +44,14 @@ class OverviewFragment : Fragment() {
             networkListener.checkNetworkAvailability(requireContext())
                 .collect { status ->
                     recipesViewModel.networkStatus = status
-                    showNetworkStatus()
+                    recipesViewModel.showNetworkStatus(
+                        requireContext(),
+                        recipesViewModel.networkStatus,
+                        recipesViewModel.backOnline
+                    )
                     val args = arguments
                     val recipeId = args!!.getBundle("recipeBundle")?.getInt("recipeId")!!
-                    val loadFavorites = args!!.getBundle("recipeBundle")?.getBoolean("loadFavorite")
+                    val loadFavorites = args.getBundle("recipeBundle")?.getBoolean("loadFavorite")
                     if (loadFavorites!!) {
                         readFavorites(recipeId)
                     } else {
@@ -61,27 +59,7 @@ class OverviewFragment : Fragment() {
                     }
                 }
         }
-
         return binding.root
-    }
-    private fun showNetworkStatus() {
-        if (!recipesViewModel.networkStatus) {
-            Toast.makeText(
-                requireContext(),
-                "No internet connection",
-                Toast.LENGTH_SHORT
-            ).show()
-            recipesViewModel.saveBackOnline(true)
-        } else {
-            if (recipesViewModel.backOnline) {
-                Toast.makeText(
-                    requireContext(),
-                    "Back online in internet",
-                    Toast.LENGTH_SHORT
-                ).show()
-                recipesViewModel.saveBackOnline(false)
-            }
-        }
     }
 
     private fun readFavorites(recipeId: Int) {
@@ -90,7 +68,6 @@ class OverviewFragment : Fragment() {
                 favoriteRecipes?.forEach { favoriteEntity ->
                     if (favoriteEntity.id == recipeId) {
                         binding.recipeBinding = favoriteEntity.detailedRecipe
-
                         binding.dietsListTextView.isSelected = true
                         binding.cuisinesListTextView.isSelected = true
                         binding.webpageButton.text
@@ -115,7 +92,6 @@ class OverviewFragment : Fragment() {
             }
         }
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

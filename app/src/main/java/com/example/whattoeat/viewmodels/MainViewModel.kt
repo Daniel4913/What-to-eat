@@ -100,6 +100,4 @@ class MainViewModel @Inject constructor(
             cacheDetailedRecipesUseCase.execute(detailedRecipeEntity)
         }
     }
-
-
 }

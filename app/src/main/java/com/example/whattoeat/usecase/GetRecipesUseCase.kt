@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 
 class GetRecipesByIngredientsUseCase @Inject constructor (
-    private val repoUse: Repository,
+    private val repository: Repository,
     private val connectivityManager: ConnectivityManager,
 ) {
 
@@ -20,7 +20,7 @@ class GetRecipesByIngredientsUseCase @Inject constructor (
     {
         return if (checkInternetConnection()) {
             try {
-                val response = repoUse.remote.getRecipesByIngredients(myIngredients)
+                val response = repository.remote.getRecipesByIngredients(myIngredients)
                 handleRecipesByIngredientsResponse(response)
             } catch (e: Exception) {
                 NetworkResult.Error("Recipes not found. Some kind of exception occurred")

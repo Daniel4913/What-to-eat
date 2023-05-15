@@ -2,7 +2,6 @@ package com.example.whattoeat.usecase
 
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import com.example.whattoeat.data.DataSource
 import com.example.whattoeat.data.Repository
 import com.example.whattoeat.model.DetailedRecipe
 import com.example.whattoeat.util.NetworkResult
@@ -10,7 +9,7 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class GetDetailedRecipesUseCase @Inject constructor(
-    private val repoUse: Repository,
+    private val repository: Repository,
     private val connectivityManager: ConnectivityManager,
 ) {
 
@@ -18,7 +17,7 @@ class GetDetailedRecipesUseCase @Inject constructor(
 //        detailedRecipesResponse.value = NetworkResult.Loading()
        return if (checkInternetConnection()) {
             try {
-                val response = repoUse.remote.getDetailedRecipes(queries)
+                val response = repository.remote.getDetailedRecipes(queries)
                 handleDetailedResponse(response)
 //                val recipes = detailedRecipesResponse.value!!.data
 //                if (recipes != null) {

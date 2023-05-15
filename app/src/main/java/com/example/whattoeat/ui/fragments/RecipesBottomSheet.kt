@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.whattoeat.R
 import com.example.whattoeat.databinding.RecipesBottomSheetBinding
@@ -19,6 +21,7 @@ import com.example.whattoeat.viewmodels.RecipesViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.coroutines.launch
 
 
 class RecipesBottomSheet : BottomSheetDialogFragment() {
@@ -42,11 +45,7 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = RecipesBottomSheetBinding.inflate(inflater, container, false)
-
         setupEditText()
-
-
-
         recipesViewModel.readIngredientsAndRanking.asLiveData()
             .observe(viewLifecycleOwner) { value ->
                 ranking = value.selectedRanking
@@ -56,7 +55,6 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
             }
 
         binding.rankingSwitch.isChecked
-
         binding.rankingSwitch.toggle()
 
         binding.rankingSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -71,7 +69,6 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
             }
         }
 
-
         binding.searchButton.setOnClickListener {
             if (recipesViewModel.networkStatus) {
                 ingredients = binding.myIngredientsEditText.text.toString()
@@ -83,17 +80,22 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
                     RecipesBottomSheetDirections.actionRecipesBottomSheetToRecipesFragment(true)
                 findNavController().navigate(action)
             } else {
-                recipesViewModel.showNetworkStatus()
+                lifecycleScope.launch {
+                    recipesViewModel.showNetworkStatus(
+                        requireContext(),
+                        recipesViewModel.networkStatus,
+                        recipesViewModel.backOnline
+                    )
+                }
             }
-
         }
-
         return binding.root
     }
 
-
-
-    private fun updateEditText(typedIngredients: String, myIngredientsEditText: TextInputEditText) {
+    private fun updateEditText(
+        typedIngredients: String,
+        myIngredientsEditText: TextInputEditText
+    ) {
         myIngredientsEditText.setText(typedIngredients)
     }
 
@@ -112,6 +114,4 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
         binding.myIngredientsEditText.imeOptions = EditorInfo.IME_ACTION_DONE
         binding.myIngredientsEditText.imeOptions
     }
-
-
 }

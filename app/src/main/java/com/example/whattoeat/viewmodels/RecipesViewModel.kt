@@ -1,6 +1,7 @@
 package com.example.whattoeat.viewmodels
 
 import android.app.Application
+import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
@@ -28,10 +29,9 @@ import javax.inject.Inject
 @HiltViewModel
 class RecipesViewModel @Inject constructor(
     private val dataStoreRepository: DataStoreRepository,
-    checkNetworkUseCase: CheckNetworkUseCase
+    private val checkNetworkUseCase: CheckNetworkUseCase
 ) :
     ViewModel() {
-
     private lateinit var ingredientsAndRanking: IngredientsAndRanking
 
     var networkStatus = false
@@ -58,17 +58,10 @@ class RecipesViewModel @Inject constructor(
         ingredientsAndRanking = IngredientsAndRanking(selectedRanking, typedIngredients)
     }
 
-    fun saveBackOnline(backOnline: Boolean) =
-        viewModelScope.launch(Dispatchers.IO) {
-            dataStoreRepository.saveBackOnline(backOnline)
-        }
-
     fun applyQueries(): HashMap<String, String> {
         val queries: HashMap<String, String> = HashMap()
-
         queries[QUERY_NUMBER] = DEFAULT_RECIPES_NUMBER
         queries[QUERY_API_KEY] = API_KEY
-
         if (this@RecipesViewModel::ingredientsAndRanking.isInitialized) {
             queries[QUERY_RANKING] = ingredientsAndRanking.selectedRanking
             queries[QUERY_INGREDIENTS] = ingredientsAndRanking.typedIngredients
@@ -82,7 +75,6 @@ class RecipesViewModel @Inject constructor(
     fun applyDetailedQueries(recipes: RecipesByIngredients?): HashMap<String, String> {
         val queries: HashMap<String, String> = HashMap()
         getRecipesIds(recipes)
-
         queries[QUERY_IDS] = recipesIds.toString().removeSurrounding("[", "]")
         queries[QUERY_NUMBER] = DEFAULT_RECIPES_NUMBER
         queries[QUERY_API_KEY] = API_KEY
@@ -95,23 +87,9 @@ class RecipesViewModel @Inject constructor(
         }
     }
 
-//    fun showNetworkStatus( ) {
-//        if (!networkStatus) {
-//            Toast.makeText(
-//                getApplication(),
-//                "No internet connection",
-//                Toast.LENGTH_SHORT
-//            ).show()
-//            saveBackOnline(true)
-//        } else {
-//            if (backOnline) {
-//                Toast.makeText(
-//                    getApplication(),
-//                    "Back online in internet",
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//                saveBackOnline(false)
-//            }
-//        }
-//    }
+    suspend fun showNetworkStatus(
+        context: Context,
+        networkStatus: Boolean,
+        backOnline: Boolean
+    ) = checkNetworkUseCase.showNetworkStatus(context, networkStatus, backOnline)
 }

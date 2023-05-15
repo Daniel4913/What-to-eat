@@ -11,10 +11,6 @@ class FavoritesUseCase @Inject constructor(
 ) {
     val readFavorites = repository.local.readFavoriteRecipes().asLiveData()
 
-    fun readFavorite(id:Int): LiveData<FavoriteRecipeEntity> {
-       return repository.local.readFavoriteRecipe(id).asLiveData()
-    }
-
     suspend fun insertFavorite(favoriteRecipeEntity: FavoriteRecipeEntity) {
         repository.local.insertFavoriteRecipe(favoriteRecipeEntity)
     }

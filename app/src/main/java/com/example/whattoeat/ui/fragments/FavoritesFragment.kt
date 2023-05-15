@@ -35,16 +35,14 @@ class FavoritesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
-
-
+        setupRecyclerView()
         mAdapter = FavoriteRecipesAdapter { recipeId ->
             val action =
-                FavoritesFragmentDirections.actionFavoritesFragmentToDetailsActivity(recipeId,true)
+                FavoritesFragmentDirections.actionFavoritesFragmentToDetailsActivity(recipeId, true)
             findNavController().navigate(action)
         }
 
         val menuHost: MenuHost = requireActivity()
-
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.favorites_menu, menu)
@@ -52,14 +50,12 @@ class FavoritesFragment : Fragment() {
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 if (menuItem.itemId == R.id.deleteAll_favorites_menu) {
-                    showSnackBar("Favorites deleted")
+                    showSnackBar()
                     mainViewModel.deleteAllFavorites()
                 }
                 return true
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-
-        setupRecyclerView()
 
         lifecycleScope.launch {
             mainViewModel.readFavorites.observe(viewLifecycleOwner) { favoriteEntities ->
@@ -74,14 +70,13 @@ class FavoritesFragment : Fragment() {
                 }
             }
         }
-
         return binding.root
     }
 
-    private fun showSnackBar(message: String) {
+    private fun showSnackBar() {
         Snackbar.make(
             binding.root,
-            message,
+            "Favorites deleted",
             Snackbar.LENGTH_LONG
         ).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setAction("Ok") {}
             .show()

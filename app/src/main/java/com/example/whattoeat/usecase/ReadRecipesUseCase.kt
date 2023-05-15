@@ -7,11 +7,9 @@ import com.example.whattoeat.data.database.entities.RecipeByIngredientEntity
 import javax.inject.Inject
 
 class ReadRecipesUseCase @Inject constructor(
-    private val repoUse: Repository
+    private val repository: Repository
 ) {
-
     fun execute(): LiveData<List<RecipeByIngredientEntity>> {
-      return  repoUse.local.readRecipesByIngredients().asLiveData()
+        return repository.local.readRecipesByIngredients().asLiveData()
     }
-
 }

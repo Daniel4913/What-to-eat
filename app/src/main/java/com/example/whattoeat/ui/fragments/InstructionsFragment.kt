@@ -76,7 +76,6 @@ class InstructionsFragment : Fragment() {
                     }
             }
         }
-
         return binding.root
     }
 

@@ -10,7 +10,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.whattoeat.adapters.IngredientsAdapter
 import com.example.whattoeat.databinding.FragmentIngredientsBinding
-import com.example.whattoeat.util.observeOnce
 import com.example.whattoeat.viewmodels.MainViewModel
 import com.example.whattoeat.viewmodels.RecipesViewModel
 import kotlinx.coroutines.launch
@@ -36,7 +35,6 @@ class IngredientsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentIngredientsBinding.inflate(inflater, container, false)
-
         setupRecyclerView()
 
         val args = requireArguments()
@@ -58,7 +56,6 @@ class IngredientsFragment : Fragment() {
                     }
             }
         }
-
         return binding.root
     }
 
@@ -66,7 +63,6 @@ class IngredientsFragment : Fragment() {
         binding.ingredientsRecyclerview.adapter = ingredientsAdapter
         binding.ingredientsRecyclerview.layoutManager = LinearLayoutManager(requireContext())
     }
-
 
     override fun onDestroyView() {
         _binding = null

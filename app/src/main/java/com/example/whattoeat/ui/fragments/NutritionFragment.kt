@@ -51,7 +51,6 @@ class NutritionFragment : Fragment() {
                     }
             }
         }
-
         return binding.root
     }
 
