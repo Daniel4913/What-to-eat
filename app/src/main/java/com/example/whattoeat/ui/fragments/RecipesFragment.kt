@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.whattoeat.viewmodels.MainViewModel
+import com.example.whattoeat.viewmodels.RecipesListViewModel
 import com.example.whattoeat.adapters.RecipesAdapter
 import com.example.whattoeat.data.database.entities.DetailedRecipeEntity
 import com.example.whattoeat.data.database.entities.RecipeByIngredientEntity
@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 class RecipesFragment : Fragment() {
     private val args by navArgs<RecipesFragmentArgs>()
 
-    private lateinit var mainViewModel: MainViewModel
+    private lateinit var mainViewModel: RecipesListViewModel
     private lateinit var recipesViewModel: RecipesViewModel
     private lateinit var networkListener: NetworkListener
 
@@ -35,7 +35,7 @@ class RecipesFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
+        mainViewModel = ViewModelProvider(requireActivity())[RecipesListViewModel::class.java]
         recipesViewModel = ViewModelProvider(requireActivity())[RecipesViewModel::class.java]
     }
 

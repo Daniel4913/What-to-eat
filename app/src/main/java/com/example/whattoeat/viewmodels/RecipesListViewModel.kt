@@ -14,37 +14,27 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class RecipesListViewModel @Inject constructor(
     private val getRecipesUseCase: GetRecipesByIngredientsUseCase,
     private val cacheRecipesUseCase: CacheRecipesUseCase,
     private val getDetailedRecipesUseCase: GetDetailedRecipesUseCase,
     private val cacheDetailedRecipesUseCase: CacheDetailedRecipesUseCase,
      readRecipesUseCase: ReadRecipesUseCase,
      readDetailedRecipesUseCase: ReadDetailedRecipesUseCase,
-    private val readCurrentRecipeUseCase: ReadCurrentRecipeUseCase,
-    private val favoritesUseCase: FavoritesUseCase,
 ) : ViewModel() {
 
-    lateinit var currentRecipe: DetailedRecipe
+
 
     /** ROOM DB */
 
     val readCachedRecipesByIngredients: LiveData<List<RecipeByIngredientEntity>> =
         readRecipesUseCase.execute()
 
-    val readDetailedRecipes: LiveData<List<DetailedRecipeEntity>> =
+    val readCachedDetailedRecipes: LiveData<List<DetailedRecipeEntity>> =
         readDetailedRecipesUseCase.execute()
 
-    val readFavorites: LiveData<List<FavoriteRecipeEntity>> =
-        favoritesUseCase.readFavorites
 
-    fun readCurrentRecipe(id: Int): LiveData<DetailedRecipeEntity> {
-        return readCurrentRecipeUseCase.execute(id)
-    }
 
-    fun readFavorite(id: Int): LiveData<FavoriteRecipeEntity> {
-        return readFavorite(id)
-    }
 
      fun insertRecipes(recipeByIngredientEntity: RecipeByIngredientEntity) =
         viewModelScope.launch(Dispatchers.IO) {
@@ -56,20 +46,7 @@ class MainViewModel @Inject constructor(
             cacheDetailedRecipesUseCase.execute(detailedRecipeEntity)
         }
 
-    fun insertFavorite(favoriteRecipeEntity: FavoriteRecipeEntity) =
-        viewModelScope.launch(Dispatchers.IO) {
-            favoritesUseCase.insertFavorite(favoriteRecipeEntity)
-        }
 
-    fun deleteFavorite(favoriteRecipeEntity: FavoriteRecipeEntity) =
-        viewModelScope.launch(Dispatchers.IO) {
-            favoritesUseCase.deleteFavorite(favoriteRecipeEntity)
-        }
-
-    fun deleteAllFavorites() =
-        viewModelScope.launch(Dispatchers.IO) {
-            favoritesUseCase.deleteAllFavorites()
-        }
 
 
     /** RETROFIT */

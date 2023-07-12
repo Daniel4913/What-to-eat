@@ -1,6 +1,7 @@
 package com.example.whattoeat.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,13 +11,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.whattoeat.adapters.IngredientsAdapter
 import com.example.whattoeat.databinding.FragmentIngredientsBinding
-import com.example.whattoeat.viewmodels.MainViewModel
+import com.example.whattoeat.viewmodels.DetailsViewModel
 import com.example.whattoeat.viewmodels.RecipesViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
 class IngredientsFragment : Fragment() {
 
-    private lateinit var mainViewModel: MainViewModel
+    private lateinit var detailsViewModel: DetailsViewModel
     private lateinit var recipesViewModel: RecipesViewModel
 
     private val ingredientsAdapter: IngredientsAdapter by lazy { IngredientsAdapter() }
@@ -26,7 +28,7 @@ class IngredientsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
+        detailsViewModel = ViewModelProvider(requireActivity())[DetailsViewModel::class.java]
         recipesViewModel = ViewModelProvider(requireActivity())[RecipesViewModel::class.java]
     }
 
@@ -42,17 +44,27 @@ class IngredientsFragment : Fragment() {
         val loadFavorite = args.getBundle("recipeBundle")?.getBoolean("loadFavorite")
         if (loadFavorite!!) {
             lifecycleScope.launch {
-                mainViewModel.readFavorite(recipeId).observe(viewLifecycleOwner) { favoriteEntity ->
-                    favoriteEntity.detailedRecipe.extendedIngredients.let {
-                        ingredientsAdapter.setIngredients(it)
+                detailsViewModel.readFavorite(recipeId)
+                    .observe(viewLifecycleOwner) { favoriteEntity ->
+                        favoriteEntity.detailedRecipe.extendedIngredients.let {
+                            ingredientsAdapter.setIngredients(it)
+                        }
                     }
-                }
             }
         } else {
             lifecycleScope.launch {
-                mainViewModel.readCurrentRecipe(recipeId)
+                detailsViewModel.readCurrentRecipe(recipeId)
                     .observe(viewLifecycleOwner) { detailedEntity ->
-                        ingredientsAdapter.setIngredients(detailedEntity.detailedRecipe.extendedIngredients)
+                        if (detailedEntity != null) {
+                            ingredientsAdapter.setIngredients(detailedEntity.detailedRecipe.extendedIngredients)
+                        } else {
+                            Snackbar.make(
+                                binding.root,
+                                "An Error occurred. \nPlease provide back internet",
+                                Snackbar.LENGTH_LONG
+                            ).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setAction("Ok") {}
+                                .show()
+                        }
                     }
             }
         }

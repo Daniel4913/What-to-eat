@@ -7,7 +7,7 @@
 
         <variable
             name="mainViewModel"
-            type="com.example.whattoeat.viewmodels.MainViewModel" />
+            type="com.example.whattoeat.viewmodels.RecipesListViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

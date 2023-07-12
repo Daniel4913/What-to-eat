@@ -5,6 +5,7 @@ import android.view.*
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -13,7 +14,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.whattoeat.R
 import com.example.whattoeat.adapters.FavoriteRecipesAdapter
 import com.example.whattoeat.databinding.FragmentFavoritesBinding
-import com.example.whattoeat.viewmodels.MainViewModel
+import com.example.whattoeat.viewmodels.DetailsViewModel
+import com.example.whattoeat.viewmodels.RecipesListViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
@@ -24,10 +26,11 @@ class FavoritesFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var mAdapter: FavoriteRecipesAdapter
-    private lateinit var mainViewModel: MainViewModel
+    private lateinit var viewModel: DetailsViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
+        viewModel = ViewModelProvider(requireActivity())[DetailsViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -35,7 +38,6 @@ class FavoritesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
-        setupRecyclerView()
         mAdapter = FavoriteRecipesAdapter { recipeId ->
             val action =
                 FavoritesFragmentDirections.actionFavoritesFragmentToDetailsActivity(recipeId, true)
@@ -51,14 +53,15 @@ class FavoritesFragment : Fragment() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 if (menuItem.itemId == R.id.deleteAll_favorites_menu) {
                     showSnackBar()
-                    mainViewModel.deleteAllFavorites()
+                    viewModel.deleteAllFavorites()
                 }
                 return true
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
+        setupRecyclerView()
         lifecycleScope.launch {
-            mainViewModel.readFavorites.observe(viewLifecycleOwner) { favoriteEntities ->
+            viewModel.readFavorites.observe(viewLifecycleOwner) { favoriteEntities ->
                 if (favoriteEntities.isEmpty()) {
                     binding.noDataImageView.visibility = View.VISIBLE
                     binding.noDataTextView.visibility = View.VISIBLE
