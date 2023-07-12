@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
@@ -40,12 +39,10 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = RecipesBottomSheetBinding.inflate(inflater, container, false)
 
         setupEditText()
-
-
 
         recipesViewModel.readIngredientsAndRanking.asLiveData()
             .observe(viewLifecycleOwner) { value ->
@@ -71,7 +68,6 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
             }
         }
 
-
         binding.searchButton.setOnClickListener {
             if (recipesViewModel.networkStatus) {
                 ingredients = binding.myIngredientsEditText.text.toString()
@@ -85,9 +81,7 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
             } else {
                 recipesViewModel.showNetworkStatus()
             }
-
         }
-
         return binding.root
     }
 
@@ -110,6 +104,4 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
         binding.myIngredientsEditText.imeOptions = EditorInfo.IME_ACTION_DONE
         binding.myIngredientsEditText.imeOptions
     }
-
-
 }

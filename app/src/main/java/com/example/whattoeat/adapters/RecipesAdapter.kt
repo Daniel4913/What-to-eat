@@ -10,7 +10,6 @@ import com.example.whattoeat.model.RecipesByIngredients
 import com.example.whattoeat.util.RecipesDiffUtil
 
 class RecipesAdapter : RecyclerView.Adapter<RecipesAdapter.RecipesViewHolder>() {
-
     private var recipes = emptyList<RecipesByIngredientsItem>()
 
     class RecipesViewHolder(private val binding: RecipesItemBinding) :

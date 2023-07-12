@@ -4,16 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import com.example.whattoeat.R
 import com.example.whattoeat.databinding.IngredientsItemBinding
 import com.example.whattoeat.model.ExtendedIngredient
-import com.example.whattoeat.model.Ingredient
-import com.example.whattoeat.util.Constants.BASE_IMAGE_URL
 import com.example.whattoeat.util.RecipesDiffUtil
 
 class IngredientsAdapter : RecyclerView.Adapter<IngredientsAdapter.IngredientsViewHolder>() {
-
     private var ingredientsList = emptyList<ExtendedIngredient>()
 
     class IngredientsViewHolder(val binding: IngredientsItemBinding) :

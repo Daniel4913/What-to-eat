@@ -29,14 +29,13 @@ class InstructionsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentInstructionsBinding.inflate(inflater, container, false)
         setupRecyclerView()
         val args = requireArguments()
@@ -76,7 +75,6 @@ class InstructionsFragment : Fragment() {
                     }
             }
         }
-
         return binding.root
     }
 
@@ -94,5 +92,4 @@ class InstructionsFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }

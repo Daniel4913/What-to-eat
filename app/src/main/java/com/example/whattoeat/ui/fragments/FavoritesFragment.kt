@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.whattoeat.R
 import com.example.whattoeat.adapters.FavoriteRecipesAdapter
@@ -33,15 +32,10 @@ class FavoritesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
 
-
-        mAdapter = FavoriteRecipesAdapter { recipeId ->
-            val action =
-                FavoritesFragmentDirections.actionFavoritesFragmentToDetailsActivity(recipeId,true)
-            findNavController().navigate(action)
-        }
+        mAdapter = FavoriteRecipesAdapter()
 
         val menuHost: MenuHost = requireActivity()
 
@@ -74,7 +68,6 @@ class FavoritesFragment : Fragment() {
                 }
             }
         }
-
         return binding.root
     }
 
@@ -97,6 +90,5 @@ class FavoritesFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 
 }

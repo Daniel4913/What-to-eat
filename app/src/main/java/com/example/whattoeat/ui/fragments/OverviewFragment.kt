@@ -36,7 +36,7 @@ class OverviewFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentOverviewBinding.inflate(inflater, container, false)
 
         binding.lifecycleOwner = this
@@ -61,15 +61,7 @@ class OverviewFragment : Fragment() {
                     }
                 }
         }
-
         return binding.root
-    }
-
-    private fun openWebsite(url: String) {
-        val webpage: Uri = Uri.parse(url)
-        val intent = Intent(Intent.ACTION_VIEW, webpage)
-        startActivity(intent)
-
     }
 
     private fun readFavorites(recipeId: Int) {

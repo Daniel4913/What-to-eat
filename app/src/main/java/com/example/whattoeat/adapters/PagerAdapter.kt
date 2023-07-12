@@ -19,5 +19,4 @@ class PagerAdapter(
         fragments[position].arguments = detailedRecipeId
         return fragments[position]
     }
-
 }

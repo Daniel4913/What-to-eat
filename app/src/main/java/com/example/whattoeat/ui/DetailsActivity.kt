@@ -31,11 +31,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class DetailsActivity : AppCompatActivity() {
 
     private val args by navArgs<DetailsActivityArgs>()
-
     private val mainViewModel: MainViewModel by viewModels()
 
     private lateinit var binding: ActivityDetailsBinding
-
     private lateinit var menuItem: MenuItem
     private lateinit var currentConfiguration: Configuration
 
@@ -84,8 +82,6 @@ class DetailsActivity : AppCompatActivity() {
             tab.text = titles[position]
             tab.icon = icons[position]
         }.attach()
-
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -95,7 +91,6 @@ class DetailsActivity : AppCompatActivity() {
         setNightModeBookmarkIconColor()
         return true
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
@@ -213,6 +208,5 @@ class DetailsActivity : AppCompatActivity() {
         super.onDestroy()
         setNightModeBookmarkIconColor()
         changeMenuItem(menuItem, R.color.white, R.drawable.bookmark_add)
-
     }
 }

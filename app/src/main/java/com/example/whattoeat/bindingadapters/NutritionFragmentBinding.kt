@@ -7,14 +7,9 @@ import androidx.databinding.BindingAdapter
 import com.example.whattoeat.R
 import com.example.whattoeat.model.NutrientX
 import com.example.whattoeat.model.Property
-import com.google.android.material.button.MaterialButton
 
 class NutritionFragmentBinding {
-
     companion object {
-
-
-
         @BindingAdapter("getNutrient")
         @JvmStatic
         fun getNutrient(textView: TextView, nutrientX: List<NutrientX>?) {
@@ -28,6 +23,7 @@ class NutritionFragmentBinding {
                             )
                         }
                     }
+
                     "Fat" -> {
                         if (textView.id == R.id.gramFat_textView) {
                             textView.text = textView.resources.getString(
@@ -36,6 +32,7 @@ class NutritionFragmentBinding {
                             )
                         }
                     }
+
                     "Carbohydrates" -> {
                         if (textView.id == R.id.gramCarb_textView) {
                             textView.text = textView.resources.getString(
@@ -44,6 +41,7 @@ class NutritionFragmentBinding {
                             )
                         }
                     }
+
                     "Protein" -> {
                         if (textView.id == R.id.gramProtein_textView) {
                             textView.text = textView.resources.getString(
@@ -52,6 +50,7 @@ class NutritionFragmentBinding {
                             )
                         }
                     }
+
                     "Saturated Fat" -> {
                         if (textView.id == R.id.gramSaturatedFat_textView) {
                             textView.text = textView.resources.getString(
@@ -60,6 +59,7 @@ class NutritionFragmentBinding {
                             )
                         }
                     }
+
                     "Sugar" -> {
                         if (textView.id == R.id.gramSugar_textView) {
                             textView.text =
@@ -79,13 +79,13 @@ class NutritionFragmentBinding {
                 when (property.name) {
                     "Glycemic Index" -> {
                         if (textView.id == R.id.glycemicIndex_textView) {
-//                            textView.text = property.amount.toString()
                             textView.text = textView.resources.getString(
                                 R.string.glycemic_index,
                                 property.amount
                             )
                         }
                     }
+
                     "Glycemic Load" -> {
                         if (textView.id == R.id.glycemicLoad_textView) {
                             textView.text = textView.resources.getString(
@@ -94,6 +94,7 @@ class NutritionFragmentBinding {
                             )
                         }
                     }
+
                     "Nutrition Score" -> {
                         if (textView.id == R.id.nutritionScore_textView) {
                             textView.text = textView.resources.getString(
@@ -102,11 +103,9 @@ class NutritionFragmentBinding {
                             )
 
                         }
-
                     }
                 }
             }
-
         }
 
         @BindingAdapter("setNutriScore")
@@ -119,22 +118,25 @@ class NutritionFragmentBinding {
                         in -15.0..-1.0 -> {
                             imageView.setImageResource(R.drawable.nutri_a)
                         }
+
                         in -0.0..2.0 -> {
                             imageView.setImageResource(R.drawable.nutri_b)
                         }
+
                         in -3.0..10.0 -> {
                             imageView.setImageResource(R.drawable.nutri_c)
                         }
+
                         in 11.0..18.0 -> {
                             imageView.setImageResource(R.drawable.nutri_d)
                         }
+
                         in 19.0..40.0 -> {
                             imageView.setImageResource(R.drawable.nutri_e)
                         }
                     }
                 }
             }
-
         }
 
         @BindingAdapter("getServings")
@@ -145,7 +147,5 @@ class NutritionFragmentBinding {
                 servings
             )
         }
-
-
     }
 }

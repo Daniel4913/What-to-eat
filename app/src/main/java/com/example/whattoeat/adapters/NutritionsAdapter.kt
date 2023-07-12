@@ -9,14 +9,12 @@ import com.example.whattoeat.model.NutrientX
 import com.example.whattoeat.util.RecipesDiffUtil
 
 class NutritionsAdapter : RecyclerView.Adapter<NutritionsAdapter.NutritionsViewHolder>() {
-
     var nutritionsList = emptyList<NutrientX>()
 
     class NutritionsViewHolder(val binding: NutritionItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NutritionsViewHolder {
-
         return NutritionsViewHolder(
             NutritionItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
@@ -29,16 +27,15 @@ class NutritionsAdapter : RecyclerView.Adapter<NutritionsAdapter.NutritionsViewH
     override fun onBindViewHolder(holder: NutritionsViewHolder, position: Int) {
         holder.binding.apply {
             tvName.text = nutritionsList[position].name
-            tvAmount.text = String.format("%.2f",nutritionsList[position].amount)
+            tvAmount.text = String.format("%.2f", nutritionsList[position].amount)
             tvUnits.text = nutritionsList[position].unit
         }
     }
 
-    fun setData(newNutritions: List<NutrientX>){
+    fun setData(newNutritions: List<NutrientX>) {
         val diffUtil = RecipesDiffUtil<NutrientX>(nutritionsList, newNutritions)
         val diffUtilResult = DiffUtil.calculateDiff(diffUtil)
         nutritionsList = newNutritions
         diffUtilResult.dispatchUpdatesTo(this)
     }
-
 }

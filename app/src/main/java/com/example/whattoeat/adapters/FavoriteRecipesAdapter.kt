@@ -4,23 +4,22 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.example.whattoeat.data.database.entities.FavoriteRecipeEntity
 import com.example.whattoeat.databinding.FavoritesItemBinding
 import com.example.whattoeat.util.RecipesDiffUtil
 
-class FavoriteRecipesAdapter(private val onItemClicked: (Int) -> Unit) :
+class FavoriteRecipesAdapter :
     RecyclerView.Adapter<FavoriteRecipesAdapter.FavoritesViewHolder>() {
 
     private var favoriteRecipesList = emptyList<FavoriteRecipeEntity>()
 
     class FavoritesViewHolder(val binding: FavoritesItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-            fun bind(favoriteRecipeEntity: FavoriteRecipeEntity){
-                binding.recipeItem = favoriteRecipeEntity.detailedRecipe
-                binding.executePendingBindings()
-            }
+        fun bind(favoriteRecipeEntity: FavoriteRecipeEntity) {
+            binding.recipeItem = favoriteRecipeEntity.detailedRecipe
+            binding.executePendingBindings()
         }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesViewHolder {
         return FavoritesViewHolder(

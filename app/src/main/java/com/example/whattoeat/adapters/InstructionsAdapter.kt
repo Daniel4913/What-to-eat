@@ -2,11 +2,8 @@ package com.example.whattoeat.adapters
 
 import android.content.Context
 import android.os.Build
-import android.util.Log
 import android.view.*
-import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -21,20 +18,17 @@ class InstructionsAdapter(
 ) :
     RecyclerView.Adapter<InstructionsAdapter.InstructionsViewHolder>(), ActionMode.Callback {
 
-    private var multiSelection = false
-
     private lateinit var mActionMode: ActionMode
 
+    private var multiSelection = false
     private var selectedSteps = mutableListOf<Int>()
     private var instructionsViewHolders = arrayListOf<InstructionsViewHolder>()
-
     private var stepsList = emptyList<Step>()
 
     class InstructionsViewHolder(val binding: InstructionsItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InstructionsViewHolder {
-
         return InstructionsViewHolder(
             InstructionsItemBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -72,8 +66,8 @@ class InstructionsAdapter(
         }
 
         holder.itemView.setOnClickListener {
-            if(multiSelection){
-                applySelection(holder,stepsList[position].number)
+            if (multiSelection) {
+                applySelection(holder, stepsList[position].number)
             }
         }
 
@@ -122,16 +116,18 @@ class InstructionsAdapter(
         holder.binding.checkImageView.alpha = checkMarkAlpha
     }
 
-    private fun applyActionModeTitle(){
-        when(selectedSteps.size){
-            0 ->{
+    private fun applyActionModeTitle() {
+        when (selectedSteps.size) {
+            0 -> {
                 multiSelection = false
                 mActionMode.finish()
             }
-            1-> {
+
+            1 -> {
                 mActionMode.title = "${selectedSteps.size} / ${stepsList.size}"
             }
-            else ->{
+
+            else -> {
                 mActionMode.title = "${selectedSteps.size} / ${stepsList.size}"
             }
         }
@@ -154,8 +150,8 @@ class InstructionsAdapter(
         return true
     }
 
-    fun finishActionMode(){
-        if(this::mActionMode.isInitialized){
+    fun finishActionMode() {
+        if (this::mActionMode.isInitialized) {
             mActionMode.finish()
         }
     }

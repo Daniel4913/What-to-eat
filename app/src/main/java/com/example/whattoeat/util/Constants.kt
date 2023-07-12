@@ -6,7 +6,7 @@ object Constants {
     // Spoonacular
     const val BASE_URL = "https://api.spoonacular.com"
     const val BASE_IMAGE_URL = "https://spoonacular.com/cdn/ingredients_100x100/"
-    const val API_KEY = "b9df31a176c74fa9a0324df9bfd3dc72"
+    const val API_KEY = "1b7968aa5d314a21b6b3c24d1f563dde"
 
     // ROOM DB
     const val DATABASE_NAME = "recipes_database"

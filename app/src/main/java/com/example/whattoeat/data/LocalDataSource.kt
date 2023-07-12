@@ -15,7 +15,7 @@ class LocalDataSource @Inject constructor(
         return recipesDao.readRecipesByIngredients()
     }
 
-    fun readDetailedRecipe(id:Int): Flow<DetailedRecipeEntity> {
+    fun readDetailedRecipe(id: Int): Flow<DetailedRecipeEntity> {
         return recipesDao.readDetailedRecipe(id)
     }
 
@@ -27,7 +27,7 @@ class LocalDataSource @Inject constructor(
         return recipesDao.readFavoriteRecipes()
     }
 
-    fun readFavoriteRecipe(id:Int): Flow<FavoriteRecipeEntity>{
+    fun readFavoriteRecipe(id: Int): Flow<FavoriteRecipeEntity> {
         return recipesDao.readFavoriteRecipe(id)
     }
 
@@ -50,8 +50,6 @@ class LocalDataSource @Inject constructor(
     suspend fun deleteFavoriteRecipe(favoriteRecipeEntity: FavoriteRecipeEntity) {
         recipesDao.deleteFavoriteRecipe(favoriteRecipeEntity)
     }
-
-
 
 
 }

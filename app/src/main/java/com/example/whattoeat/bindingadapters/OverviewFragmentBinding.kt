@@ -14,7 +14,6 @@ import com.google.android.material.button.MaterialButton
 
 class OverviewFragmentBinding {
     companion object {
-
         @BindingAdapter("setImage")
         @JvmStatic
         fun setImage(imageView: ImageView, imageUrl: String?) {

@@ -75,7 +75,6 @@ class RecipesViewModel @Inject constructor(
             queries[QUERY_RANKING] = DEFAULT_RANKING
             queries[QUERY_INGREDIENTS] = DEFAULT_INGREDIENTS
         }
-
         return queries
     }
 
@@ -115,5 +114,4 @@ class RecipesViewModel @Inject constructor(
             }
         }
     }
-
 }

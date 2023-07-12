@@ -9,9 +9,7 @@ import com.example.whattoeat.model.RecipesByIngredients
 import com.example.whattoeat.util.NetworkResult
 
 class RecipesFragmentBinding {
-
     companion object {
-
         @BindingAdapter("readApiResponse", "readDatabase", requireAll = true)
         @JvmStatic
         fun errorImageViewVisibility(
@@ -45,6 +43,4 @@ class RecipesFragmentBinding {
             }
         }
     }
-
-
 }

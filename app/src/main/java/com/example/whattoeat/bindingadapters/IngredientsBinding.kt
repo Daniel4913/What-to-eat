@@ -9,7 +9,6 @@ import com.example.whattoeat.util.Constants.BASE_IMAGE_URL
 
 class IngredientsBinding {
     companion object {
-
         @BindingAdapter("setIngredientImage")
         @JvmStatic
         fun setIngredientImage(imageView: ImageView, ingredientUrl: String?) {

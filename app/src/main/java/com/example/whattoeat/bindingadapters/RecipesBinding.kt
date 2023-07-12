@@ -33,7 +33,6 @@ class RecipesBinding {
         }
 
 
-
         @BindingAdapter("loadImageFromUrl")
         @JvmStatic
         fun loadImageFromUrl(imageView: ImageView, imageUrl: String?) {
@@ -69,7 +68,7 @@ class RecipesBinding {
         @BindingAdapter("setMyIngredients")
         @JvmStatic
         fun setMyIngredients(textView: TextView, ingredients: List<UsedIngredient>) {
-            var listIngredients = mutableListOf<String>()
+            val listIngredients = mutableListOf<String>()
             ingredients.forEach {
                 listIngredients.add("✓ ${it.original}\n")
             }

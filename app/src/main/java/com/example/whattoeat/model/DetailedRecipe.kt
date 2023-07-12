@@ -3,7 +3,6 @@ package com.example.whattoeat.model
 
 import com.google.gson.annotations.SerializedName
 
-
 data class DetailedRecipe(
     @SerializedName("aggregateLikes")
     val aggregateLikes: Int,

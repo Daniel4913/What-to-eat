@@ -13,7 +13,6 @@ import com.example.whattoeat.data.database.entities.RecipeByIngredientEntity
     exportSchema = false
 )
 @TypeConverters(RecipesTypeConverter::class)
-abstract class RecipesDatabase: RoomDatabase() {
+abstract class RecipesDatabase : RoomDatabase() {
     abstract fun recipesDao(): RecipesDao
-
 }
