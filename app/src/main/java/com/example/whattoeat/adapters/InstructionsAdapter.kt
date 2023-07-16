@@ -137,8 +137,7 @@ class InstructionsAdapter(
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
         mActionMode = mode!!
-        mActionMode.subtitle = "Steps done"
-
+        mActionMode.subtitle = context.getString(R.string.steps_done)
         return true
     }
 

@@ -1,12 +1,20 @@
 package com.example.whattoeat.bindingadapters
 
-import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.example.whattoeat.R
 import com.example.whattoeat.model.NutrientX
 import com.example.whattoeat.model.Property
+import com.example.whattoeat.util.Constants.CALORIES
+import com.example.whattoeat.util.Constants.CARBOHYDRATES
+import com.example.whattoeat.util.Constants.FAT
+import com.example.whattoeat.util.Constants.GLYCEMIC_INDEX
+import com.example.whattoeat.util.Constants.GLYCEMIC_LOAD
+import com.example.whattoeat.util.Constants.NUTRITION_SCORE
+import com.example.whattoeat.util.Constants.PROTEIN
+import com.example.whattoeat.util.Constants.SATURATED_FAT
+import com.example.whattoeat.util.Constants.SUGAR
 
 class NutritionFragmentBinding {
     companion object {
@@ -15,7 +23,7 @@ class NutritionFragmentBinding {
         fun getNutrient(textView: TextView, nutrientX: List<NutrientX>?) {
             nutrientX?.forEach { nutrientItem ->
                 when (nutrientItem.name) {
-                    "Calories" -> {
+                    CALORIES -> {
                         if (textView.id == R.id.calories_textView) {
                             textView.text = textView.resources.getString(
                                 R.string.calories,
@@ -24,7 +32,7 @@ class NutritionFragmentBinding {
                         }
                     }
 
-                    "Fat" -> {
+                    FAT -> {
                         if (textView.id == R.id.gramFat_textView) {
                             textView.text = textView.resources.getString(
                                 R.string.gram_nutrient,
@@ -33,7 +41,7 @@ class NutritionFragmentBinding {
                         }
                     }
 
-                    "Carbohydrates" -> {
+                    CARBOHYDRATES -> {
                         if (textView.id == R.id.gramCarb_textView) {
                             textView.text = textView.resources.getString(
                                 R.string.gram_nutrient,
@@ -42,7 +50,7 @@ class NutritionFragmentBinding {
                         }
                     }
 
-                    "Protein" -> {
+                    PROTEIN -> {
                         if (textView.id == R.id.gramProtein_textView) {
                             textView.text = textView.resources.getString(
                                 R.string.gram_nutrient,
@@ -51,7 +59,7 @@ class NutritionFragmentBinding {
                         }
                     }
 
-                    "Saturated Fat" -> {
+                    SATURATED_FAT -> {
                         if (textView.id == R.id.gramSaturatedFat_textView) {
                             textView.text = textView.resources.getString(
                                 R.string.saturated_fat,
@@ -60,7 +68,7 @@ class NutritionFragmentBinding {
                         }
                     }
 
-                    "Sugar" -> {
+                    SUGAR -> {
                         if (textView.id == R.id.gramSugar_textView) {
                             textView.text =
                                 textView.resources.getString(R.string.sugar, nutrientItem.amount)
@@ -77,7 +85,7 @@ class NutritionFragmentBinding {
         fun getProperty(textView: TextView, properties: List<Property>?) {
             properties?.forEach { property ->
                 when (property.name) {
-                    "Glycemic Index" -> {
+                    GLYCEMIC_INDEX -> {
                         if (textView.id == R.id.glycemicIndex_textView) {
                             textView.text = textView.resources.getString(
                                 R.string.glycemic_index,
@@ -86,7 +94,7 @@ class NutritionFragmentBinding {
                         }
                     }
 
-                    "Glycemic Load" -> {
+                    GLYCEMIC_LOAD -> {
                         if (textView.id == R.id.glycemicLoad_textView) {
                             textView.text = textView.resources.getString(
                                 R.string.glycemic_load,
@@ -95,7 +103,7 @@ class NutritionFragmentBinding {
                         }
                     }
 
-                    "Nutrition Score" -> {
+                    NUTRITION_SCORE -> {
                         if (textView.id == R.id.nutritionScore_textView) {
                             textView.text = textView.resources.getString(
                                 R.string.nutrition_score,
@@ -112,8 +120,7 @@ class NutritionFragmentBinding {
         @JvmStatic
         fun setNutriScore(imageView: ImageView, properties: List<Property>?) {
             properties?.forEach {
-                Log.d("changeNutriScore", "${it.name} ${it.amount}")
-                if (it.name == "Nutrition Score") {
+                if (it.name == NUTRITION_SCORE) {
                     when (it.amount) {
                         in -15.0..-1.0 -> {
                             imageView.setImageResource(R.drawable.nutri_a)

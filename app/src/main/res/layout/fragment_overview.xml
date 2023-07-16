@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="recipeBinding"
             type="com.example.whattoeat.model.DetailedRecipe" />
@@ -23,12 +24,12 @@
             setImage="@{recipeBinding.image}"
             android:layout_width="0dp"
             android:layout_height="250dp"
+            android:contentDescription="@string/dish_image"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/avatars" />
-
 
 
         <com.google.android.material.chip.Chip
@@ -108,7 +109,8 @@
                     android:src="@drawable/ic_like"
                     app:layout_constraintEnd_toStartOf="@id/likes_textView"
                     app:layout_constraintTop_toTopOf="@+id/title_textView"
-                    app:tint="@color/md_theme_dark_primary" />
+                    app:tint="@color/md_theme_dark_primary"
+                    android:contentDescription="@string/number_of_likes_image" />
 
                 <TextView
                     android:id="@+id/diets_textView"
@@ -116,7 +118,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Diets: "
+                    android:text="@string/diets"
                     app:layout_constraintStart_toStartOf="@+id/title_textView"
                     app:layout_constraintTop_toBottomOf="@+id/title_textView" />
 
@@ -127,7 +129,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    android:text="Dish types:"
+                    android:text="@string/dish_types"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/diets_textView"
                     app:layout_constraintTop_toBottomOf="@+id/diets_textView" />

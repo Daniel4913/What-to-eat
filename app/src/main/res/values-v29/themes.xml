@@ -30,7 +30,6 @@
 
 
         <item name="android:iconTint">@color/md_theme_dark_secondaryContainer</item>
-        <item name="tintNavigationIcon"></item>
 
         <!--   ActionMode     //////////////////////////////////////////////////////-->
         <item name="actionModeStyle">@style/Widget.ActionMode</item>

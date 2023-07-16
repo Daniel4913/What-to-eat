@@ -47,6 +47,7 @@
                     setIngredientImage="@{ingredient.image}"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
+                    android:contentDescription="@string/dish_image"
                     app:layout_constraintBottom_toBottomOf="@+id/white_background"
                     app:layout_constraintEnd_toEndOf="@+id/white_background"
                     app:layout_constraintStart_toStartOf="@+id/white_background"

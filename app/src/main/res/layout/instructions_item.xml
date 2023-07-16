@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:text="step"
+                android:text="@string/step"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -73,7 +73,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_check"
-                app:tint="@color/md_theme_light_tertiary" />
+                app:tint="@color/md_theme_light_tertiary"
+                android:contentDescription="@string/done_checkmark_icon" />
 
             <TextView
                 android:id="@+id/step_details_textView"

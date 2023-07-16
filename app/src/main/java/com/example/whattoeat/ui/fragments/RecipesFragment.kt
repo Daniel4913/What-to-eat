@@ -1,21 +1,22 @@
 package com.example.whattoeat.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
-import android.view.*
-import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.whattoeat.viewmodels.MainViewModel
 import com.example.whattoeat.adapters.RecipesAdapter
 import com.example.whattoeat.databinding.FragmentRecipesBinding
 import com.example.whattoeat.model.RecipesByIngredients
 import com.example.whattoeat.util.NetworkListener
 import com.example.whattoeat.util.NetworkResult
 import com.example.whattoeat.util.observeOnce
+import com.example.whattoeat.viewmodels.MainViewModel
 import com.example.whattoeat.viewmodels.RecipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -75,10 +76,8 @@ class RecipesFragment : Fragment() {
     private fun readDatabase() {
         lifecycleScope.launch {
             mainViewModel.readCachedRecipesByIngredients.observeOnce(viewLifecycleOwner) { database ->
-                Log.d("RecipesFragment", "readDatabase called")
                 if (database.isNotEmpty() && !args.backFromBottomSheet) {
                     mAdapter.setData(database[0].recipesByIngredients)
-                    Log.d("RecipesFragment", "readDatabase called")
                 } else {
                     requestApiData()
                 }

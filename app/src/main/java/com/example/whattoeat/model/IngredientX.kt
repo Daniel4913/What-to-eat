@@ -1,7 +1,6 @@
 package com.example.whattoeat.model
 
 
-import com.example.whattoeat.model.NutrientX
 import com.google.gson.annotations.SerializedName
 
 data class IngredientX(

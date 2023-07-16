@@ -46,7 +46,7 @@ class FavoritesFragment : Fragment() {
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 if (menuItem.itemId == R.id.deleteAll_favorites_menu) {
-                    showSnackBar("Favorites deleted")
+                    showSnackBar(getString(R.string.favorites_deleted))
                     mainViewModel.deleteAllFavorites()
                 }
                 return true

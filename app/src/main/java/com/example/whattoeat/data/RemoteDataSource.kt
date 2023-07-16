@@ -1,6 +1,5 @@
 package com.example.whattoeat.data
 
-import android.util.Log
 import com.example.whattoeat.data.network.SpoonacularApi
 import com.example.whattoeat.model.DetailedRecipe
 import com.example.whattoeat.model.RecipesByIngredients

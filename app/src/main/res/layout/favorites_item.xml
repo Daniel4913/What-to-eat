@@ -44,7 +44,8 @@
                     app:layout_constraintBottom_toTopOf="@id/favorite_title_textView"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    tools:srcCompat="@tools:sample/avatars"
+                    android:contentDescription="@string/dish_image" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/favorite_cooking_time_chip"

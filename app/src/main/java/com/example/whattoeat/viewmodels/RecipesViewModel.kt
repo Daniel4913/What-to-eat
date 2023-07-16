@@ -1,7 +1,6 @@
 package com.example.whattoeat.viewmodels
 
 import android.app.Application
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.asLiveData
@@ -10,9 +9,11 @@ import com.example.whattoeat.data.DataStoreRepository
 import com.example.whattoeat.data.IngredientsAndRanking
 import com.example.whattoeat.model.RecipesByIngredients
 import com.example.whattoeat.util.Constants.API_KEY
+import com.example.whattoeat.util.Constants.BACK_INTERNET
 import com.example.whattoeat.util.Constants.DEFAULT_INGREDIENTS
 import com.example.whattoeat.util.Constants.DEFAULT_RANKING
 import com.example.whattoeat.util.Constants.DEFAULT_RECIPES_NUMBER
+import com.example.whattoeat.util.Constants.NO_INTERNET
 import com.example.whattoeat.util.Constants.QUERY_API_KEY
 import com.example.whattoeat.util.Constants.QUERY_IDS
 import com.example.whattoeat.util.Constants.QUERY_INGREDIENTS
@@ -37,7 +38,7 @@ class RecipesViewModel @Inject constructor(
 
     val readIngredientsAndRanking = dataStoreRepository.readIngredients
     val readBackOnline = dataStoreRepository.readBackOnline.asLiveData()
-    var recipesIds = mutableListOf<String>()
+    private var recipesIds = mutableListOf<String>()
 
     fun saveIngredients() =
         viewModelScope.launch(Dispatchers.IO) {
@@ -85,7 +86,6 @@ class RecipesViewModel @Inject constructor(
         queries[QUERY_IDS] = recipesIds.toString().removeSurrounding("[", "]")
         queries[QUERY_NUMBER] = DEFAULT_RECIPES_NUMBER
         queries[QUERY_API_KEY] = API_KEY
-        Log.d("applyDetailedQueries recipesVM", "$queries")
         return queries
     }
 
@@ -99,7 +99,7 @@ class RecipesViewModel @Inject constructor(
         if (!networkStatus) {
             Toast.makeText(
                 getApplication(),
-                "No internet connection",
+                NO_INTERNET,
                 Toast.LENGTH_SHORT
             ).show()
             saveBackOnline(true)
@@ -107,7 +107,7 @@ class RecipesViewModel @Inject constructor(
             if (backOnline) {
                 Toast.makeText(
                     getApplication(),
-                    "Back online in internet",
+                    BACK_INTERNET,
                     Toast.LENGTH_SHORT
                 ).show()
                 saveBackOnline(false)

@@ -12,6 +12,11 @@ import com.example.whattoeat.data.database.entities.FavoriteRecipeEntity
 import com.example.whattoeat.data.database.entities.RecipeByIngredientEntity
 import com.example.whattoeat.model.DetailedRecipe
 import com.example.whattoeat.model.RecipesByIngredients
+import com.example.whattoeat.util.Constants.API_KEY_LIMITED
+import com.example.whattoeat.util.Constants.NO_INTERNET
+import com.example.whattoeat.util.Constants.RECIPES_NOT_FOUND
+import com.example.whattoeat.util.Constants.RECIPES_NOT_FOUND_EXT
+import com.example.whattoeat.util.Constants.TIMEOUT
 import com.example.whattoeat.util.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -38,7 +43,7 @@ class MainViewModel @Inject constructor(
     val readFavorites: LiveData<List<FavoriteRecipeEntity>> =
         repository.local.readFavoriteRecipes().asLiveData()
 
-    fun readCurrentRecipe(id: Int): LiveData<DetailedRecipeEntity>{
+    fun readCurrentRecipe(id: Int): LiveData<DetailedRecipeEntity> {
         return repository.local.readDetailedRecipe(id).asLiveData()
     }
 
@@ -74,7 +79,7 @@ class MainViewModel @Inject constructor(
 
     /** RETROFIT */
     var recipesResponse: MutableLiveData<NetworkResult<RecipesByIngredients>> = MutableLiveData()
-    var detailedRecipesResponse: MutableLiveData<NetworkResult<List<DetailedRecipe>>> =
+    private var detailedRecipesResponse: MutableLiveData<NetworkResult<List<DetailedRecipe>>> =
         MutableLiveData()
 
 
@@ -103,7 +108,7 @@ class MainViewModel @Inject constructor(
                     NetworkResult.Error("Error: $e")
             }
         } else {
-            detailedRecipesResponse.value = NetworkResult.Error("Probable no internet connection")
+            detailedRecipesResponse.value = NetworkResult.Error(NO_INTERNET)
         }
     }
 
@@ -120,11 +125,11 @@ class MainViewModel @Inject constructor(
                 }
             } catch (e: Exception) {
                 recipesResponse.value =
-                    NetworkResult.Error("Recipes not found. Some kind of exception occurred")
-                Log.d("getRecipesByIngredientsSafeCall", "e: ${e}")
+                    NetworkResult.Error(RECIPES_NOT_FOUND_EXT)
+                Log.d("getRecipesByIngredientsSafeCall", "e: $e")
             }
         } else {
-            recipesResponse.value = NetworkResult.Error(message = "No internet connection")
+            recipesResponse.value = NetworkResult.Error(message = NO_INTERNET)
         }
     }
 
@@ -143,18 +148,22 @@ class MainViewModel @Inject constructor(
     private fun handleRecipesByIngredientsResponse(response: Response<RecipesByIngredients>): NetworkResult<RecipesByIngredients>? {
         when {
             response.message().toString().contains("timeout") -> {
-                return NetworkResult.Error("Timeout")
+                return NetworkResult.Error(TIMEOUT)
             }
+
             response.code() == 402 -> {
-                return NetworkResult.Error("API KEY LIMITED")
+                return NetworkResult.Error(API_KEY_LIMITED)
             }
+
             response.body().isNullOrEmpty() -> {
-                return NetworkResult.Error("Recipes not found")
+                return NetworkResult.Error(RECIPES_NOT_FOUND)
             }
+
             response.isSuccessful -> {
                 val foodRecipes = response.body()
                 return NetworkResult.Success(foodRecipes!!)
             }
+
             else -> {
                 return NetworkResult.Error(response.message())
             }
@@ -164,18 +173,22 @@ class MainViewModel @Inject constructor(
     private fun handleDetailedResponse(response: Response<List<DetailedRecipe>>): NetworkResult<List<DetailedRecipe>>? {
         when {
             response.message().toString().contains("timeout") -> {
-                return NetworkResult.Error("Timeout")
+                return NetworkResult.Error(TIMEOUT)
             }
+
             response.code() == 402 -> {
-                return NetworkResult.Error("API KEY LIMITED")
+                return NetworkResult.Error(API_KEY_LIMITED)
             }
+
             response.body() == null -> {
-                return NetworkResult.Error("Recipes not found")
+                return NetworkResult.Error(RECIPES_NOT_FOUND)
             }
+
             response.isSuccessful -> {
                 val foodRecipes = response.body()
                 return NetworkResult.Success(foodRecipes!!)
             }
+
             else -> {
                 return NetworkResult.Error(response.message())
             }

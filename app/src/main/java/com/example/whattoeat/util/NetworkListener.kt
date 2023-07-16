@@ -17,8 +17,8 @@ class NetworkListener : ConnectivityManager.NetworkCallback() {
 
         var isConnected = false
 
-        connectivityManager.allNetworks.forEach {// network ->
-            val networkCapability = connectivityManager.getNetworkCapabilities(it)
+        connectivityManager.allNetworks.forEach { network ->
+            val networkCapability = connectivityManager.getNetworkCapabilities(network)
             networkCapability?.let {
                 if (it.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)) {
                     isConnected = true

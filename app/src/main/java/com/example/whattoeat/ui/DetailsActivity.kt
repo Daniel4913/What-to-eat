@@ -130,7 +130,7 @@ class DetailsActivity : AppCompatActivity() {
                 FavoriteRecipeEntity(savedRecipeId, it.detailedRecipe)
             mainViewModel.deleteFavorite(favoriteRecipeEntity)
             changeMenuItem(item, R.color.md_theme_dark_onSurfaceVariant, R.drawable.bookmark_add)
-            showSnackBar("Recipe removed from favorites")
+            showSnackBar(getString(R.string.recipe_removed_from_favorites))
             recipeSaved = false
             setNightModeBookmarkIconColor()
         }
@@ -145,7 +145,7 @@ class DetailsActivity : AppCompatActivity() {
         }
         changeMenuItem(item, R.color.md_theme_dark_onPrimaryContainer, R.drawable.bookmark_added)
         recipeSaved = true
-        showSnackBar("Recipe saved!")
+        showSnackBar(getString(R.string.recipe_saved))
         setNightModeBookmarkIconColor()
     }
 
@@ -202,7 +202,6 @@ class DetailsActivity : AppCompatActivity() {
             }
         }
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

@@ -51,8 +51,6 @@
         <item name="android:textColor">@color/md_theme_light_onPrimaryContainer</item>
     </style>
 
-    <style name="actionModeDark" parent="@style/Widget.AppCompat.ActionMode"></style>
-
     <style name="BottomSheetDialogThemeNoFloating" parent="ThemeOverlay.Material3.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowSoftInputMode">adjustResize|stateVisible</item>

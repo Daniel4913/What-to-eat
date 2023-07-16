@@ -29,7 +29,7 @@
         android:layout_marginTop="12dp"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="12dp"
-        android:hint="My ingredients"
+        android:hint="@string/my_ingredients"
         app:endIconMode="clear_text"
         app:layout_constraintBottom_toTopOf="@id/search_button"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="24dp"
-        android:text="search"
+        android:text="@string/search"
         app:icon="@drawable/ic_search"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

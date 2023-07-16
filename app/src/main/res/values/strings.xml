@@ -1,17 +1,11 @@
 <resources>
     <string name="app_name">What to eat</string>
     <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="step_length">%1d %2s</string>
-
     <string name="servings">%d servings</string>
     <string name="percent_caloric_breakdown">%.1f%%</string>
     <string name="gram_nutrient">%.1f g</string>
-
     <string name="glycemic_load">Glycemic Load: %.1f</string>
     <string name="glycemic_index">Glycemic Index: %.1f</string>
     <string name="saturated_fat">Saturated Fat: %.1f g</string>
@@ -22,7 +16,7 @@
     <string name="nutrition_score">Nutrition score:\n %.1f %%</string>
     <string name="save_to_favorites">Save to favorites</string>
     <string name="empty_favorites">Your favorite recipes will appear here</string>
-    <string name="no_instructions_text">No instructions availible</string>
+    <string name="no_instructions_text">No instructions available</string>
     <string name="toolbar_title">Details</string>
     <string name="delete_all">Delete All</string>
     <string name="favorites">Favorites</string>
@@ -33,6 +27,30 @@
     <string name="visit_recipe_page">Visit recipe page:\n%s</string>
     <string name="no_missed_ingredients">You\'re ready to cook!😍</string>
     <string name="no_data">No data</string>
+    <string name="steps_done">Steps done</string>
+    <string name="maximize_used_ingredients">Maximize used ingredients first</string>
+    <string name="minimize_missing_ingredients">Minimize missing ingredients first</string>
+    <string name="favorites_deleted">Favorites deleted</string>
+    <string name="recipe_removed_from_favorites">Recipe removed from favorites</string>
+    <string name="recipe_saved">Recipe saved to favorites!</string>
+    <string name="no_instructions_image_description">No instructions provided image error</string>
+    <string name="fat">Fat</string>
+    <string name="full_nutrients_list">Full nutrients list:</string>
+    <string name="carbs">Carbs</string>
+    <string name="protein">Protein</string>
+    <string name="nutrition_score_image">nutrition_score_image</string>
+    <string name="dish_image">dish_image</string>
+    <string name="number_of_likes_image">Number of likes image</string>
+    <string name="diets">Diets:</string>
+    <string name="dish_types">Dish types:</string>
+    <string name="error_image">Error image</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="step">Step</string>
+    <string name="done_checkmark_icon">Done checkmark icon</string>
+    <string name="my_ingredients">My ingredients</string>
+    <string name="search">search</string>
+    <string name="fridge_my_ingredients_icon">fridge, my ingredients icon</string>
+    <string name="cart_missing_ingredients_icon">cart, missing ingredients icon</string>
 
 
 </resources>

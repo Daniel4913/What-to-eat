@@ -14,6 +14,8 @@ import com.example.whattoeat.R
 import com.example.whattoeat.databinding.RecipesBottomSheetBinding
 import com.example.whattoeat.util.Constants.DEFAULT_INGREDIENTS
 import com.example.whattoeat.util.Constants.DEFAULT_RANKING
+import com.example.whattoeat.util.Constants.RANKING_1
+import com.example.whattoeat.util.Constants.RANKING_2
 import com.example.whattoeat.viewmodels.RecipesViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.switchmaterial.SwitchMaterial
@@ -58,12 +60,12 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
 
         binding.rankingSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-                buttonView.text = "Maximize used ingredients first"
-                ranking = "1"
+                buttonView.text = getString(R.string.maximize_used_ingredients)
+                ranking = RANKING_1
                 updateSwitch(ranking, binding.rankingSwitch)
             } else {
-                buttonView.text = "Minimize missing ingredients first"
-                ranking = "2"
+                buttonView.text = getString(R.string.minimize_missing_ingredients)
+                ranking = RANKING_2
                 updateSwitch(ranking, binding.rankingSwitch)
             }
         }
@@ -90,12 +92,12 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun updateSwitch(selectedRanking: String, rankingSwitch: SwitchMaterial) {
-        if (selectedRanking == "1") {
+        if (selectedRanking == RANKING_1) {
             rankingSwitch.isChecked = true
-            rankingSwitch.text = "Maximize used ingredients first"
-        } else if (selectedRanking == "2") {
+            rankingSwitch.text = getString(R.string.maximize_used_ingredients)
+        } else if (selectedRanking == RANKING_2) {
             rankingSwitch.isChecked = false
-            rankingSwitch.text = "Minimize missing ingredients first"
+            rankingSwitch.text = getString(R.string.minimize_missing_ingredients)
         }
     }
 
