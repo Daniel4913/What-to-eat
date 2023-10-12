@@ -4,7 +4,7 @@ List of features:
 - Searching recipes by ingredients, 
 - Adding and removing from favorites. All favorites are cached locally. 
 
-[![Watch the video]]https://vimeo.com/873607595?share=copy
+[![Watch the video]](https://vimeo.com/873607595?share=copy)
 
 Tech stack:
 - Dagger - Hilt
