@@ -7,10 +7,7 @@ List of features:
 
 [[Watch the video on vimeo]](https://vimeo.com/873607595?share=copy)
 
-<img src="https://play-lh.googleusercontent.com/lxoVs5VAHzpEPQ0weYo9r7FwjWyGsxlVfMx1ZFU0rLYN8XryLZQEInl2NGfYFcX2d4s=w1052-h592-rw" href="">
-<img src="https://play-lh.googleusercontent.com/lxoVs5VAHzpEPQ0weYo9r7FwjWyGsxlVfMx1ZFU0rLYN8XryLZQEInl2NGfYFcX2d4s=w1052-h592-rw" href="">
-<img src="https://play-lh.googleusercontent.com/vY5BSRpLA-41AJEfPbDUKJdXMFai7B6CbnJ8LO4DW_FBAu6-Q8ALbvgdRh-8eYaqQK0=w1052-h592-rw" href="">
-<img src="https://play-lh.googleusercontent.com/xImt3hxTcwV6DNFzTTULRo8yULc98liZR8Q7wu6QbalhoNr7v5T78bHZzHjgzS_xh8Q=w1052-h592-rw" href="">
+<img src="https://play-lh.googleusercontent.com/lxoVs5VAHzpEPQ0weYo9r7FwjWyGsxlVfMx1ZFU0rLYN8XryLZQEInl2NGfYFcX2d4s=w1052-h592-rw" href=""> <img src="https://play-lh.googleusercontent.com/lxoVs5VAHzpEPQ0weYo9r7FwjWyGsxlVfMx1ZFU0rLYN8XryLZQEInl2NGfYFcX2d4s=w1052-h592-rw" href=""> <img src="https://play-lh.googleusercontent.com/vY5BSRpLA-41AJEfPbDUKJdXMFai7B6CbnJ8LO4DW_FBAu6-Q8ALbvgdRh-8eYaqQK0=w1052-h592-rw" href=""> <img src="https://play-lh.googleusercontent.com/xImt3hxTcwV6DNFzTTULRo8yULc98liZR8Q7wu6QbalhoNr7v5T78bHZzHjgzS_xh8Q=w1052-h592-rw" href="">
 
 Tech stack:
 - Dagger - Hilt
